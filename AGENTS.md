@@ -1,14 +1,9 @@
-# <Project>
-
-<!-- One paragraph: what this repo is, and what it is not. Replace everything above the House
-rules section — those are the parts the baseline template ships and expects you to keep. -->
-
 ## Where things live
 
 | If you need                    | Read                                   |
 | ------------------------------ | -------------------------------------- |
 | What this project is           | [`ABSTRACT.md`](./ABSTRACT.md)         |
-| What a word means              | [`CONTEXT.md`](./CONTEXT.md)           |
+| What a word means              | [`GLOSSARY.md`](./GLOSSARY.md)         |
 | Why something is the way it is | [`docs/adr/`](./docs/adr/)             |
 | Why something broken isn't     | [`docs/gotchas.md`](./docs/gotchas.md) |
 
@@ -37,41 +32,15 @@ Delete the rows this repo does not have yet rather than leaving dangling links.
 - **Dead code gets deleted.** `vp exec fallow` reports what nothing reaches. A file that is
   only reachable at runtime belongs in `fallow.toml`; everything else it flags is real.
 
-## Definition of done
-
-A change is done when its production path is reachable through a real entrypoint; success and
-expected failure are tested; `vp run ready` passes from a clean checkout; and the documentation
-is updated where implementation invalidated an assumption — a new decision means a new ADR, a
-new term means a `CONTEXT.md` entry.
-
-## Skills
-
-[`.agents/skills/`](./.agents/skills/) holds skills this repo expects you to use:
-
-- [`grilling`](./.agents/skills/grilling/SKILL.md) — stress-test a plan or decision before
-  building it.
-- [`codebase-design`](./.agents/skills/codebase-design/SKILL.md) — the design vocabulary this
-  repo uses: **module**, **interface**, **implementation**, **adapter**, **seam**, **depth**.
-- [`code-review`](./.agents/skills/code-review/SKILL.md) — review a change against both repo
-  standards and its spec.
-
-`.claude/` is a symlink to `.agents/`, and `CLAUDE.md` is a symlink to this file, so every
-agent reads one set of instructions. `CLAUDE.md` is gitignored and created on install by
-[`scripts/link-agents.mjs`](./scripts/link-agents.mjs) — the file's own header says why.
-
-<!--VITE PLUS START-->
-
-# Using Vite+, the Unified Toolchain for the Web
+## Using Vite+, the Unified Toolchain for the Web
 
 This project is using Vite+, a unified toolchain built on top of Vite, Rolldown, Vitest, tsdown, Oxlint, Oxfmt, and Vite Task. Vite+ wraps runtime management, package management, and frontend tooling in a single global CLI called `vp`. Vite+ is distinct from Vite, and it invokes Vite through `vp dev` and `vp build`. Run `vp help` to print a list of commands and `vp <command> --help` for information about a specific command.
 
 Docs are local at `node_modules/vite-plus/docs` or online at https://viteplus.dev/guide/.
 
-## Review Checklist
+### Review Checklist
 
 - [ ] Run `vp install` after pulling remote changes and before getting started.
 - [ ] Run `vp check` and `vp test` to format, lint, type check and test changes.
 - [ ] Check if there are `vite.config.ts` tasks or `package.json` scripts necessary for validation, run via `vp run <script>`.
 - [ ] If setup, runtime, or package-manager behavior looks wrong, run `vp env doctor` and include its output when asking for help.
-
-<!--VITE PLUS END-->
