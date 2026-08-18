@@ -5,9 +5,10 @@ It is written in ASD-STE100 Simplified Technical English.
 **Status.** The vocabulary and the mechanism are settled. No code implements them. §13 holds what gets built
 first. §15 holds what is still open.
 
-This revision is the first one shaped by a project outside crux. §4.1, §5.8, §10, §11.2, and §12.1 all exist
-because something was tried and did not survive contact with the format. §13.2 records that the dogfooding period
-of §13.3 has met its exit condition.
+This revision is shaped by a project outside crux. §4.1, §10, §11.2, and §12.1 exist because something was tried
+and did not survive contact with the format. §5.8 and §5.9 exist because that project then **built** what it had
+designed, and the build corrected the design. §13.2 records that the dogfooding period of §13.3 has met its exit
+condition twice: once from the drawing board, and once from the first working package.
 
 Three durable artifacts, each answering a different question. The **catalog** says what the codebase promises
 (§4). A **glossary** says what the words in a promise mean (§3). A **rationale** says why a promise reads as it
@@ -25,30 +26,31 @@ work is judged against into a first-class artifact.
 
 ## 2. The vocabulary
 
-| Word           | Meaning                                                                                              |
-| -------------- | ---------------------------------------------------------------------------------------------------- |
-| **project**    | What a `GLOSSARY.md` declares. It owns one catalog, one rationale directory, and one slug prefix.    |
-| **glossary**   | What a project's words mean. One `GLOSSARY.md` per project. Prose, never parsed.                     |
-| **claim**      | A short, falsifiable statement of a requirement the codebase must satisfy. It carries a stable slug. |
-| **catalog**    | The organised set of all claims in a project.                                                        |
-| **rationale**  | A document that says why a claim reads as it does, and what was rejected on the way.                 |
-| **fog**        | Material you want, but cannot yet state as a claim.                                                  |
-| **witness**    | A mechanism that judges whether some part of the codebase satisfies a claim.                         |
-| **marker**     | The comment block that designates a witness. A witness **is** its marker.                            |
-| **directive**  | One `@name` instruction inside a block. §6.1 lists the six.                                          |
-| **attest**     | The relation a marker records. Witness X attests claim Y.                                            |
-| **subject**    | The code a witness judges. `@scope` names it.                                                        |
-| **instrument** | The witness itself: the marker and the lines it owns, plus the claim text it attests.                |
-| **existence**  | Whether a witness is still installed. A form check over the markers.                                 |
-| **verdict**    | What a witness says about the **subject**: **affirms**, **denies**, or **silent**.                   |
-| **standing**   | Whether the **instrument** logically attests its claim: **sound**, **false**, or **unaudited**.      |
-| **amendment**  | The set of claim changes that one unit of work proposes.                                             |
-| **canvass**    | The act of asking every witness in scope for a verdict.                                              |
-| **adapter**    | A converter from one tool's report into verdicts, keyed on markers.                                  |
-| **auditor**    | An intelligence that converts a marker into a standing.                                              |
-| **readout**    | What a canvass produces. One entry per claim in scope, with its verdicts and standings.              |
-| **audit**      | The act of reading an instrument to decide its standing.                                             |
-| **ruling**     | The decision a human makes at the merge.                                                             |
+| Word           | Meaning                                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| **project**    | What a `GLOSSARY.md` declares. It owns one catalog, one rationale directory, and one slug prefix.     |
+| **glossary**   | What a project's words mean. One `GLOSSARY.md` per project. Prose, never parsed.                      |
+| **claim**      | A short, falsifiable statement of a requirement the codebase must satisfy. It carries a stable slug.  |
+| **catalog**    | The organised set of all claims in a project.                                                         |
+| **rationale**  | A document that says why a claim reads as it does, and what was rejected on the way.                  |
+| **fog**        | Material you want, but cannot yet state as a claim.                                                   |
+| **witness**    | A mechanism that judges whether some part of the codebase satisfies a claim.                          |
+| **marker**     | The comment block that designates a witness. A witness **is** its marker.                             |
+| **directive**  | One `@name` instruction inside a block. §6.1 lists the six.                                           |
+| **attest**     | The relation a marker records. Witness X attests claim Y.                                             |
+| **subject**    | The code a witness judges. `@scope` names it.                                                         |
+| **instrument** | The witness itself: the marker and the lines it owns, plus the claim text it attests.                 |
+| **existence**  | Whether a witness is still installed. A form check over the markers.                                  |
+| **verdict**    | What a witness says about the **subject**: **affirms**, **denies**, or **silent**.                    |
+| **standing**   | Whether one **instrument** supports one **claim**: **sound**, **unsound**, or **unaudited**.          |
+| **coverage**   | Whether a claim's witnesses **together** uphold it: **covered**, **under-covered**, or **unaudited**. |
+| **amendment**  | The set of claim changes that one unit of work proposes.                                              |
+| **canvass**    | The act of asking every witness in scope for a verdict.                                               |
+| **adapter**    | A converter from one tool's report into verdicts, keyed on markers.                                   |
+| **auditor**    | An intelligence that sets the standings of a claim's instruments, and then its coverage.              |
+| **readout**    | What a canvass produces. One block per claim in scope. See §8.4.                                      |
+| **audit**      | The act of reading a claim's instruments to set their standings and its coverage.                     |
+| **ruling**     | The decision a human makes at the merge.                                                              |
 
 ### 2.1 The naming rule
 
@@ -81,16 +83,18 @@ Record these so that they are not proposed again.
 | **ADR**                | It holds the decision **and** the reasoning. Crux splits the two, so the name is false. See §11.                                                                                                                                                                       |
 | **`CONTEXT.md`**       | _Context_ is already ambiguous, and it names a boundary rather than the word list the file holds.                                                                                                                                                                      |
 | **workspace**          | A name for the root project. _The root project is the project at the root_, so the overload describes rather than puns. The first repository to adopt this vocabulary rejected the word on sight, and rejected the argument for it a second time when it was restated. |
+| **false**              | The former name of the **unsound** standing. It does not pair with _sound_, so a reader had to learn the two ends separately. This document also uses _false_ in its ordinary English sense in several places, and one word must not do both jobs. See §5.6.           |
+| **complete**           | A name for the **covered** coverage. It promises that nothing is missing, which no audit can establish. _Covered_ says how far the witnesses reach, which is what the auditor actually judges. See §5.8.                                                               |
 
 Four directives were proposed and rejected. Record these too.
 
-| Directive             | Rejected because                                                                                                                                                                                                            |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@decision`           | An anchor from code to a rationale. A plain Markdown link does the same for a reader, and the core resolved nothing.                                                                                                        |
-| `@witness`            | An opener for a witness block. `@attests` already opens it, so the directive carried no information.                                                                                                                        |
-| `@record`             | A noun for a rationale. The only query it served is `ls`.                                                                                                                                                                   |
-| a required terminator | It makes the extent **stated** rather than **correct**, and a hand-placed one under-extends. See §6.2.                                                                                                                      |
-| a bare `@end`         | `@end` is a keyword in Objective-C and a command in Texinfo. A stray one truncates a real marker's extent, which is the one failure that lets a false witness survive. The terminators name their opener instead. See §6.2. |
+| Directive             | Rejected because                                                                                                                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `@decision`           | An anchor from code to a rationale. A plain Markdown link does the same for a reader, and the core resolved nothing.                                                                                                           |
+| `@witness`            | An opener for a witness block. `@attests` already opens it, so the directive carried no information.                                                                                                                           |
+| `@record`             | A noun for a rationale. The only query it served is `ls`.                                                                                                                                                                      |
+| a required terminator | It makes the extent **stated** rather than **correct**, and a hand-placed one under-extends. See §6.2.                                                                                                                         |
+| a bare `@end`         | `@end` is a keyword in Objective-C and a command in Texinfo. A stray one truncates a real marker's extent, which is the one failure that lets an unsound witness survive. The terminators name their opener instead. See §6.2. |
 
 ### 2.3 The tools are named outside the vocabulary
 
@@ -285,7 +289,14 @@ somewhere else entirely.
 
 **The catalog is present tense.** It states what the system promises **now**. One condition enforces this:
 
-> **A claim is in the catalog only if a sound witness affirms it.**
+> **A claim is in the catalog only if its witnesses affirm it, each of them is sound, and together they cover
+> it.**
+
+The condition has three parts because a claim can fail in three places. A witness can deny. A witness can be
+sound-looking and support nothing (§5.6). Every witness can be sound and the set can still fall short of the
+claim (§5.8). An earlier revision wrote this as _a sound witness affirms it_, and the singular was wrong: it
+described a claim with one witness, and it pushed every claim down to the size of one check. §5.9 records what
+that cost.
 
 Three results follow:
 
@@ -295,7 +306,8 @@ Three results follow:
   invariant in §8.5. So a claim that is already in the catalog may have a silent witness at a later commit, and a
   claim that an amendment **adds** may not. A new claim has no earlier affirmation to carry forward.
 
-Do not call such a claim _false_. **False** is the standing of a witness, and one word must not have two meanings.
+Do not call such a claim _unsound_. **Unsound** is the standing of a witness, and one word must not have two
+meanings.
 
 ### 4.1 The subject must be rederivable from the repository
 
@@ -357,16 +369,22 @@ of the three to detect.
 | ------------------------------------------------------------------------------ | --------- | --------------------------------------------------- | ------------------- |
 | the claim has no marker — **unattested**                                       | existence | a form check. Nothing is asked and nothing is read. | red — stop          |
 | a witness **denies**                                                           | verdict   | the canvass                                         | red — stop          |
-| a witness is **false**                                                         | standing  | the audit                                           | red — stop          |
+| a witness is **unsound**                                                       | standing  | the audit                                           | red — stop          |
+| the claim is **under-covered**                                                 | coverage  | the audit                                           | red — stop          |
 | every witness is **silent**                                                    | verdict   | the canvass                                         | yellow — the ruling |
 | a standing is **unaudited**, or an agent proposed it and no human confirmed it | standing  | the audit                                           | yellow — the ruling |
+| coverage is **unaudited**, or an agent proposed it and no human confirmed it   | coverage  | the audit                                           | yellow — the ruling |
+
+**Unattested and under-covered are the same failure at two sizes.** A claim with no marker is not reached by
+anything. A claim that is under-covered is reached in part. The first is free to find and the second needs an
+intelligence, which is why they are separate rows and one condition.
 
 **A red item never reaches a human.** It is a stop before the ruling, and not an entry in a readout that anybody
 looks at. Work returns to the builder.
 
-So the readout that an operator receives always has, for every claim in scope, at least one witness that is not
-false and does not deny. The only open items are the two yellow rows, and the ruling is what closes them. After the
-ruling, the condition above holds on the human's authority.
+So the readout that an operator receives always has, for every claim in scope, a set of witnesses where none is
+unsound, none denies, and the set covers the claim. The only open items are the three yellow rows, and the ruling
+is what closes them. After the ruling, the condition above holds on the human's authority.
 
 ## 5. Witnesses
 
@@ -433,22 +451,31 @@ Every witness has two sides, and each question belongs to exactly one of them.
 - The **subject** is the code the witness judges. `@scope` names it.
 - The **instrument** is the marker, the lines it owns, and the text of the claims it attests.
 
-The audit follows from this in one sentence: **the audit confirms that the instrument logically attests the marked
-claim.** Nothing about the subject enters it.
+The audit follows from this in one sentence: **the audit confirms that the instrument supports the marked claim.**
+Nothing about the subject enters it.
 
-### 5.4 The three questions
+**A standing belongs to a marker and a claim together, not to a marker.** A marker that attests three claims has
+three standings, and they can differ. The same test can support one claim and say nothing at all about the next
+one on the same line. So the audit reads a pair, and the repair for one bad pair is to remove that one `@attests`
+directive, not always to delete the marker.
 
-| Question      | Answered by                         | Cost                 | Voided by                                        | Default                           |
-| ------------- | ----------------------------------- | -------------------- | ------------------------------------------------ | --------------------------------- |
-| **existence** | a form check over the marker index  | free                 | nothing — recomputed every run                   | always recomputed                 |
-| **verdict**   | an adapter, or a judge              | free, or expensive   | a change inside `@scope`                         | **asked**; carried by exception   |
-| **standing**  | an auditor. Always an intelligence. | **always expensive** | a change to the instrument, or to the claim text | **carried**; audited by exception |
+### 5.4 The four questions
+
+| Question      | Answered by                         | Cost                 | Voided by                                                            | Default                           |
+| ------------- | ----------------------------------- | -------------------- | -------------------------------------------------------------------- | --------------------------------- |
+| **existence** | a form check over the marker index  | free                 | nothing — recomputed every run                                       | always recomputed                 |
+| **verdict**   | an adapter, or a judge              | free, or expensive   | a change inside `@scope`                                             | **asked**; carried by exception   |
+| **standing**  | an auditor. Always an intelligence. | **always expensive** | a change to the instrument, or to the claim text                     | **carried**; audited by exception |
+| **coverage**  | an auditor. Always an intelligence. | **always expensive** | a change to **any** of the claim's instruments, or to the claim text | **carried**; audited by exception |
+
+Existence and verdict attach to one witness. Standing attaches to one witness and one claim. **Coverage attaches
+to the claim alone**, and it is the only question that cannot be answered by looking at one marker.
 
 The symmetry inverts, and that inversion is the design:
 
 - A **verdict** is asked by default, and carried only when asking is expensive — that is, only for a witness file.
-- A **standing** is carried by default, and audited only by exception — always, for every kind, because an
-  intelligence is the only thing that can set it.
+- A **standing** and a **coverage** are carried by default, and audited only by exception — always, for every
+  kind, because an intelligence is the only thing that can set either.
 
 ### 5.5 The verdict
 
@@ -481,15 +508,25 @@ silent.
 
 ### 5.6 The standing
 
-| Standing      | Meaning                                                         |
-| ------------- | --------------------------------------------------------------- |
-| **sound**     | An auditor read the instrument. It logically attests its claim. |
-| **false**     | It does not attest its claim. Repair it or delete it.           |
-| **unaudited** | Nobody has read it against its claim.                           |
+A standing is set for one marker against one claim (§5.3).
+
+| Standing      | Meaning                                                                                      |
+| ------------- | -------------------------------------------------------------------------------------------- |
+| **sound**     | An auditor read the instrument. It supports this claim.                                      |
+| **unsound**   | It does not support this claim. Remove this `@attests`, repair the instrument, or delete it. |
+| **unaudited** | Nobody has read it against this claim.                                                       |
+
+**Sound does not mean sufficient.** A sound witness supports its claim. It does not have to reach the whole of
+it. A test that observes the token's byte source is sound for _nobody can guess the token_, and it settles only
+one of the ways that claim can fail. Whether the set of witnesses reaches the whole claim is a different question,
+and §5.8 asks it.
+
+This is the narrow reading, and it is deliberate. The wide reading — _sound means this marker attests the full
+claim_ — is what an earlier revision implied, and §5.9 records the damage it did.
 
 **A standing carries its source.**
 
-- An agent can set **false** by itself. To find a bad witness needs no authority.
+- An agent can set **unsound** by itself. To find a bad witness needs no authority.
 - An agent **proposes** sound. The human confirms it at the ruling.
 
 ### 5.7 Witnesses that attest several claims
@@ -501,36 +538,136 @@ coupled to another claim's forever. An integration test that attests four claims
 is a problem only when it is the sole proof, and then the coupling is the signal: either these are one claim, or
 they lack real witnesses.
 
-**The cost of a shared marker is its audit.** The audit cost of a marker is proportional to the number of claims it
-attests, because a change to the instrument re-opens the question for all of them. Nothing forbids stacking claims
-on one marker, and nobody does it twice. The claims that belong on one marker are the ones that rise and fall
-together.
+**The cost of a shared marker is its audit.** A marker that attests three claims carries three standings (§5.3),
+and a change to the instrument re-opens all three. Nothing forbids stacking claims on one marker, and nobody does
+it twice. The claims that belong on one marker are the ones that rise and fall together.
 
 For an inferential witness, sharing is nearly free: a witness file is a container, and three markers in one file
 are three witnesses with three scopes and three judgments.
 
-### 5.8 A claim that needs two kinds of witness is two claims
+### 5.8 Coverage
 
-The mirror of §5.7, and the same observation read from the opposite end. §5.7 warns about one marker carrying many
-claims, and the diagnosis there is that the claims are coupled. This is one claim needing many markers:
+§5.7 looks at one marker with many claims. This is the other direction: one claim with many markers. It is the
+ordinary case, and until this revision the document had no word for the question it raises.
 
-> **A claim that appears to need two witnesses of different kinds should be split — or its second half is out of
-> scope.**
+> **Coverage is whether a claim's witnesses, taken together, uphold it.**
 
-Not two witnesses of the **same** kind. Two unit tests on one claim is ordinary supplementary evidence. The signal
-is the mismatch of kinds, because a lint rule and a test answer questions of different shapes, and needing both
-means two questions were written on one line.
+| Coverage          | Meaning                                                                           |
+| ----------------- | --------------------------------------------------------------------------------- |
+| **covered**       | An auditor read every witness of this claim together. They reach the whole claim. |
+| **under-covered** | Part of the claim is reached by nothing. Add a witness, or lower the claim.       |
+| **unaudited**     | Nobody has read the set as a set.                                                 |
 
-It has held in three different directions, which is why it is a rule rather than an anecdote:
+**Every witness sound does not mean the claim is covered.** That sentence is the reason the axis exists. Standing
+is a judgment about one instrument, and no number of them adds up to a judgment about the claim. A claim can hold
+three sound witnesses and still promise something that nothing checks.
 
-| The claim as written                 | Given                    | Was actually                                               |
-| ------------------------------------ | ------------------------ | ---------------------------------------------------------- |
-| _the token is random_                | a lint rule and a test   | **no weak randomness** and **the right shape**             |
-| _the backup lands in object storage_ | a local test and a probe | one claim; the other half was out of scope entirely (§4.1) |
-| _configuration is required_          | a type and a test        | **availability** and **validation**                        |
+**Coverage carries its source, on the same asymmetry as a standing** (§5.6). An agent can declare
+**under-covered** by itself, because finding a gap needs no authority. An agent **proposes** covered, and the
+human confirms it at the ruling. That is the same authority as §9.5's, and it is the same reason: an agent can see
+that a claim is not reached, and only the operator can say that a claim is reached far enough.
 
-A compound predicate, an out-of-scope subject, and two distinct properties sharing a slug. Splitting is the answer
-every time, and each half comes out with one honest witness.
+#### The gap that appears most often
+
+> **A witness that closes one way to fail does not affirm the way to succeed.**
+
+The set of wrong implementations is unbounded. A prohibition removes one member of it. So a lint rule that forbids
+`Math.random` is sound for _nobody can guess the token_ — it removes a real way to fail — and a hand-written weak
+generator passes it without complaint. Nothing in that marker observes what the code does instead.
+
+The repair is a second witness with the opposite polarity: a test that watches the production path take its bytes
+from the approved source. Note what the repair is **not**. It is not a second claim. The claim was never compound.
+One promise, two failures, two witnesses, one coverage.
+
+This was the first thing the audit of the first build found, and it is the check to run first on any claim whose
+witnesses are all prohibitions.
+
+#### The two repairs, and why the second one matters
+
+Under-coverage has two exits, and a builder may take either.
+
+- **Add a witness**, until the set reaches the claim.
+- **Lower the claim**, until the claim reaches the set.
+
+The second exit is not a defeat. It is the force that keeps §5.9 honest. §5.9 pushes a claim up, toward the
+failure a reader can see. Coverage pushes it down, toward what the witnesses actually reach. Neither force is
+correct on its own:
+
+> The altitude of a claim is where those two forces balance. A claim above it promises what nothing checks. A
+> claim below it describes its own witness, and no operator can rule on it.
+
+#### The cost, stated and accepted
+
+Coverage has no mechanical form and never will. It joins §13.3's _never automate_ column, beside _claim, or
+settled by construction?_ It is also the one judgment in this document that cannot be made by reading the diff
+alone: answering it needs every witness of the claim read together, and most of them did not change. §8.5 pays
+that cost and says why the bound still holds.
+
+The alternative was to require that each marker attest its full claim. That rule needs no new axis and it is
+cheaper to audit. It was tried, on a real package, and §5.9 is what it produced.
+
+### 5.9 Group claims by the failure a reader can see
+
+> **Group claims by the failure a reader would notice. Do not group them by the check that finds it.**
+
+Two properties are two claims when they can fail separately **and** their separate failures mean different things
+to the person the promise is made to. If the reader sees one failure, it is one claim, whatever number of checks
+it takes to hold it up.
+
+Apply it to a token. A weak generator, a `Math.random` call, and a sixteen-byte value are three defects with three
+different checks. They produce one visible failure: **somebody can guess the token.** So the claim is _nobody can
+guess the token_, and it holds three witnesses of three kinds. Apply it to configuration. An absent time zone and
+the string `"Mars/Olympus"` both produce one visible failure: the system uses the wrong local date, or it does not
+start.
+
+The rule cuts the other way just as often. _At most one entry exists for a local date_ and _a second answer
+replaces the first_ can each fail while the other holds, and a reader sees two different things — duplicated rows,
+or stale data. Two claims.
+
+#### What this replaces, and why the old rule looked true
+
+An earlier revision of this section said the opposite:
+
+> ~~A claim that appears to need two witnesses of different kinds should be split — or its second half is out of
+> scope.~~
+
+**That is retracted.** A mismatch of witness kinds is not evidence that a claim is compound. It is the ordinary
+shape of a claim that a reader would recognise, because one visible failure usually has several causes, and
+different causes are found by different instruments.
+
+The rule looked true because all three of its examples were doing other rules' work:
+
+| The example                          | The rule that actually applied                                               |
+| ------------------------------------ | ---------------------------------------------------------------------------- |
+| _the token is random_                | §5.8 — a prohibition does not affirm a provenance. One claim, two witnesses. |
+| _the backup lands in object storage_ | §4.1 — the second half was not rederivable from the repository               |
+| _configuration is required_          | §5.8 — compile-time and runtime absence are two witnesses on one claim       |
+
+None of the three needed a split on the ground the rule gave. Two of them were split anyway, and the splitting is
+what caused the damage below.
+
+#### What the wrong altitude costs
+
+The first package built under this vocabulary entered its build with eleven claims and left with fourteen. The
+splits were forced: the auditor required each marker to attest its full claim, so a claim that no single marker
+could reach had to be cut until one could. Three things went wrong, and all three were reported by the operator
+who had to read the result.
+
+- **The catalog stopped reading as a set of promises.** Three claims described the byte source, the forbidden
+  call, and the output shape of one token. The system promises none of those three things to anybody. It promises
+  that the token cannot be guessed.
+- **A witness took a claim's name.** `core/config/is-context-service` states that the configuration is a service
+  in the framework's context. That is a description of the instrument, not of the subject (§5.3). It was the type
+  witness for the configuration claim, promoted to a claim because nothing else could hold it.
+- **The review cost rose with no gain in safety.** Every split multiplied the audit: a separate question, a
+  separate standing, a separate row, for parts of one promise that rise and fall together.
+
+> A claim that describes its own witness is a witness that took a claim's name. A claim is about the subject.
+
+**The catalog is read by a human at the ruling**, and §9.5 says what that human decides: _were these the right
+claims?_ An operator has an opinion about _nobody can guess the token_. An operator has no opinion about which
+context service holds the time zone. A catalog written at witness altitude cannot be ruled on, and a catalog that
+cannot be ruled on has lost the job §4 gave it.
 
 ## 6. The marker format
 
@@ -682,7 +819,7 @@ about the witness case and they still mean it.
 **A terminator names the opener it closes**: `@claim:end`, `@attests:end`, `@grounds:end`. There is no bare
 `@end`, and its absence is the point. `@end` is a keyword in Objective-C and a command in Texinfo, so a stray one
 would truncate a real marker's extent — and §6.2 is about to say that under-extension is the one failure that lets
-a false witness survive. It is also the least-written directive, so a broken extent is the least likely to be
+an unsound witness survive. It is also the least-written directive, so a broken extent is the least likely to be
 noticed. Naming the opener kills both collisions outright, and it makes the terminator checkable against the block
 that is actually open.
 
@@ -710,12 +847,12 @@ sits among many unmarked ones:
 }
 ```
 
-**Over-extension is safe.** It causes extra audits. Under-extension lets a false witness survive. So the coarse
+**Over-extension is safe.** It causes extra audits. Under-extension lets an unsound witness survive. So the coarse
 default is never wrong, only expensive, and the extent is an optimisation problem rather than a correctness one.
 
 **This is why a terminator is not required.** Requiring one would not make the extent correct, only **stated**, and
 a hand-placed terminator fails in the unsafe direction: too early is under-extension, which is the one failure
-above that lets a false witness survive. It also goes stale silently, because there is nothing to check a written
+above that lets an unsound witness survive. It also goes stale silently, because there is nothing to check a written
 extent against, whereas a default that runs to the next block tracks a `describe` as it grows and shrinks.
 
 **There is no file-level marker and no nesting.** An earlier version made a marker _before any non-comment content_
@@ -901,6 +1038,30 @@ So the witness field is the step that finishes the claim, and §10's exit gate a
 you can write the claim **and** assign its witness. An amendment is authorable at exactly that moment and not
 before.
 
+**An amendment is a specification, not a freeze.** Naming a witness starts the design. **Writing** the witness
+finishes it, and that happens during the build. The first package built under this vocabulary entered with eleven
+claims and left with fourteen, and every change came from the same place: somebody wrote the witness and found
+that the claim did not say what it meant.
+
+| What the build found                                        | What that build did | What §5.8 says to do |
+| ----------------------------------------------------------- | ------------------- | -------------------- |
+| a prohibition cannot affirm a provenance                    | split the claim     | add a witness        |
+| _required_ has a compile-time and a runtime reading         | split the claim     | add a witness        |
+| _expires after seven days_ did not settle the exact instant | reword the claim    | reword the claim     |
+
+Read the last two columns together. The **finding** was right all three times, and the build was working. The
+**remedy** was wrong twice, because the rule of the day forced a split where a second witness was the honest
+answer. §5.9 records that correction. What matters here is the first column: all three were invisible until
+somebody wrote the witness.
+
+The third row is the plainest. The test could not be written until somebody ruled whether the boundary instant is
+inside or outside. That is fog (§10) that the amendment did not know it held, and it surfaced when a person tried
+to write the assertion.
+
+**So a build that changes its amendment is the design working, not the entry gate failing.** What it needs is a
+route: the builder cannot make that change alone, because §9.5 gives the choice of claims to the operator. §9.1
+carries the route, and §15's entry-gate thread now has this as evidence.
+
 **An amendment is proposed until the merge. The merge enacts it.** Do not merge an amendment to the main branch on
 its own. The rule that decides this:
 
@@ -985,29 +1146,49 @@ export const noSubprocess = createRule({ name: "no-subprocess", … })
 
 Three failure modes, three different questions, and only one of them is a verdict:
 
-| What happened                       | Question  | Mechanism                                            | Result                      |
-| ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------- |
-| the rule was deleted from config    | existence | the marker was deleted with the line                 | unattested — red            |
-| the rule was set to `warn` or `off` | standing  | the config line changed, so it is in the audit scope | a reader marks it **false** |
-| the code violates the rule          | verdict   | the adapter joins on rule id                         | **denies**                  |
+| What happened                       | Question  | Mechanism                                            | Result                        |
+| ----------------------------------- | --------- | ---------------------------------------------------- | ----------------------------- |
+| the rule was deleted from config    | existence | the marker was deleted with the line                 | unattested — red              |
+| the rule was set to `warn` or `off` | standing  | the config line changed, so it is in the audit scope | a reader marks it **unsound** |
+| the code violates the rule          | verdict   | the adapter joins on rule id                         | **denies**                    |
 
 **Do not add a test that reads the config and asserts the rule is enabled.** It solves a problem the marker's
 position already solves, and it reports a standing failure as a verdict.
 
 ### 8.4 The readout
 
-The canvass produces the readout. One entry for each claim in scope:
+The canvass produces the readout. **One block for each claim in scope**, headed by the claim and its coverage,
+then one line for each witness:
 
-| claim                        | witness                             | verdict           | standing  |
-| ---------------------------- | ----------------------------------- | ----------------- | --------- |
-| `close/deletes-first`        | `close.test.ts:12`                  | affirms           | sound     |
-| `renderers/colour-is-passed` | `witnesses/renderers-take-style.md` | affirms (carried) | sound     |
-| `report/reads-at-a-glance`   | `witnesses/report-legibility.md`    | silent            | unaudited |
+```
+core/token/cannot-be-guessed                                        covered (proposed)
+  token.test.ts:14                    web crypto bytes     affirms            sound
+  vite.config.ts:31                   no Math.random       affirms            sound
+  token.test.ts:52                    length and alphabet  affirms            sound
 
-Two columns, two questions. _What does this witness say?_ And _can I believe it?_
+renderers/colour-is-passed                                                     covered
+  witnesses/renderers-take-style.md   every renderer       affirms (carried)   sound
+  witnesses/style-is-not-dropped.md   the passed value     silent          unaudited
 
-**Keep the meaning narrow.** The readout is the verdicts and the standings. It is not the whole package. The
-operator receives the amendment beside it, because the ruling compares what was wanted to what the witnesses say:
+report/reads-at-a-glance                                                     unaudited
+  witnesses/report-legibility.md      the summary view     silent          unaudited
+```
+
+Three questions, and each has its own place. _What does this witness say?_ — the verdict column. _Can I believe
+this witness?_ — the standing column. _Is this claim held up?_ — the coverage on the claim line, where the eye
+lands first.
+
+**The block is the shape of the audit, not only of the report.** An auditor works claim by claim: collect every
+witness of one claim, set a standing for each one that is in the audit scope, then read the whole set together and
+set the coverage. Marker order is the wrong order, because coverage is not visible from it (§5.8).
+
+The second block shows why coverage is not a summary of the standings. One of its witnesses is unaudited, and the
+claim is still covered: the auditor read the set and found that the other witness reaches the whole claim on its
+own. The two axes answer different questions, so neither column can be computed from the other.
+
+**Keep the meaning narrow.** The readout is the verdicts, the standings, and the coverage. It is not the whole
+package. The operator receives the amendment beside it, because the ruling compares what was wanted to what the
+witnesses say:
 
 ```
 amendment    what was wanted
@@ -1029,9 +1210,22 @@ The second term alone is not sufficient. The first term catches the case that ma
 witness to a claim that is **not** in the amendment. An extra test on an existing claim is exactly where a builder
 defines its own success.
 
-**The invariant holds by induction across merges.** Every merge audits every marker in that scope, and a merge
-changes nothing else. So each untouched marker still has the instrument and the claim text that it was audited
-against. Therefore **a witness on the main branch is presumed sound**, and there is nothing to look up.
+**Coverage widens the reading, and it does not widen the scope.** A coverage is void when any of the claim's
+instruments changes, or when the claim text does (§5.4). So the claims to re-cover are exactly the claims named by
+the marker scope above, and the diff still bounds the work. What changes is the reading: answering coverage for
+one claim needs **every** witness of that claim, and most of them did not change. An auditor reads unchanged
+markers to judge a claim it was already going to judge. It sets no standing on them.
+
+**The invariant holds by induction across merges.** Every merge audits every marker in that scope, sets the
+coverage of every claim they touch, and changes nothing else. So each untouched marker still has the instrument
+and the claim text that it was audited against, and each untouched claim still has the witness set it was covered
+against. Therefore **a witness on the main branch is presumed sound and a claim on it is presumed covered**, and
+there is nothing to look up.
+
+**One audit pass is not a fixed point.** On the first build, an audit marked six claims red, the builder repaired
+them, and a second audit found one further gap in the same package. That is normal and it is not a defect: the
+repair changes the instrument, and a changed instrument is back in scope by the rule above. §9.3's cycle budget is
+what bounds it.
 
 **The record of an audit is the merge.** It sits on the PR with the readout. You never query it.
 
@@ -1039,9 +1233,9 @@ against. Therefore **a witness on the main branch is presumed sound**, and there
 do not survive a checkout. A content hash is the stronger version and is still not worth it: it protects against
 one skipped audit, which is a process failure, and it costs a diff on every edit.
 
-**The base case.** In an existing repository every witness starts unaudited, and it becomes audited the first time
-its instrument or its claim is touched. The first audit produces the base case. The readout shows the truth, in
-yellow.
+**The base case.** In an existing repository every witness starts unaudited and every claim starts uncovered, and
+each becomes audited the first time its instrument or its claim is touched. The first audit produces the base
+case. The readout shows the truth, in yellow.
 
 **The blind spot, stated and accepted.** A witness can become vacuous without either side of its instrument
 changing. A helper it calls becomes a no-op, and the witness still affirms. Neither the induction nor a hash
@@ -1053,12 +1247,17 @@ already has. So name the blind spot, and leave it.
 
 ### 8.6 Why the canvass and the audit stay separate
 
-| Act         | Question                                  | Subject        | Voided by                               |
-| ----------- | ----------------------------------------- | -------------- | --------------------------------------- |
-| **canvass** | Does the code satisfy the claims?         | the subject    | any change inside `@scope`              |
-| **audit**   | Do these instruments attest their claims? | the instrument | a change to the instrument or the claim |
+| Act         | Question                                                       | Subject                      | Voided by                               |
+| ----------- | -------------------------------------------------------------- | ---------------------------- | --------------------------------------- |
+| **canvass** | Does the code satisfy the claims?                              | the subject                  | any change inside `@scope`              |
+| **audit**   | Do these instruments support this claim, and do they reach it? | the instrument and the claim | a change to the instrument or the claim |
 
 The canvass is worthless without the audit, because a builder that writes its own witness decides its own success.
+
+**This was measured, not assumed.** The first package built under this vocabulary passed every test and passed the
+repository's own gate. An independent audit then marked six of its claims red. The tests asserted the ordinary
+path; the claims promised the edges. Neither the runner nor the gate can find that, because both ask the subject
+and the failure was in the instrument.
 
 **Both belong to the reviewer. Neither belongs to the builder.**
 
@@ -1072,16 +1271,33 @@ They are two acts and one artifact. Do not split the page the operator reads.
 
 1. A human operator gives belay an **amendment**.
 2. Belay instructs a **builder** to implement the amendment.
-3. Belay instructs a **reviewer** to canvass the witnesses and audit the markers in the audit scope. This produces
+3. **At any point during step 2 the builder may escalate.** Writing a witness can show that a claim does not say
+   what it means (§7). The builder states the proposed change to the amendment and stops. Belay puts it to the
+   operator, who accepts or refuses it. The amendment is then what the operator says it is, and step 2 continues.
+4. Belay instructs a **reviewer** to canvass the witnesses and audit the claims in the audit scope. This produces
    the **readout**.
-4. Belay forwards the amendment and the readout to the human operator for the **ruling**.
+5. Belay forwards the amendment and the readout to the human operator for the **ruling**.
+
+**Step 3 is a first-class step, not an escape hatch.** The first build used it three times, and each use improved
+the specification. A builder that cannot escalate has two choices, and both are worse: implement a claim it knows
+is wrong, or change the specification on its own authority. §9.5 gives that authority to the operator, and step 3
+is how the operator exercises it without waiting for the ruling.
+
+It is bounded by the same budget as the rest of the loop (§9.3). A builder that escalates on every claim has been
+given fog, not an amendment (§10).
 
 ### 9.2 The builder's exit condition
 
-> **The builder is done when the canvass is green.**
+> **The builder hands off when the canvass is green.**
 
-That is the same condition as the ruling. A `change` witness is changed until it affirms. A `delete` witness is
-deleted with its claim.
+**That is not the same condition as the ruling**, and an earlier revision said it was. A green canvass says the
+subject satisfies the witnesses. It says nothing about whether the witnesses support the claims, and §4.2 makes an
+unsound witness and an under-covered claim both red. The first build made this concrete: every test passed, the
+repository gate passed, and an audit then marked six claims red.
+
+So green is the moment the builder gives the work to a reviewer. Doneness is decided by somebody who did not
+build, which is what §8.6 requires. A `change` witness is changed until it affirms. A `delete` witness is deleted
+with its claim.
 
 **There is no failure classifier.** An earlier design classified a denial as _expected_ or as _regression_ by
 looking up its claim in the amendment. It is deleted. It could not resolve a marker that attests one claim inside
@@ -1106,6 +1322,10 @@ Kill it and restart it, and nothing is lost. Two rules it must carry:
 - **A cycle budget.** Without a bound the loop never ends. Exceeding it is an abort, and an abort is the third
   acceptable interruption.
 
+**Budget for more than one audit round.** A repair changes the instrument, and a changed instrument is back in the
+audit scope (§8.5), so a second audit is the normal case and not the exception. The first build needed two rounds
+on one package. A budget of one round is a budget that aborts good work.
+
 ### 9.4 Where the readout is published
 
 The readout must be where the ruling happens, tied to a commit, and not in the tree. It is void at the next commit,
@@ -1123,16 +1343,25 @@ later. It is not worth the API work first, and it renders prose badly.
 
 ### 9.5 What the human decides
 
-The reviewer has already collected the verdicts and set the standings. So the human is not making a quality
-decision. **The human makes a specification decision: were these the right claims?** That is the same authority as
-step 1, exercised again with the output visible.
+The reviewer has already collected the verdicts, set the standings, and set the coverage. So the human is not
+making a quality decision. **The human makes a specification decision: were these the right claims?** That is the
+same authority as step 1, exercised again with the output visible.
 
-The ruling has exactly two kinds of item to clear:
+The ruling has exactly three kinds of item to clear:
 
 - **yellow verdicts** — witnesses whose subject changed and whom nobody asked
 - **unconfirmed standings** — soundness that an agent proposed and no human confirmed
+- **unconfirmed coverage** — a claim an agent proposed as covered, that no human confirmed
 
-Both are the point where the machine reached the edge of what it can say.
+All three are the point where the machine reached the edge of what it can say.
+
+**Coverage is where this authority does the most work**, because it is the question that asks how much proof a
+promise needs (§5.8). An agent can say that a claim is reached by nothing. Only the operator can say that a claim
+is reached far enough.
+
+**The same authority is exercised at §9.1's step 3**, in the middle of a build, when a builder finds that a claim
+does not say what it means. It is the same question — _is this the right claim?_ — asked before the work is
+finished rather than after. Nothing about it is a lesser act.
 
 ## 10. Fog
 
@@ -1270,9 +1499,9 @@ land in different merges.
 
 ### 11.3 Settled by construction, and the index that does not exist
 
-**A claim exists to be checked.** That is its whole purpose — §4 admits it to the catalog only when a sound
-witness affirms it, and §5.2 pushes it as far up the ladder of witnesses as it honestly goes. So there is no point
-claiming something that nothing can violate, because the check can never do any work.
+**A claim exists to be checked.** That is its whole purpose — §4 admits it to the catalog only when sound
+witnesses affirm and cover it, and §5.2 pushes each one as far up the ladder of witnesses as it honestly goes. So
+there is no point claiming something that nothing can violate, because the check can never do any work.
 
 Most decisions leave a claim behind. _We will not do X_ is usually _we do Y instead_, and Y is claimable. But one
 class is not, and it is not an edge case:
@@ -1419,6 +1648,12 @@ repository, a slug rename is atomic with the code that caused it. Moving the tra
 a dangling reference now lives in a different system, on a different release cycle, that cannot see the rename
 happen.
 
+**The first build showed the same fact from the builder's side, and added one case.** A claim slug lived in the
+amendment, in the rationale that grounds it, in the catalog, and in the markers, and one split changed all four by
+hand. It also showed that **the number of claims in an amendment is not stable**: the tracker said ten, the
+amendment held eleven, and the build finished with fourteen (§7). A count is a view, so cairn derives it and never
+stores it. A stored count is wrong from the first escalation.
+
 **So cairn needs a watcher, and it is a repair rather than a feature.** It checks out the target at its main
 branch, runs crux, and warns about stale references in its own tickets and fog. Three constraints:
 
@@ -1452,6 +1687,13 @@ that can be wrong.
 
 It runs nothing. It stores nothing.
 
+**Crux also ships a short form of this document, and that is a requirement rather than a courtesy.** The first
+build had to recover the marker grammar, the project declaration rule, the grounding rules, and the amendment
+lifecycle by reading this repository at the start of the session. This document is long on purpose — it holds the
+arguments — and nobody reads it per session. So the short form states the rules and none of the reasoning, and it
+links here for the reasoning. It belongs with crux and not with cairn: it is about the format, and cairn holds the
+queue.
+
 **2. A belay MVP.** A local supervisor that goes from an amendment on a branch to a PR with a posted readout:
 
 - run the sources named in `.belay/witnesses.toml`, map each report through its adapter, and join on the marker
@@ -1469,13 +1711,22 @@ built then would have encoded guesses about material nobody had handled under th
 above are built **by hand at the fog layer** — every amendment authored the slow way, every conversion from fog to
 a claim done by a person with an agent. That was the experiment.
 
-**§13.3's exit condition is met.** The first project built under this vocabulary that is not crux itself produced
-two pain points that repeated, which is the bar. Both are now written into this document rather than left in a log:
+**§13.3's exit condition is met, and it has now been met twice.** The first project built under this vocabulary
+that is not crux itself produced repeated pain points at the drawing board, and then produced a second set when it
+built what it had designed. All of them are now in this document rather than in a log:
 
-| Repeated                               | Where it landed                                        |
-| -------------------------------------- | ------------------------------------------------------ |
-| every cross-reference is grep and hope | §12.1 — cairn holds each fact once, derives every view |
-| the cost of clearing fog varies wildly | §10 — a fog item records what would clear it           |
+| Repeated                                           | Found     | Where it landed                                        |
+| -------------------------------------------------- | --------- | ------------------------------------------------------ |
+| every cross-reference is grep and hope             | designing | §12.1 — cairn holds each fact once, derives every view |
+| the cost of clearing fog varies wildly             | designing | §10 — a fog item records what would clear it           |
+| a claim was reworded after its witness was written | building  | §7 — an amendment is a specification, not a freeze     |
+| the amendment changed during the build             | building  | §9.1 — the builder escalates, and the operator rules   |
+| a green canvass held unsound witnesses             | building  | §9.2 — green is a handoff, and §8.6 was measured       |
+
+**The building round did something the designing round could not: it corrected the framework itself.** §5.9
+retracts a rule that this document carried, and the retraction came from reading a real catalog and finding it
+unreadable. No amount of design produced that. It needed fourteen claims, an audit, and an operator who had to
+review the result.
 
 **So cairn is designable, and it is still not second.** The order stands, because belay is what makes the catalog
 worth having and cairn is what makes it comfortable. What changed is that cairn's design no longer waits on
@@ -1496,13 +1747,20 @@ its report, and does not silently work around it:
 | a witness assignment that changed the design             | §7 — the altitude was wrong, and the witness is what found it          |
 | an amendment that had to change during the build         | how much design must precede a build, and where the entry gate belongs |
 | what had to be re-derived at the start of a session      | exactly what the tracker must hold                                     |
+| a catalog that was tiring to read                        | the altitude is wrong, whatever each single claim looks like           |
 | a by-hand step that felt **clerical**                    | a candidate for the tool to absorb                                     |
 | a by-hand step that felt like **thinking**               | never automate it                                                      |
 
 The last two are the test that matters. Clerical work is a missing feature. Thinking is the work.
 
-**One entry in the never-automate column is settled**, and §11.3 holds it: _claim, or settled by construction?_ has
-no mechanical form and never will.
+**Watch the reader, and not only the writer.** The sixth row was added after the first build, and it is the row
+that found §5.9. Every claim in that catalog was defensible on its own. The catalog as a whole was not, and the
+only signal was an operator saying that reviewing it felt tedious. A complaint about the reading is evidence about
+the design, and it is easy to dismiss because it names no single defect.
+
+**Two entries in the never-automate column are settled.** §11.3 holds the first: _claim, or settled by
+construction?_ has no mechanical form and never will. §5.8 holds the second: whether a claim's witnesses reach it
+is a judgment, and no count of sound standings substitutes for it.
 
 **Where the notes go.** One append-only file, `FOG-LOG.md`, in the project doing the building. It is fog by
 definition, so nothing in it is a claim, and none of it is durable. What survives review is lifted into this
@@ -1531,10 +1789,16 @@ because the second adopter tests what the first one could not.
 14. The catalog holds the decision. A rationale holds the reasoning.
 15. A claim earns its place only if something could plausibly violate it.
 16. Crux judges the repository. What is not rederivable from a checkout is not a claim.
+17. A witness that closes one way to fail does not affirm the way to succeed.
+18. A claim names a failure a reader can see. A claim that describes its own witness is at the wrong altitude.
+19. Every witness sound does not mean the claim is covered.
 
 Property 1 is scoped on purpose. Property 16 creates a legitimate class of work that has no claim and never will —
 the infrastructure a repository is deployed onto — and that work belongs in a runbook, with the risk named there.
 Pretending otherwise is how a permanently green witness gets written.
+
+Properties 17 to 19 came from building rather than from designing, and 18 and 19 are the pair that sets a claim's
+altitude. 18 pushes a claim up and 19 pushes it down. Neither is safe alone. See §5.8 and §5.9.
 
 **Do not renumber this list.** §3.2 cites property 11 and §11.3 cites properties 2 and 15. New properties are
 appended.
@@ -1548,7 +1812,11 @@ _what does this block_ is what surfaces a contradiction, and it surfaced one her
   tool 2._ The strongest argument for the branch is not test-first discipline and is not the deleted classifier:
   **a witness that denied before the build is the only mechanical evidence that it can deny at all.** Every other
   soundness check is a person reading. Against it: three of the four kinds have no failing state, so the gate would
-  read _every witness that can deny, does deny_, and the work moves rather than disappears.
+  read _every witness that can deny, does deny_, and the work moves rather than disappears. **The first build adds
+  a third consideration and does not settle the thread.** The amendment changed three times during that build
+  (§7), so a gate that demands a complete and correct amendment is asking for something no design phase can
+  deliver. That argues against a heavy gate of either shape, and §9.1's step 3 is the route that makes a light one
+  survivable.
 - **How the audit scope gets its diff base.** _Blocks tool 2, and nothing before it._ The merge base of the branch
   is the obvious answer, and it needs git. Whose job that is has no answer yet.
 - **Where the amendment lives.** _Blocks nothing until cairn emits one._ A file on the branch is the current
