@@ -3,12 +3,20 @@
 | If you need                    | Read                                   |
 | ------------------------------ | -------------------------------------- |
 | What this project is           | [`ABSTRACT.md`](./ABSTRACT.md)         |
-| What a word means              | [`GLOSSARY.md`](./GLOSSARY.md)         |
-| Why something is the way it is | [`docs/adr/`](./docs/adr/)             |
-| Why something broken isn't     | [`docs/gotchas.md`](./docs/gotchas.md) |
+| How the framework works        | [`docs/README.md`](./docs/README.md)   |
+| Which document holds a section | the §-index in `docs/README.md`        |
+| Why a rule reads as it does    | the section that states it — see below |
 
 New writing goes to one of those homes from the start, and **nothing lives in two of them**.
-Delete the rows this repo does not have yet rather than leaving dangling links.
+
+**The reasoning stays beside the rule it justifies.** This repository has no separate rationale
+directory: a rejected alternative, a retracted rule, and a deleted design are written into the
+section that replaced them, because a rule split from its argument is an assertion nobody can
+weigh. The runbooks are the one exception — they are read per session and carry no history.
+
+**Section numbers are the citation form and they are stable.** `§6.6` means the same thing in a
+commit message, in a tracker, and in another repository's notes. A section keeps its number when
+it moves between documents. Cite the number; resolve it through `docs/README.md`.
 
 ## House rules
 
