@@ -6,8 +6,10 @@ Part of the crux framework documentation. [Contents](./README.md) · [Abstract](
 
 ## 4. Claims and the catalog
 
-**A claim is prose with a slug.** The prose is falsifiable, and it is written in the words its project settled
-([§3](./vocabulary.md#3-the-glossary)). The slug is stable and machine-friendly, it names that project ([§3.5](./vocabulary.md#35-the-slug-carries-the-project)), and it survives a rewording of the
+**A claim is prose with a slug.** The prose is falsifiable, and it is written in the words the repository settled
+([§3](./vocabulary.md#3-the-glossary)). The slug is stable, machine-friendly, and free-form — a repository groups
+its claims by naming convention and nothing derives or checks the shape
+([§3.4](./vocabulary.md#34-there-are-no-projects-and-the-trail-that-got-here)). It survives a rewording of the
 prose.
 
 **A claim is declared by `@claim`, and its extent is its text** ([§6.1](./format.md#61-directives)). So a catalog file is an ordinary document
@@ -18,7 +20,7 @@ is owned by nothing, because it orients rather than promises.
 that nothing can violate. [§11.3](./lifecycle.md#113-settled-by-construction-and-the-index-that-does-not-exist) draws that line and says where the rest goes. §4.1 draws a second line, and it cuts
 somewhere else entirely.
 
-**The catalog is present tense.** It states what the system promises **now**. One condition enforces this:
+**One repository, one catalog, and it is present tense.** It states what the system promises **now**. One condition enforces this:
 
 > **A claim is in the catalog only if its witnesses affirm it, each of them is sound, and together they cover
 > it.**

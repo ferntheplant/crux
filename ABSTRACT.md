@@ -58,8 +58,9 @@ The refusals are load-bearing, and each one keeps a cost out of the core.
 - **It never learns the comment syntax of any language.** A directive is a name, whitespace, and one
   whitespace-free token. The core is a line scanner.
 - **It never resolves a path.** Every check compares one directive against another, so where a file sits is a
-  house rule that a repository may decline.
-- **It never reads a glossary's definitions.** It reads one directive there and nothing else.
+  house rule that a repository may decline. There are no projects and no namespaces: one repository, one catalog,
+  and a slug an author chooses freely.
+- **It never reads a glossary's definitions.** It learns only that a file is one, so that a change earns a row.
 - **It runs nothing and it stores nothing.** Every index it needs is derived on each run.
 - **It judges the repository only.** A claim whose state is not rederivable from a checkout is not a claim.
 

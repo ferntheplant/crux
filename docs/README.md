@@ -10,7 +10,7 @@ moves between these documents, so cite the number and resolve it here.
 
 | Read                                | For                                                              | Holds       |
 | ----------------------------------- | ---------------------------------------------------------------- | ----------- |
-| [Vocabulary](./vocabulary.md)       | the words, and what a project's own glossary does                | §2–§3       |
+| [Vocabulary](./vocabulary.md)       | the words, and what a glossary is for                            | §2–§3       |
 | [Claims and witnesses](./claims.md) | what a claim is, what may be one, and what judges it             | §4–§5       |
 | [The marker format](./format.md)    | the directives, the extent, and every form error                 | §6          |
 | [Lifecycle](./lifecycle.md)         | fog, the amendment that clears it, and the rationale beside it   | §7, §10–§11 |
@@ -39,8 +39,8 @@ stays in the sections they link to.
 | §3.1    | [What it holds](./vocabulary.md#31-what-it-holds)                                                                                                              | `vocabulary.md` |
 | §3.2    | [Crux does not read it](./vocabulary.md#32-crux-does-not-read-it)                                                                                              | `vocabulary.md` |
 | §3.3    | [A changed glossary is a yellow row](./vocabulary.md#33-a-changed-glossary-is-a-yellow-row)                                                                    | `vocabulary.md` |
-| §3.4    | [A glossary declares a project](./vocabulary.md#34-a-glossary-declares-a-project)                                                                              | `vocabulary.md` |
-| §3.5    | [The slug carries the project](./vocabulary.md#35-the-slug-carries-the-project)                                                                                | `vocabulary.md` |
+| §3.4    | [There are no projects, and the trail that got here](./vocabulary.md#34-there-are-no-projects-and-the-trail-that-got-here)                                     | `vocabulary.md` |
+| §3.5    | [What survived, and why it is stronger](./vocabulary.md#35-what-survived-and-why-it-is-stronger)                                                               | `vocabulary.md` |
 | **§4**  | [**Claims and the catalog**](./claims.md#4-claims-and-the-catalog)                                                                                             | `claims.md`     |
 | §4.1    | [The subject must be rederivable from the repository](./claims.md#41-the-subject-must-be-rederivable-from-the-repository)                                      | `claims.md`     |
 | §4.2    | [How the condition fails](./claims.md#42-how-the-condition-fails)                                                                                              | `claims.md`     |

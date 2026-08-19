@@ -110,20 +110,19 @@ tooling **around** crux is what decides what the catalog can hold, and that asym
 
 **1. Crux.** It reads and lists claims, witnesses, and rationale links. Its whole scope is already stated above:
 
-- find every `GLOSSARY.md` and read its `@project`, which is the set of projects and the only input the checks
-  below cannot derive from the markers themselves ([§3.4](./vocabulary.md#34-a-glossary-declares-a-project))
+- note which files carry `@glossary`, so that a changed one earns its row on the readout ([§3.3](./vocabulary.md#33-a-changed-glossary-is-a-yellow-row))
 - list the claims, each with its kind and the witnesses that attest it
 - list the markers, each with its claims, its extent, and its scope
 - list, for each claim, the rationale that ground it ([§11.1](./lifecycle.md#111-what-a-rationale-grounds))
-- report the form errors of [§6.6](./format.md#66-form-errors) — unattested, orphaned, dead scope, mixed, misplaced, unknown kind, misfiled,
-  collision, unfounded, forward dangle
+- report the form errors of [§6.6](./format.md#66-form-errors) — unattested, orphaned, dead scope, mixed, misplaced, unknown kind, collision,
+  forward dangle
 - report the two non-errors of [§6.6](./format.md#66-form-errors) — a rationale grounding a deleted claim, and a changed glossary
 - emit the marker index as a machine form, for adapters and for cairn's watcher to join against
 
 It runs nothing. It stores nothing.
 
 **Crux also ships a short form of this document, and that is a requirement rather than a courtesy.** The first
-build had to recover the marker grammar, the project declaration rule, the grounding rules, and the amendment
+build had to recover the marker grammar, the grounding rules, and the amendment
 lifecycle by reading this repository at the start of the session. This document is long on purpose — it holds the
 arguments — and nobody reads it per session. So the short form states the rules and none of the reasoning, and it
 links here for the reasoning. It belongs with crux and not with cairn: it is about the format, and cairn holds the
@@ -279,13 +278,12 @@ _what does this block_ is what surfaces a contradiction, and it surfaced one her
   only the completeness property.
 - **Beacon.** _Blocks nothing._ Unowned. Its payload is fully determined by the amendment and the readout, so it
   invents no data model and can be deferred.
-- **Whether this document's [§2](./vocabulary.md#2-the-vocabulary) is the root project's glossary.** _Blocks the root project's first claim, because
-  that claim needs a `GLOSSARY.md` with `@project root` in it ([§3.4](./vocabulary.md#34-a-glossary-declares-a-project))._ For every other repository the two are
-  separate — the framework's words and the project's words. Here they collide, because the project is the
-  framework. Keeping both would give one word two homes.
-- **Where the catalog sits inside a project.** _Blocks nothing; it is a house rule either way._ [§3.4](./vocabulary.md#34-a-glossary-declares-a-project) draws
-  `docs/catalog/`, and [§6.6](./format.md#66-form-errors) says crux never resolves a path, so nothing enforces it. Whether that freedom is worth
-  having, or whether it only invites drift between repositories, has no answer yet.
+- **Whether a repository's prefixes stay coherent, and what notices when they do not.** _Blocks nothing, and it is
+  the cost §3.4 accepted knowingly._ With no projects, a prefix is a naming convention that nothing checks. A typo
+  is still caught — as **orphaned** or **unattested** — but a second scheme growing beside the first is not. The
+  candidates are a house rule, a lint witness over the catalog, or a report that lists prefixes by frequency and
+  lets a person see the drift. Nothing decides between them yet, and a repository large enough to have the problem
+  does not exist.
 
 **Closed since the last revision.**
 
@@ -307,7 +305,13 @@ _is the instrument still running?_ — belongs to the canvasser
 
 _Where fog is stored_ — §12.1, outside the target repository, with a watcher.
 
-_Whether a single-project repository carries a prefix_ — [§3.5](./vocabulary.md#35-the-slug-carries-the-project), yes, always, and `@project` is what made it cheap.
+_Whether a single-project repository carries a prefix_ — dissolved. §3.4 deleted projects, so no slug carries one.
+
+_Whether this document's §2 is the root project's glossary_ — dissolved with projects. §2 is a glossary like any
+other, and it carries `@glossary` because it settles the words its claims are written in.
+
+_Where the catalog sits_ — anywhere. A claim is declared by `@claim` wherever that directive appears, so the
+catalog is defined by the directive rather than by a location, and crux still resolves no path.
 
 ## 16. Under watch
 
@@ -329,7 +333,7 @@ every adopting repository must satisfy is not.
 | W3  | an exactly-once claim hid a commit point between two stateful systems | one external side effect   | a reviewer prompt             |
 | W4  | a mechanism was added, argued for, and observed by nothing            | one amendment, three cases | a reviewer prompt             |
 | W5  | an amendment has no vintage                                           | three unenacted amendments | recorded only                 |
-| W6  | one prose sentence became two claims in two projects                  | one sentence               | recorded only                 |
+| W6  | one prose sentence became two claims at two altitudes                 | one sentence               | recorded only                 |
 | W7  | fog cleared and produced no artifact at all                           | one item                   | recorded only                 |
 
 ### W1 — A tool can be capable of an offline witness and still refuse to run one
@@ -406,11 +410,11 @@ grounding a deleted claim is the same shape at the other end of the pipeline
 **Deliberately filed low.** An underspecified framework moving under an unenacted artifact is expected rather than
 defective, and this stops mattering the moment crux stabilises. Recorded so the observation is not lost.
 
-### W6 — One prose sentence, two claims, two projects
+### W6 — One prose sentence, two claims, two altitudes
 
-One sentence of a design document — _the token gives no access to the history_ — became two claims in different
-projects at different altitudes, neither implying the other, with no honest single witness spanning both. A
-granularity signal, and one occurrence says nothing yet about where the right altitude is.
+One sentence of a design document — _the token gives no access to the history_ — became two claims at different
+altitudes, neither implying the other, with no honest single witness spanning both. A granularity signal, and one
+occurrence says nothing yet about where the right altitude is.
 
 ### W7 — Fog can clear without producing anything
 

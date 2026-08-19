@@ -37,7 +37,7 @@ set no standing on them.
 
 ## 3. For each witness — does this instrument support this claim?
 
-Read the instrument and the code in `@scope`. Read the project's glossary beside them
+Read the instrument and the code in `@scope`. Read the glossary that governs its words beside them
 ([§3.2](../vocabulary.md#32-crux-does-not-read-it)).
 
 - **Sound does not mean sufficient.** A witness may support part of a claim and be sound

@@ -8,10 +8,9 @@ Part of the crux framework documentation. [Contents](./README.md) · [Abstract](
 
 | Word           | Meaning                                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------------------- |
-| **project**    | What a `GLOSSARY.md` declares. It owns one catalog, one rationale directory, and one slug prefix.     |
-| **glossary**   | What a project's words mean. One `GLOSSARY.md` per project. Prose, never parsed.                      |
+| **glossary**   | What the words in a claim mean. A file carrying `@glossary`. Prose, never parsed.                     |
 | **claim**      | A short, falsifiable statement of a requirement the codebase must satisfy. It carries a stable slug.  |
-| **catalog**    | The organised set of all claims in a project.                                                         |
+| **catalog**    | The set of every claim in the repository.                                                             |
 | **rationale**  | A document that says why a claim reads as it does, and what was rejected on the way.                  |
 | **fog**        | Material you want, but cannot yet state as a claim.                                                   |
 | **witness**    | A mechanism that judges whether some part of the codebase satisfies a claim.                          |
@@ -62,11 +61,12 @@ Record these so that they are not proposed again.
 | **decision**           | The decision is the claim. A word for it here would name the same thing twice.                                                                                                                                                                                                              |
 | **ADR**                | It holds the decision **and** the reasoning. Crux splits the two, so the name is false. See [§11](./lifecycle.md#11-rationale).                                                                                                                                                             |
 | **`CONTEXT.md`**       | _Context_ is already ambiguous, and it names a boundary rather than the word list the file holds.                                                                                                                                                                                           |
-| **workspace**          | A name for the root project. _The root project is the project at the root_, so the overload describes rather than puns. The first repository to adopt this vocabulary rejected the word on sight, and rejected the argument for it a second time when it was restated.                      |
+| **project**            | A named subdivision of a repository, owning one glossary, one catalog, and one slug prefix. Tried in three forms and dropped in all three. §3.4 holds the trail; do not reintroduce it without reading that section first.                                                                  |
+| **workspace**          | A name for the root project, from the era when projects existed. Kept because it records that the naming question was live and was answered twice before the thing being named was deleted.                                                                                                 |
 | **false**              | The former name of the **unsound** standing. It does not pair with _sound_, so a reader had to learn the two ends separately. This document also uses _false_ in its ordinary English sense in several places, and one word must not do both jobs. See [§5.6](./claims.md#56-the-standing). |
 | **complete**           | A name for the **covered** coverage. It promises that nothing is missing, which no audit can establish. _Covered_ says how far the witnesses reach, which is what the auditor actually judges. See [§5.8](./claims.md#58-coverage).                                                         |
 
-Four directives were proposed and rejected. Record these too.
+Five directives were proposed and rejected. Record these too.
 
 | Directive             | Rejected because                                                                                                                                                                                                                                                        |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -75,6 +75,7 @@ Four directives were proposed and rejected. Record these too.
 | `@record`             | A noun for a rationale. The only query it served is `ls`.                                                                                                                                                                                                               |
 | a required terminator | It makes the extent **stated** rather than **correct**, and a hand-placed one under-extends. See [§6.2](./format.md#62-the-extent-of-a-marker).                                                                                                                         |
 | a bare `@end`         | `@end` is a keyword in Objective-C and a command in Texinfo. A stray one truncates a real marker's extent, which is the one failure that lets an unsound witness survive. The terminators name their opener instead. See [§6.2](./format.md#62-the-extent-of-a-marker). |
+| `@project <prefix>`   | It declared a project and bound the prefix that project's slugs carried. Deleted with projects themselves. `@glossary` took its place in the file where it used to sit, and carries no token. See §3.4.                                                                 |
 
 ### 2.3 The tools are named outside the vocabulary
 
@@ -95,7 +96,13 @@ Two results:
 
 **A claim is prose, and prose is falsifiable only if its words are.** Two people who read _cancellation_
 differently cannot agree on whether a witness attests it, and the disagreement surfaces at the audit, where it is
-most expensive. So a project settles its words first, and the settlement is a `GLOSSARY.md`.
+most expensive. So a repository settles its words first, and the settlement is a **glossary**: any file carrying
+the `@glossary` directive.
+
+**A repository holds as many glossaries as it finds useful.** One file for a large vocabulary is unmanageable, and
+crux has no reason to insist on one — it never reads a definition, so the number of files costs it nothing. Split
+them by area, by package, by whatever grouping a reader would look under. Which glossary governs a given claim is
+a question for the auditor, which §3.2 says is always an intelligence, and an intelligence reads a directory.
 
 ### 3.1 What it holds
 
@@ -103,7 +110,7 @@ A glossary, and nothing else. Not a specification, not a design note, not a scra
 what it means.
 
 ```md
-> @project ordering crux-ignore
+> @glossary crux-ignore
 
 # Ordering
 
@@ -125,25 +132,31 @@ Four rules:
 - **Be opinionated.** When several words name one concept, choose one and list the rest under `_Avoid_`. A
   glossary that admits synonyms has not done its job.
 - **Define what a term is, not what it does.** One or two sentences.
-- **Only terms this project gives a special meaning.** A general programming word belongs here when this project
-  narrows it, and never because the project uses it a lot.
+- **Only terms this repository gives a special meaning.** A general programming word belongs here when the
+  repository narrows it, and never because the code uses it a lot.
 - **Group terms under subheadings when clusters appear.** A flat list is right until it is not.
 
 **The glossary is not claimable.** It states what words mean, and no code can falsify a definition, so there is
-nothing for a witness to be asked. A project may still claim conformance _to_ it — _no identifier uses a rejected
-term_ is a claim with an obvious lint witness — but that claim is about the code. The definition is not.
+nothing for a witness to be asked. A repository may still claim conformance _to_ it — _no identifier uses a
+rejected term_ is a claim with an obvious lint witness — but that claim is about the code. The definition is not.
 
 ### 3.2 Crux does not read it
 
-> **Crux knows the glossary by name, and it reads one directive in it. It never learns what a term means.**
+> **Crux knows which files are glossaries, and nothing else about them. It never learns what a term means.**
 
 This is the same refusal as [§6.1](./format.md#61-directives), one level up. There, the core never learns the comment syntax of any language.
 Here, it never learns what a term is.
 
-**The `@project` line is not an exception to this.** It is the ordinary line scan of [§6.1](./format.md#61-directives), applied in a file crux
-already had to find, and none of the three arguments below touches it: it needs no grammar, it matches nothing
-fuzzily, and it protects a case a person cannot close by hand. What §3.2 refuses is the **definitions**, and a
-prefix is not one.
+**The `@glossary` line is not an exception to this.** It is the ordinary line scan of [§6.1](./format.md#61-directives), and none of the three
+arguments below touches it: it needs no grammar, it matches nothing fuzzily, and it protects a case a person
+cannot close by hand. What §3.2 refuses is the **definitions**, and a flag on a file is not one.
+
+**It is declared rather than derived, and that is what buys the split above.** An earlier design found glossaries
+by the fixed filename `GLOSSARY.md`, which forced one file per area and made the name load-bearing. A directive
+moves the fact from the filename into the file, so a glossary may be called anything, live anywhere, and be split
+as finely as its readers want. This is the same trade [§6.4](./format.md#64-what-is-not-a-directive) asks of every
+directive: the core must resolve _is this a glossary_ without intelligence, and a filename convention is the
+weaker way to tell it.
 
 An earlier draft made the glossary load-bearing: crux would index the terms, and a changed definition would put
 every claim using that term into the audit scope. Three things killed it.
@@ -163,109 +176,106 @@ every claim using that term into the audit scope. Three things killed it.
 So the glossary is an input to the **auditor**, which [§5.4](./claims.md#54-the-four-questions) says is always an intelligence. An auditor reads the
 instrument and the code in `@scope`; it reads the glossary beside them. That needs no format at all.
 
-**The glossary is privileged without being parsed.** It has a fixed name, one directive, a reader on every audit,
-and a row on the readout when it moves. None of that requires a grammar.
+**A glossary is privileged without being parsed.** It has one directive, a reader on every audit, and a row on
+the readout when it moves. None of that requires a grammar.
 
 ### 3.3 A changed glossary is a yellow row
 
 The one mechanical hook, and it is deliberately weak:
 
-> **When a glossary changes in a diff, the readout says so and lists the claims of that project.**
+> **When a glossary changes in a diff, the readout names it.**
 
 It is not an audit trigger and it voids nothing. It is a row the human clears at the ruling, in the same family as
 [§4.2](./claims.md#42-how-the-condition-fails)'s two yellow rows: the machine has reached the edge of what it can say, and the question — _did the meaning
 move?_ — goes to the person who moved it.
 
+**It names the file and stops there.** An earlier version listed the claims of the changed glossary's project.
+Without projects there is no subset to list, and listing every claim in the repository would be noise rather than
+signal. The loss is smaller than it looks: §3.2's third argument already says the case is closed by the person
+making it — if you redefine a term and it changes what a claim promises, you reword the claim, and reworded claim
+text is already the second term of the audit scope ([§8.5](./review.md#85-the-audit-and-why-it-needs-no-cache)).
+
+**Splitting glossaries makes this row better, not worse.** One enormous glossary moving tells an operator almost
+nothing. A small glossary named for one area moving tells them where to look. The finer the split, the more the
+row is worth — which is the opposite of what a mechanical hook usually does when you subdivide its subject.
+
 The cost is a file-level diff and no parsing.
 
-### 3.4 A glossary declares a project
+### 3.4 There are no projects, and the trail that got here
 
-> **A project is a `GLOSSARY.md`. Its `@project <prefix>` declares the prefix that its claims carry.**
+> **One repository, one catalog. A slug is whatever its author writes, and nothing derives, checks, or decorates
+> it.**
 
-That is the whole definition, and it is the only place the set of projects comes from. A project holds one
-glossary, one catalog, and one rationale directory. A monorepo holds several sets, and the repository root is a
-project like any other. **The root project is named `root`.** The overload with _root_ as a position is a
-description rather than a pun — the root project **is** the project at the root — so the thing needs no
-disambiguating from the position. `workspace` was proposed and rejected; see §2.2.
+A claim slug is a free-form token: `close/deletes-first`, `checkin/it-does-a-thing`, `foo/bar/baz/it-does-fizz`.
+The slashes are a convention for reading, not a structure crux parses. Prefixes are how a team groups its claims,
+`crux ls --prefix belay/` is pure string work, and nothing needs declaring for that to work.
 
-```
-/
-├── GLOSSARY.md              declares root
-├── docs/
-│   ├── catalog/
-│   └── rationale/
-└── apps/
-    ├── cairn/
-    │   ├── GLOSSARY.md      declares cairn
-    │   └── docs/{catalog,rationale}/
-    └── belay/
-        ├── GLOSSARY.md      declares belay
-        └── docs/{catalog,rationale}/
-```
+**This is a deletion, and three earlier designs are underneath it.** Each was load-bearing, each had an argument,
+and each failed on a different repository shape. Record all three, because the pull toward reinventing them is
+strong and each one looks right until the case that kills it.
 
-**The prefix is declared, not derived, and `apps/cairn` is why.** A prefix taken from the directory would have to
-choose between `apps` and `cairn`, would collide the moment `apps/core` sits beside `packages/core`, and would
-break whenever a directory is named differently from the thing inside it. Worse, deriving it at all means reading
-where a file sits, which [§6.6](./format.md#66-form-errors) forbids outright. One declared token removes the layout from the question, and the
-**misfiled** check becomes what every other check already is: one directive compared against another.
+| Design                                              | It bought                                       | It died on                                          |
+| --------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------- |
+| **1.** the slug carries a declared project prefix   | a tracker places a claim with pure string work  | the rename cost, paid by projects that succeeded    |
+| **2.** position: the nearest glossary owns a marker | free splits, clean slugs, a structural arrow    | a project spread across `packages/` **and** `apps/` |
+| **3.** no projects at all                           | all of the above, and the core resolves no path | nothing checks that a team's prefixes stay coherent |
 
-**The name is a format rule. The position is a house rule.** `GLOSSARY.md` is how crux finds a project, so that
-name is load-bearing and a repository does not get to rename it. Where the file sits is free, because the prefix
-no longer depends on it. The split is sharper than the one it replaces, not looser.
+**Design 1 — the prefix.** Every slug began with a declared project prefix, and crux reported a prefix naming no
+project as **misfiled**. The argument was §12's interface: a tracker stores slugs and never claim text, so a slug
+must place a claim without a checkout, and a prefix does that with pure string work.
 
-**A project needs no claims to exist.** It exists because its glossary declares it. An application repository can
-reach a working catalog with the root project holding nothing at all, where a tool monorepo uses its root
-immediately — and crux does not have to tell the two apart.
+What killed it was measured rather than argued. Collapsing a four-project repository into one moved about
+twenty-six slugs across twelve files, and none of it was mechanical, because a slug that names something **live**
+must move and a slug that names something **past** must not
+([§6.6](./format.md#a-rename-does-not-touch-every-mention-of-the-slug)). The cost fell entirely on projects that
+had grown enough to reorganise, which is the worst population to charge.
 
-**Shared vocabulary is handled in prose.** Belay and cairn both use crux's words. Rather than a root glossary that
-every project inherits, or a dependency graph that crux would have to learn, `apps/belay/GLOSSARY.md` opens with a
-sentence: _this project uses the crux vocabulary; the words below are belay's own._ An intelligence reading it does
-the right thing. That is the dividend of not parsing it.
+**Design 2 — position.** Drop the prefix, and let a marker belong to the nearest glossary above it. Slugs get
+short, a split rewrites nothing, and the arrow between a parent and a child becomes structural: a child cannot
+attest a parent's claim, because the slug resolves to the child's catalog and dangles. It also strengthened
+misfiling, catching a catalog that declared a slug belonging to a different project.
 
-**Naming the only project: decide it on migration cost.** A project is whatever a `GLOSSARY.md` declares, and this
-document gives no guidance on what to call one — correctly, in a monorepo, where the name is the package and the
-question answers itself. In a single-project repository the segment carries no information at the point of use,
-and the choice is between the name of the **position** and the name of the **product**.
+What killed it is that **position implies a project is one contiguous subtree.** A tool implemented as
+`packages/belay-core`, `apps/belay-server`, and `apps/belay-supervisor` has three different nearest ancestors and
+no way to share one catalog without moving all three under one directory. Real monorepos put modules of one
+product in several top-level directories, and a format that forbids it is a format that does not get adopted. The
+escape hatch — let a marker declare its project — **is the prefix**, which is how you know the circle closed.
 
-The first adopter chose `root` over its product name, and the reason generalises: `root` was already declared in
-the repository's own glossary, so it cost no entry and no new word. The argument against it — that a position
-stops meaning anything when there is only one position — is true and it does not matter, because the segment is
-carrying no meaning either way.
+**Design 3 — the deletion.** Both of the above existed to answer _which project owns this claim_, and nothing else
+needed the answer. The catalog is a set, the tracker wants uniqueness rather than structure, and grouping is a
+reading convenience that a naming convention already provides. So the question goes away with the thing that
+asked it.
 
-> **When a segment carries no information, the cheapest true value wins, and cheapness is measured in edits.**
+### What the deletion costs, stated plainly
 
-Weigh a later split at the same moment. §3.5 buys _a split never rewrites a slug_, and this is where you decide
-whether the repository is one project or two. Collapsing a four-project repository into one moved about
-twenty-six slugs across twelve files, and none of it was mechanical — see the rename rule in
-[§6.6](./format.md#a-rename-does-not-touch-every-mention-of-the-slug).
+**Nothing enforces the convention.** With `belay/`, `cairn/`, and `core/` as prefixes by agreement, nothing stops
+a claim from being filed under a prefix that means nothing, and nothing notices when a repository's prefixes drift
+into two competing schemes. That is a house rule now, and it is the kind that rots quietly at scale.
 
-### 3.5 The slug carries the project
+Two things soften it and neither closes it. A typo'd prefix in an `@attests` still shows as **orphaned**, and a
+typo'd prefix in a `@claim` still shows as **unattested**, so nothing that was caught before becomes silent — what
+is lost is a check on prefixes nobody typo'd but nobody agreed on either. And a catalog that is tiring to read is
+already evidence about the design ([§13.3](./roadmap.md#133-the-dogfooding-rule)), which is the same signal
+arriving through a person instead of a check.
 
-> **A claim slug begins with its project's prefix. Always, and in a single-project repository too.**
+**The structural arrow is not lost, it dissolves.** _No module attests another module's claims_ was invented to
+police design 2's nesting, and with no nesting there is nothing to police. If a repository wants it back, it is a
+**claim in that repository's own catalog** witnessed by a lint rule — not a format feature, and not a reason to
+reintroduce projects.
 
-`belay/readout/names-its-commit`. `crux/marker/extent-ends-at-end`. `root/squash-merges-only`, at the root. And
-`demo/close/deletes-first` in a repository that holds only `demo`.
+### 3.5 What survived, and why it is stronger
 
-The reason is [§12](./roadmap.md#12-the-tools): **a tracker stores slugs and never claim text**, and beacon routes on a slug with no checkout.
-Both must place a claim without an index, and a prefix is the only thing that does that with pure string work.
+Three things the deletion improves rather than merely leaves alone.
 
-**The single-project exemption is deleted, and `@project` is what paid for it.** An earlier draft dropped the
-prefix when a repository held one project, on the grounds that `close/deletes-first` reads better and that the
-rewrite on a later split is mechanical. Two things changed. The prefix is now one declared token rather than a
-convention, so writing it costs one line in one file. And an exemption would make `@project`'s token optional —
-the only directive in the format with a variable arity, and a rule to memorise for a saving of one path segment.
+**Crux resolves no paths at all.** [§6.6](./format.md#66-form-errors) states this absolutely, and design 2 was
+about to buy one carefully-negotiated exception to it. The core is a line scanner again, and where every file sits
+is a house rule that a repository may decline.
 
-What it buys is that **a split never rewrites a slug**. The cost fell only on projects that succeeded, which is
-the worst population to charge, and a slug that appears in a tracker beside another project's is better off
-prefixed from the first day it is written.
+**Slugs are globally unique by construction.** §12's hard interface — _a tracker stores slugs and never claim
+text_ — is what design 1 introduced a prefix to protect. One catalog per repository gives it for free, with no
+prefix, no shadowing rule, and no disambiguation. Cairn and beacon place a claim with pure string work, which is
+more than the prefix ever guaranteed: under design 2 a shadowed slug named two claims and neither tool could tell
+them apart.
 
-**The kind is not in the slug.** `@kind` carries it ([§6.1](./format.md#61-directives)), so a claim is never `belay/capability/...`. A slug
-names a project and then an area, and the audience it is written for is an attribute that can be corrected
-without a rename.
-
-The kind is also **not derivable from the prefix**, which is what earns it a directive rather than a convention. A
-root project's claims are mostly development-kind — conventional commits, the lint rules, the gate — and that
-correlation invites the shortcut. It is only a correlation: a package holds development claims too, because a
-package has its own lint rules.
-
-**Crux checks the prefix.** A claim whose prefix names no declared project is misfiled. [§6.6](./format.md#66-form-errors).
+**A split never rewrites a slug.** Design 1 claimed this and did not deliver it, because splitting a project
+changed every prefix it held. Here it is true, because no slug ever named a project.

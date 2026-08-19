@@ -40,19 +40,21 @@ There are six directives, and they divide into three shapes. A **noun** binds a 
 that is already bound. An **attribute** modifies the block it sits in. Each opener also has a terminator, and §6.2
 covers those as one family.
 
-| Shape         | Directive           | Token                                      | Opens         | Repeatable |
-| ------------- | ------------------- | ------------------------------------------ | ------------- | ---------- |
-| **noun**      | `@project <prefix>` | one slug segment, with no `/`              | a project     | no         |
-| **noun**      | `@claim <slug>`     | a slug                                     | a declaration | no         |
-| **verb**      | `@attests <slug>`   | a slug, or a comma-separated list of slugs | a marker      | yes        |
-| **verb**      | `@grounds <slug>`   | a slug, or a comma-separated list of slugs | a grounding   | yes        |
-| **attribute** | `@scope <globs>`    | a glob, or a comma-separated list of globs | —             | yes        |
-| **attribute** | `@kind <word>`      | `capability` or `development`              | —             | no         |
+| Shape         | Directive         | Token                                      | Opens         | Repeatable |
+| ------------- | ----------------- | ------------------------------------------ | ------------- | ---------- |
+| **noun**      | `@glossary`       | none                                       | a glossary    | no         |
+| **noun**      | `@claim <slug>`   | a slug                                     | a declaration | no         |
+| **verb**      | `@attests <slug>` | a slug, or a comma-separated list of slugs | a marker      | yes        |
+| **verb**      | `@grounds <slug>` | a slug, or a comma-separated list of slugs | a grounding   | yes        |
+| **attribute** | `@scope <globs>`  | a glob, or a comma-separated list of globs | —             | yes        |
+| **attribute** | `@kind <word>`    | `capability` or `development`              | —             | no         |
 
-**`@project` is read only in a `GLOSSARY.md`.** It is the one directive whose file matters, and [§3.4](./vocabulary.md#34-a-glossary-declares-a-project) says why: the
-glossary is what declares a project, so the directive that names the project has to live where the project is
-declared. Everywhere else the name is ordinary text. This is also what makes the name safe — `@project` appears in
-legacy file headers across several ecosystems, and none of those files is a glossary.
+**`@glossary` takes no token, and it is the only directive that marks a whole file.** Its extent is inert: crux
+learns that this file is a glossary and nothing else about it, which is the whole of what
+[§3.2](./vocabulary.md#32-crux-does-not-read-it) permits. One consequence of taking no token is that its match
+surface is wider than the rest — every other directive is immunised by the one-token rule, and this one is not. A
+sentence beginning _@glossary is the word we use_ would mark the file. `crux-ignore` is the remedy, and prose that
+discusses the format should expect to reach for it.
 
 **Every token is one word.** An attribute never takes free text, and this is not a style preference: the moment a
 token may contain a space, the core must know where the comment ends in order to know where the value stops, and
@@ -92,17 +94,17 @@ line carrying a well-formed slug is indistinguishable from a real marker by any 
 an attribute outside a block is inert. So ignoring the opener line of an example is enough, and a partly decorated
 block degrades to nothing rather than to half a marker.
 
-**A block opens with `@project`, `@claim`, `@attests`, or `@grounds`, and the opener fixes what the block is.**
+**A block opens with `@glossary`, `@claim`, `@attests`, or `@grounds`, and the opener fixes what the block is.**
 
-| Opens with | Construct       | Its extent is  | Takes    |
-| ---------- | --------------- | -------------- | -------- |
-| `@project` | **project**     | inert          | —        |
-| `@claim`   | **declaration** | the claim text | `@kind`  |
-| `@attests` | **marker**      | the instrument | `@scope` |
-| `@grounds` | **grounding**   | inert          | —        |
+| Opens with  | Construct       | Its extent is  | Takes    |
+| ----------- | --------------- | -------------- | -------- |
+| `@glossary` | **glossary**    | inert          | —        |
+| `@claim`    | **declaration** | the claim text | `@kind`  |
+| `@attests`  | **marker**      | the instrument | `@scope` |
+| `@grounds`  | **grounding**   | inert          | —        |
 
-**One asymmetry, and it is deliberate.** Two openers are nouns and two are verbs. A noun binds — `@project` binds
-a prefix, `@claim` binds a slug to the prose below it. A verb should have been a noun in both cases and is not, for
+**One asymmetry, and it is deliberate.** Two openers are nouns and two are verbs. A noun binds — `@glossary` binds
+nothing but the file it sits in, `@claim` binds a slug to the prose below it. A verb should have been a noun in both cases and is not, for
 the same reason: **a witness has no identity to bind** ([§5.1](./claims.md#51-a-witness-is-a-marker)), and neither has a rationale. Making the grammar
 regular would cost a second line on every witness in every repository forever, and [§5.2](./claims.md#52-the-four-kinds) wants as many witnesses as
 it can get.
@@ -289,8 +291,9 @@ By that test `@attests` qualifies, because the form check and the join need it. 
 slug must bind to the prose that defines it. `@scope` qualifies, because carry-forward, claim surfacing, and the
 auditor's reading list need it. `@grounds` qualifies, because prose that **mentions** a slug and prose that is
 **about** it look identical to a machine, and [§11.1](./lifecycle.md#111-what-a-rationale-grounds) needs them apart. `@kind` qualifies, because the readout is
-ordered by it. `@project` qualifies, because the **misfiled** check compares a slug's prefix against the set of
-projects, and without the directive that set could only come from where files sit — which §6.6 forbids.
+ordered by it. `@glossary` qualifies, because [§3.3](./vocabulary.md#33-a-changed-glossary-is-a-yellow-row) puts a
+row on the readout when a glossary moves, and without the directive crux could only tell a glossary by its
+filename — which is a convention rather than a declaration, and which would force one file per area.
 
 The target command, the judgment, the reason, and the rejected alternative do not. They are read only by an
 intelligence, and an intelligence reads prose.
@@ -330,18 +333,16 @@ A machine computes all of these, and none of them needs a tool, a language, or a
 - A `@kind` **inside a declaration** whose token is outside `capability` and `development` is **unknown**. The set
   is closed, because [§8.4](./review.md#84-the-readout) orders the readout by it and an open set has no order. The scoping is the whole check: a
   naive version fires on every JSDoc `@kind class` in the repository.
-- A claim whose slug prefix names no declared project is **misfiled**. [§3.4](./vocabulary.md#34-a-glossary-declares-a-project).
-- Two projects declaring one prefix is a **collision**. Whichever claims they hold, one set is misfiled and
-  nothing can say which.
-- A repository that declares no project at all is **unfounded**. Every claim in it is misfiled, so reporting each
-  one separately would bury the single fact that explains them.
+- Two declarations of one slug is a **collision**. One catalog means one slug names one claim, and nothing can say
+  which declaration a marker meant.
 - A `@grounds` that names no declared claim is a **forward dangle**. [§11.5](./lifecycle.md#115-a-dangling-grounding-in-both-directions) says why this is an error where the
   backward case is not.
 
 **Crux resolves slugs. It never resolves paths.** Every check above reads a directive and compares it with
-another directive — the **misfiled** check included, since `@project` is what a slug prefix is compared against.
-None of them looks at where a file sits, which is why the positions in [§3.4](./vocabulary.md#34-a-glossary-declares-a-project) are house rules that a repository may
-decline without breaking anything.
+another directive.
+None of them looks at where a file sits, so a repository may put its catalog, its glossaries, and its rationale
+wherever it likes. [§3.4](./vocabulary.md#34-there-are-no-projects-and-the-trail-that-got-here) records the three
+designs that would have made position load-bearing, and why each was dropped.
 
 **A form error must be fixable by the person who caused it, at the moment they caused it.** That is the line
 between this list and the two reports below it, and it is the whole reason the forward dangle is an error while
