@@ -3,12 +3,20 @@
 | If you need                    | Read                                   |
 | ------------------------------ | -------------------------------------- |
 | What this project is           | [`ABSTRACT.md`](./ABSTRACT.md)         |
-| What a word means              | [`GLOSSARY.md`](./GLOSSARY.md)         |
-| Why something is the way it is | [`docs/adr/`](./docs/adr/)             |
-| Why something broken isn't     | [`docs/gotchas.md`](./docs/gotchas.md) |
+| How the framework works        | [`docs/README.md`](./docs/README.md)   |
+| Which document holds a section | the §-index in `docs/README.md`        |
+| Why a rule reads as it does    | the section that states it — see below |
 
 New writing goes to one of those homes from the start, and **nothing lives in two of them**.
-Delete the rows this repo does not have yet rather than leaving dangling links.
+
+**The reasoning stays beside the rule it justifies.** This repository has no separate rationale
+directory: a rejected alternative, a retracted rule, and a deleted design are written into the
+section that replaced them, because a rule split from its argument is an assertion nobody can
+weigh. The runbooks are the one exception — they are read per session and carry no history.
+
+**Section numbers are the citation form and they are stable.** `§6.6` means the same thing in a
+commit message, in a tracker, and in another repository's notes. A section keeps its number when
+it moves between documents. Cite the number; resolve it through `docs/README.md`.
 
 ## House rules
 
@@ -18,6 +26,12 @@ Delete the rows this repo does not have yet rather than leaving dangling links.
 - **`vp run ready` is the gate.** It runs `vp check` (format, lint, type-check), then every
   package's `test`, then every package's `build`. A change is not done until it passes from a
   clean checkout.
+- **A workspace package's `exports` resolves to source, not to `dist`.** The gate runs `check`
+  and `test` before `build`, so on a clean checkout a consumer that resolves to `dist` fails on
+  the gate's own ordering, before any code is wrong. The failure is confusing — a module
+  resolution error in one package, caused by the order of three words in a script elsewhere.
+  Everything here is TypeScript and nothing is published, so `build` stays as a check that the
+  package packs rather than as the thing consumers use.
 - **Gate commands live in `package.json`, not in `run.tasks`.** `vp run` reads both, and
   `run.cache: true` already caches scripts, so a task wrapper adds only `dependsOn`/`env`/
   `input` control — nothing a linear `check → test → build` chain needs. Scripts stay visible
