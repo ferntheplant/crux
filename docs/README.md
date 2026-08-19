@@ -8,14 +8,24 @@ moves between these documents, so cite the number and resolve it here.
 
 ## The documents
 
-| Read                                | For                                                            | Holds       |
-| ----------------------------------- | -------------------------------------------------------------- | ----------- |
-| [Vocabulary](./vocabulary.md)       | the words, and what a project's own glossary does              | §2–§3       |
-| [Claims and witnesses](./claims.md) | what a claim is, what may be one, and what judges it           | §4–§5       |
-| [The marker format](./format.md)    | the directives, the extent, and every form error               | §6          |
-| [Lifecycle](./lifecycle.md)         | fog, the amendment that clears it, and the rationale beside it | §7, §10–§11 |
-| [Review](./review.md)               | the canvass, the readout, the audit, and belay's loop          | §8–§9       |
-| [Roadmap](./roadmap.md)             | the tools, the properties, and what is still open              | §12–§15     |
+| Read                                | For                                                              | Holds       |
+| ----------------------------------- | ---------------------------------------------------------------- | ----------- |
+| [Vocabulary](./vocabulary.md)       | the words, and what a project's own glossary does                | §2–§3       |
+| [Claims and witnesses](./claims.md) | what a claim is, what may be one, and what judges it             | §4–§5       |
+| [The marker format](./format.md)    | the directives, the extent, and every form error                 | §6          |
+| [Lifecycle](./lifecycle.md)         | fog, the amendment that clears it, and the rationale beside it   | §7, §10–§11 |
+| [Review](./review.md)               | the canvass, the readout, the audit, and belay's loop            | §8–§9       |
+| [Roadmap](./roadmap.md)             | the tools, the properties, what is open, and what is under watch | §12–§16     |
+
+## The runbooks
+
+Procedure, read per session. They carry no history and no rejected alternatives — the reasoning
+stays in the sections they link to.
+
+| Read                               | When                                                        |
+| ---------------------------------- | ----------------------------------------------------------- |
+| [Builder](./runbooks/builder.md)   | you were handed an amendment and are making its claims true |
+| [Reviewer](./runbooks/reviewer.md) | you did not build it, and you are producing the readout     |
 
 ## Every section, and where it lives
 
@@ -52,6 +62,11 @@ moves between these documents, so cite the number and resolve it here.
 | §6.5    | [Scope, and who needs it](./format.md#65-scope-and-who-needs-it)                                                                                               | `format.md`     |
 | §6.6    | [Form errors](./format.md#66-form-errors)                                                                                                                      | `format.md`     |
 | **§7**  | [**The amendment**](./lifecycle.md#7-the-amendment)                                                                                                            | `lifecycle.md`  |
+| §7.1    | [Judge coverage while the amendment is still text](./lifecycle.md#71-judge-coverage-while-the-amendment-is-still-text)                                         | `lifecycle.md`  |
+| §7.2    | [Read the amendment as a whole](./lifecycle.md#72-read-the-amendment-as-a-whole)                                                                               | `lifecycle.md`  |
+| §7.3    | [Name the seam, and say what it displaces](./lifecycle.md#73-name-the-seam-and-say-what-it-displaces)                                                          | `lifecycle.md`  |
+| §7.4    | [A witness may be written against an artifact that does not exist yet](./lifecycle.md#74-a-witness-may-be-written-against-an-artifact-that-does-not-exist-yet) | `lifecycle.md`  |
+| §7.5    | [The amendment is proposed until the merge](./lifecycle.md#75-the-amendment-is-proposed-until-the-merge)                                                       | `lifecycle.md`  |
 | **§10** | [**Fog**](./lifecycle.md#10-fog)                                                                                                                               | `lifecycle.md`  |
 | **§11** | [**Rationale**](./lifecycle.md#11-rationale)                                                                                                                   | `lifecycle.md`  |
 | §11.1   | [What a rationale grounds](./lifecycle.md#111-what-a-rationale-grounds)                                                                                        | `lifecycle.md`  |
@@ -75,9 +90,11 @@ moves between these documents, so cite the number and resolve it here.
 | §9.5    | [What the human decides](./review.md#95-what-the-human-decides)                                                                                                | `review.md`     |
 | **§12** | [**The tools**](./roadmap.md#12-the-tools)                                                                                                                     | `roadmap.md`    |
 | §12.1   | [Cairn keeps its state outside the repository it serves](./roadmap.md#121-cairn-keeps-its-state-outside-the-repository-it-serves)                              | `roadmap.md`    |
+| §12.2   | [Cairn holds the work that changes the witness supply](./roadmap.md#122-cairn-holds-the-work-that-changes-the-witness-supply)                                  | `roadmap.md`    |
 | **§13** | [**What gets built first, and what is being watched**](./roadmap.md#13-what-gets-built-first-and-what-is-being-watched)                                        | `roadmap.md`    |
 | §13.1   | [Two tools, in order](./roadmap.md#131-two-tools-in-order)                                                                                                     | `roadmap.md`    |
 | §13.2   | [The tracker was deliberately not third, and the period has now closed](./roadmap.md#132-the-tracker-was-deliberately-not-third-and-the-period-has-now-closed) | `roadmap.md`    |
 | §13.3   | [The dogfooding rule](./roadmap.md#133-the-dogfooding-rule)                                                                                                    | `roadmap.md`    |
 | **§14** | [**The properties**](./roadmap.md#14-the-properties)                                                                                                           | `roadmap.md`    |
 | **§15** | [**Open threads**](./roadmap.md#15-open-threads)                                                                                                               | `roadmap.md`    |
+| **§16** | [**Under watch**](./roadmap.md#16-under-watch)                                                                                                                 | `roadmap.md`    |

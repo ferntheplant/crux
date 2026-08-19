@@ -222,6 +222,23 @@ every project inherits, or a dependency graph that crux would have to learn, `ap
 sentence: _this project uses the crux vocabulary; the words below are belay's own._ An intelligence reading it does
 the right thing. That is the dividend of not parsing it.
 
+**Naming the only project: decide it on migration cost.** A project is whatever a `GLOSSARY.md` declares, and this
+document gives no guidance on what to call one — correctly, in a monorepo, where the name is the package and the
+question answers itself. In a single-project repository the segment carries no information at the point of use,
+and the choice is between the name of the **position** and the name of the **product**.
+
+The first adopter chose `root` over its product name, and the reason generalises: `root` was already declared in
+the repository's own glossary, so it cost no entry and no new word. The argument against it — that a position
+stops meaning anything when there is only one position — is true and it does not matter, because the segment is
+carrying no meaning either way.
+
+> **When a segment carries no information, the cheapest true value wins, and cheapness is measured in edits.**
+
+Weigh a later split at the same moment. §3.5 buys _a split never rewrites a slug_, and this is where you decide
+whether the repository is one project or two. Collapsing a four-project repository into one moved about
+twenty-six slugs across twelve files, and none of it was mechanical — see the rename rule in
+[§6.6](./format.md#a-rename-does-not-touch-every-mention-of-the-slug).
+
 ### 3.5 The slug carries the project
 
 > **A claim slug begins with its project's prefix. Always, and in a single-project repository too.**

@@ -68,6 +68,31 @@ dashboard.
 locally — a dry run, an emulator, a `--local` flag. Those read repository configuration and ask the service
 nothing, so their answer is rederivable from a checkout.
 
+#### The boundary is set by your tooling, and it moves
+
+The rule above is right. What is wrong is to read its boundary as given. _Inside the checkout_ is a statement about
+what a checkout holds, and what a checkout holds depends on what you adopted.
+
+The four deleted claims came back. The project adopted a framework that declares its infrastructure in the
+repository, and the DNS records, the access application, and the rate-limit rule each became a resource
+declaration — an artifact in the checkout, and a claim about that artifact is rederivable like any other.
+
+> **A claim about _live_ infrastructure is still not a claim. A claim about _declared_ infrastructure is.**
+
+The first sentence is what this section always said. The second had nothing to attach to when it was written,
+because with no declarative artifact there is no second sentence. The error to avoid is not the answer of the day.
+It is recording the answer of the day as a principle.
+
+**Three things do not move with it**, and they belong in the same breath, because a repository that adopts such a
+framework reaches for all three:
+
+- **runtime state** — whether the backup bucket holds anything. Nothing declares that.
+- **out-of-band human acts** — clicking a verification link in an email. What returns is a claim about the
+  declaration, never about the act.
+- **drift** — the account diverging from the declaration. Still monitoring, still nothing crux catches. What
+  changes is only that there is now an artifact on the repository side to diff against, where before there was
+  nothing at all.
+
 **A value the repository does not hold raises the claim. It does not delete it.** This is the near neighbour of the
 rule above, it arrives from the other direction, and the two have opposite remedies:
 
@@ -89,6 +114,9 @@ that would actually happen, where the concrete version only ever checked one str
 **This line does more work than any other in the document.** Inside the checkout or outside it decides whether a
 claim can exist, whether a claim must be raised a level, and — per [§10](./lifecycle.md#10-fog) — how expensive a piece of fog is to clear.
 Three unrelated problems, one boundary.
+
+It is also the line most likely to move under you, and §5.2 says why: the supply side that sets the witness
+ladder's ceiling sets this boundary too. Two settled rules, one shared cause.
 
 ### 4.2 How the condition fails
 
@@ -153,7 +181,26 @@ enable becomes a development claim with a working witness at the cost of one com
 it on ([§8.3](./review.md#83-a-lint-witness-in-full)), with no custom rule and no new adapter.
 
 That is a reason to choose a library that has nothing to do with the library's runtime behaviour, and it is worth
-weighing at the moment of choosing, because the ceiling it sets is permanent.
+weighing at the moment of choosing, because the ceiling it sets is permanent. §4.1's boundary moves on the same
+supply, and for the same reason.
+
+**A static witness needs a declarative subject.** This is the precondition the ladder assumes and never states.
+Kinds 1 and 2 read an artifact for the state it describes, and an imperative script cannot be read that way — you
+would have to simulate it. So infrastructure built by a deploy script leaves you with kind 4 judging an artifact
+that is not even the subject, and the same infrastructure described declaratively sits two rungs higher for that
+reason and no other. Those claims were never strictly impossible. They were badly witnessed, and the defect was in
+the **subject** rather than in the claim. When a claim seems stuck at the bottom of the ladder, ask whether its
+subject is declarative before you accept the rung.
+
+**The question at witness-assignment time is _can a rule exist here_, not _does a rule exist_.** Those have
+different answers and only the first is about the ecosystem. A lint witness was named for _no email-shaped string
+literal appears under this directory_, and the linter of the day ships no rule that can see a string — every
+restriction rule it has keys on an identifier. It also ships a plugin API, and the rule was forty lines. The
+witness stayed at kind 3 by **writing** the instrument rather than by finding it.
+
+So weigh what building costs at the moment the witness is assigned. When it is small, build it. When it is large,
+the honest move is to drop a rung and record that the ceiling was set by **budget** — which is a third thing again,
+and worth naming as such, because a budget moves and an ecosystem does not.
 
 A witness file names a target and states a judgment. The target is a command to run, or the code to read.
 
@@ -189,6 +236,26 @@ Nothing about the subject enters it.
 three standings, and they can differ. The same test can support one claim and say nothing at all about the next
 one on the same line. So the audit reads a pair, and the repair for one bad pair is to remove that one `@attests`
 directive, not always to delete the marker.
+
+**A witness can observe a proxy for its subject and pass.** §5.2 ranks a witness by the mechanism that delivers the
+verdict, and says nothing about the distance between what the witness observes and what the claim is about. A test
+is kind 2 whether it watches the subject or watches a wrapper that reports on the subject's behalf — and a proxy is
+exactly what a framework hands you: an invocation result, an HTTP status, a job outcome, a success counted by
+whatever runs your code.
+
+The case that found it: a scheduled-handler runtime wraps every handler so that a failure inside it returns
+success. It does this deliberately, so that one bad run cannot crash the service, and the documentation says so
+plainly and calls it a convenience — which for many jobs it is. It means that _the scheduled fire completed_ is
+true when the send the handler exists to perform was refused. Witnesses drafted as _one prompt, one send_ affirm
+with **zero** sends when the send is counted at the invocation, and mean what they say when it is counted at the
+binding. One clause of the amendment changed, and the meaning of the claim inverted.
+
+> **Say where the observation happens.** A witness that does not name the point it observes has not said what it
+> observes.
+
+The ladder gets no new rung for this, and should not: the kind is still the mechanism that delivers the verdict.
+It is a question about the **subject**, which is why it belongs here. `@scope` names the code a witness judges, and
+a witness watching a wrapper has quietly judged something else.
 
 ### 5.4 The four questions
 
@@ -293,6 +360,12 @@ ordinary case, and until this revision the document had no word for the question
 is a judgment about one instrument, and no number of them adds up to a judgment about the claim. A claim can hold
 three sound witnesses and still promise something that nothing checks.
 
+**Coverage asks one direction, and the other direction is a signal.** It asks whether the witnesses reach the
+claim. Nothing asks whether a witness reaches **further** than the claim, so an over-reaching witness is invisible
+to the audit and surfaces only when somebody reads the pair. A claim promising that a handler _creates at most one
+prompt_, beside its named witness asserting that _exactly one prompt exists **and** exactly one send occurred_, is
+not telling you the witness is wrong. It is telling you the claim is under-stated. Repair the claim.
+
 **Coverage carries its source, on the same asymmetry as a standing** (§5.6). An agent can declare
 **under-covered** by itself, because finding a gap needs no authority. An agent **proposes** covered, and the
 human confirms it at the ruling. That is the same authority as [§9.5](./review.md#95-what-the-human-decides)'s, and it is the same reason: an agent can see
@@ -394,6 +467,15 @@ who had to read the result.
   separate standing, a separate row, for parts of one promise that rise and fall together.
 
 > A claim that describes its own witness is a witness that took a claim's name. A claim is about the subject.
+
+**Somebody else's witness is no better.** The rule reads as though the trap is a claim describing the instrument
+that attests it, and the wider case is the same failure. _The type-aware lint pipeline is available and denying_
+is not a claim: its subject is the machinery behind three other claims, and no operator has an opinion about it.
+The pull toward writing it is real, because a witness supply can fail silently — a pinned linter drifts, a patch
+stops applying, and every claim the pipeline carries goes green on that day. That failure is real and the catalog
+is the wrong place to put it. It is a question about whether the instrument is **running**, which is the
+canvasser's job and not the catalog's; [§8.2](./review.md#82-the-join-from-a-marker-to-a-verdict) is where it
+lands.
 
 **The catalog is read by a human at the ruling**, and [§9.5](./review.md#95-what-the-human-decides) says what that human decides: _were these the right
 claims?_ An operator has an opinion about _nobody can guess the token_. An operator has no opinion about which

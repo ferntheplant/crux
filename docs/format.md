@@ -352,3 +352,29 @@ Two things are reported and are **not** errors:
 
 - **A rationale that grounds a claim which no longer exists.** [§11.5](./lifecycle.md#115-a-dangling-grounding-in-both-directions).
 - **A glossary that changed in this diff.** [§3.3](./vocabulary.md#33-a-changed-glossary-is-a-yellow-row).
+
+#### A rename does not touch every mention of the slug
+
+The slug is the hub ([§11.1](./lifecycle.md#111-what-a-rationale-grounds)), so a rename looks like a search and
+replace over the repository. It is not. Two kinds of mention are identical to a machine and must be treated
+oppositely:
+
+- A **citation** names a claim that exists now — a `@grounds`, an `@attests`, a catalog declaration, an
+  amendment's entry, one amendment referring to another's claim. Every one must move, or it dangles.
+- A **record** names a slug as it was written at some past moment — the list of claims an enacted amendment
+  deleted, a note saying what a claim was renamed from, a log of what a session did. These must **not** move,
+  because the name is the fact being recorded.
+
+**No mechanical property separates them.** Crux finds an **orphaned** marker, so it would find every stale
+citation. It would also find every record and report it as the same error, because both are a slug-shaped string
+naming nothing that exists.
+
+The consequence for a tool is direct, and it is not _rename everything_: a rename tool that operates on slug
+identity corrupts the record it was supposed to preserve. What a tool can honestly do is **the join** — show every
+mention, grouped by file, and let a person mark the boundary once. That is the same shape as
+[§12.1](./roadmap.md#121-cairn-keeps-its-state-outside-the-repository-it-serves)'s watcher, and that remedy is
+safe only because it never proposes to write.
+
+The cost runs both ways when nobody does it by hand. A stale citation is a dangling reference a reader chases and
+loses. A rewritten record is worse and quieter: it reads as true, and what it falsifies is the account of what the
+work actually cost.

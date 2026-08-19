@@ -26,6 +26,12 @@ it moves between documents. Cite the number; resolve it through `docs/README.md`
 - **`vp run ready` is the gate.** It runs `vp check` (format, lint, type-check), then every
   package's `test`, then every package's `build`. A change is not done until it passes from a
   clean checkout.
+- **A workspace package's `exports` resolves to source, not to `dist`.** The gate runs `check`
+  and `test` before `build`, so on a clean checkout a consumer that resolves to `dist` fails on
+  the gate's own ordering, before any code is wrong. The failure is confusing — a module
+  resolution error in one package, caused by the order of three words in a script elsewhere.
+  Everything here is TypeScript and nothing is published, so `build` stays as a check that the
+  package packs rather than as the thing consumers use.
 - **Gate commands live in `package.json`, not in `run.tasks`.** `vp run` reads both, and
   `run.cache: true` already caches scripts, so a task wrapper adds only `dependsOn`/`env`/
   `input` control — nothing a linear `check → test → build` chain needs. Scripts stay visible

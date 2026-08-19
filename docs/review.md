@@ -45,6 +45,25 @@ The adapter degrades in three steps, by what the runner reports:
 **silent**, and a lint rule that reports nothing is **affirming**, because the linter ran over everything. Absence
 means different things for the two kinds, and it is the only kind-specific logic in the whole join.
 
+**That asymmetry rests on an assumption, and the adapter is what must check it.** _The linter ran over everything_
+is true until the rule is not loaded. A rule id that no longer resolves — a plugin that failed to load, a patched
+package restored by a reinstall, a version floor that moved — reports nothing for exactly the same reason a clean
+codebase reports nothing, and the join reads the second as the first. Every claim that rule carries goes green on
+the day it stops running.
+
+> **An adapter reports whether the instrument ran, and not only what it said.** A rule id the tool does not
+> recognise is not an affirmation. It is a **silent** verdict at best, and a denial of the whole source is
+> defensible.
+
+This is the honest home for _is the mechanism that would have told us still running?_ The catalog is the wrong
+home for it: a claim whose subject is the pipeline behind three other claims is at the wrong altitude
+(§5.9), and no operator has an opinion about it at a ruling. The question is real, and it is the canvasser's. Most
+tools can answer it — a linter knows which rules it loaded — so this is an adapter's obligation where the tool
+reports it, and an intelligence's reading of the source list where it does not.
+
+**Under-attribution is the direction this protects.** The two rules below say that when an adapter must guess it
+attributes a denial to more claims rather than fewer. A supply failure is the same guess wearing a green shirt.
+
 **Where adapters live.** Belay ships them. The repository states which apply and how to produce the report. The
 core never sees this.
 

@@ -46,10 +46,90 @@ to write the assertion.
 
 **So a build that changes its amendment is the design working, not the entry gate failing.** What it needs is a
 route: the builder cannot make that change alone, because [§9.5](./review.md#95-what-the-human-decides) gives the choice of claims to the operator. [§9.1](./review.md#91-the-sequence)
-carries the route, and [§15](./roadmap.md#15-open-threads)'s entry-gate thread now has this as evidence.
+carries the route. This is half of why belay receives an amendment rather than a branch with failing witnesses — a
+gate demanding a complete and correct amendment asks for something no design phase can deliver
+([§15](./roadmap.md#15-open-threads), closed).
 
-**An amendment is proposed until the merge. The merge enacts it.** Do not merge an amendment to the main branch on
-its own. The rule that decides this:
+### 7.1 Judge coverage while the amendment is still text
+
+An amendment that **regroups** existing witnesses — combining two claims, splitting one, moving a witness from one
+claim to another — creates a new witness set for every claim it touches, and every new set needs a coverage
+judgment ([§5.8](./claims.md#58-coverage)). Take that judgment in the amendment, before it freezes the shape of the
+work.
+
+The cost is asymmetric, and it was measured in both directions.
+
+**Taken late**, on an amendment that combined six claims into two and scheduled the coverage audit after the gate:
+two audit rounds and rework. The first found a boundary value that passed every witness. The second found two
+claims whose witnesses observed a test-only path rather than the production one. The repository edits had happened
+before the judgment that constrained them.
+
+**Taken early**, on the next two amendments: a paragraph each. It still found three gaps before a line was
+written — a claim whose witnesses were all prohibitions ([§5.8](./claims.md#58-coverage)), a witness that
+enumerated which routes exist where the claim was about what they return, and a shared marker that was the sole
+proof of two claims ([§5.7](./claims.md#57-witnesses-that-attest-several-claims)).
+
+This moves a required judgment earlier. It does not automate it.
+
+### 7.2 Read the amendment as a whole
+
+**Two claims of one amendment can contradict each other, and nothing in the model looks for it.** Coverage asks
+whether a claim's witnesses reach that claim. A standing asks whether one instrument supports one claim. The form
+checks are scoped to one directive. Every question is scoped to a single claim — and the amendment, which is the
+natural unit, is the one artifact with no consistency question attached to it at all.
+
+One amendment held _the send happens at the send hour and at no other hour_ beside _a failed send is recorded_,
+whose coverage note spoke of suppressing every retry for that local date. Under a strict hourly gate there is no
+retry inside the local date, so the second claim's own reasoning was false. Under a loose gate the first claim's
+second clause was false. Both were defensible alone. Neither could be built without deciding the other.
+
+**The tell was in the coverage prose, not in either claim.** _Every retry for that local date_ presupposes retries
+that the sibling claim forbids. Coverage prose is where an amendment writes down its assumptions about its
+neighbours, and it is nobody's job to read it against them.
+
+[§5.9](./claims.md#59-group-claims-by-the-failure-a-reader-can-see) records the same failure one level up: claims
+individually defensible and collectively wrong, found by an operator who had to read the catalog. This is the
+amendment-sized version, and the escalation route settled it — the builder stated the proposed change and stopped,
+and one exchange produced a better claim than either reading. Two of the three options on the table would have
+shipped a real defect.
+
+### 7.3 Name the seam, and say what it displaces
+
+An amendment specifies claims. The production work that a specification implies has no artifact, and that is
+correct: nothing about a service split is falsifiable that the claims do not already say. The failure is reading
+_this carries no claim_ as _this is small_.
+
+Two amendments each noted that a capability seam "carries no claim of its own" and would land in whichever merged
+first. Building it moved a type off the package's public entrypoint, rewrote every existing witness in that
+package to go through the new services, rebuilt a table so a row could exist in a state it previously could not,
+dropped a stored column in favour of a derived value, changed how the package's exports resolve, and added a
+migration. None of it changed a claim. All of it was required before two of six claims could be witnessed at all.
+
+The repair is a line in the amendment rather than a new artifact: **name the seam, and name what it displaces.**
+
+### 7.4 A witness may be written against an artifact that does not exist yet
+
+Amendments are sequenced, so this happens in any repository with more than one of them open. A claim promising
+that a set of routes exposes no history was witnessed by an import restriction naming the entrypoint that carries
+the list operation — and that entrypoint belongs to the **next** amendment.
+
+| Option                                  | Verdict                                                                       |
+| --------------------------------------- | ----------------------------------------------------------------------------- |
+| create the artifact now, empty          | rejected — dead code, and the repository's own tooling is right to say so     |
+| defer the witness to the later merge    | rejected — the claim would enter the catalog under-covered on purpose         |
+| deny what exists **and** what is coming | taken — restrict the entrypoint that exists, name the identifiers that do not |
+
+A restriction on a name that nothing exports yet is legal and silent until the day it is not. That is the right
+trade, because the rule holding a witness in place is worth least on the day it is written and most on the day
+somebody else adds the thing it forbids.
+
+Crux has a word for a claim that cannot yet be stated (§10) and for one stated but unbuilt (an amendment). It has
+none for a witness whose subject is in the future, and it needs none — but **an amendment says plainly when a
+witness is written forward**, because the marker cannot say it.
+
+### 7.5 The amendment is proposed until the merge
+
+**The merge enacts it.** Do not merge an amendment to the main branch on its own. The rule that decides this:
 
 > Keep a pre-work artifact only if it carries information that the post-work artifact cannot reconstruct.
 
