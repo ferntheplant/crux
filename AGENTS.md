@@ -1,11 +1,12 @@
 ## Where things live
 
-| If you need                    | Read                                   |
-| ------------------------------ | -------------------------------------- |
-| What this project is           | [`ABSTRACT.md`](./ABSTRACT.md)         |
-| How the framework works        | [`docs/README.md`](./docs/README.md)   |
-| Which document holds a section | the §-index in `docs/README.md`        |
-| Why a rule reads as it does    | the section that states it — see below |
+| If you need                 | Read                                   |
+| --------------------------- | -------------------------------------- |
+| What this project is        | [`ABSTRACT.md`](./ABSTRACT.md)         |
+| How the framework works     | [`SPEC.md`](./SPEC.md)                 |
+| What to do in a session     | [`runbooks/`](./runbooks/)             |
+| Why a rule reads as it does | the section that states it — see below |
+| The full history of a rule  | `git show 27db6c6:docs/README.md`      |
 
 New writing goes to one of those homes from the start, and **nothing lives in two of them**.
 
@@ -16,7 +17,10 @@ weigh. The runbooks are the one exception — they are read per session and carr
 
 **Section numbers are the citation form and they are stable.** `§6.6` means the same thing in a
 commit message, in a tracker, and in another repository's notes. A section keeps its number when
-it moves between documents. Cite the number; resolve it through `docs/README.md`.
+it moves between documents. Cite the number; resolve it in `SPEC.md`.
+
+**Write the specification and the runbooks in ASD-STE100 Simplified Technical English.** Short
+sentences, active voice, and one meaning for each word. `SPEC.md` §2 defines the technical words.
 
 ## House rules
 
