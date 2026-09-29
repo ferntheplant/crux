@@ -17,6 +17,9 @@ export default defineConfig({
     singleQuote: false,
     trailingComma: "all",
     printWidth: 120,
+    // Markdown carries no hard line breaks inside a paragraph or list item: the reader's tool wraps it. A
+    // wrapped claim puts its `^id` pin on a line that holds only half of the claim, and block links then break.
+    proseWrap: "never",
     insertFinalNewline: true,
     sortImports: true,
     sortPackageJson: true,
