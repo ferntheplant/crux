@@ -1,7 +1,3 @@
----
-catalog: 1
----
-
 # Witnesses
 
 A witness is a part of the repository that can show if the codebase satisfies a claim. This file tells how a witness is marked, and how to write one that tells the truth.
@@ -13,19 +9,39 @@ A witness is a part of the repository that can show if the codebase satisfies a 
 Crux finds each witness with a line scanner, in each file that git tracks. It never learns the comment syntax of a language.
 
 ```ts
-/** @attests closing#^ordered_not_atomic    crux-ignore */
+/** @attests catalog/closing.md#ordered-not-atomic    crux-ignore */
 describe("close", () => { … })
 ```
 
-> [!CLAIMS] Claims
+> [!CLAIMS]
 >
-> - **One directive.** `@attests` is the only directive. It is `@attests`, whitespace, and one token with no whitespace. Crux ignores the remaining text on the line.
-> - **Blocks.** A block is a contiguous sequence of directive lines. The first line with no directive ends it.
-> - **Several slugs.** A token can hold several slugs, separated by commas. Several `@attests` lines in one block are one witness of each slug.
-> - **Extent.** A block owns the lines from itself to `@attests:end`, to the next block, or to the end of the file, whichever is first.
-> - **Not a directive.** A token that contains `<`, `>`, or a backtick is not a directive.
-> - **Ignored lines.** A line that contains `crux-ignore` has no directive. The match is case-sensitive.
-> - **Claims only.** A witness attests claims. An `@attests` token has the form of a claim slug, `file#^id`, and never names a heading.
+> ### One directive
+>
+> `@attests` is the only directive. It is `@attests`, whitespace, and one token with no whitespace. Crux ignores the remaining text on the line.
+>
+> ### Blocks
+>
+> A block is a contiguous sequence of directive lines. The first line with no directive ends it.
+>
+> ### Several slugs
+>
+> A token can hold several slugs, separated by commas. Several `@attests` lines in one block are one witness of each slug.
+>
+> ### Extent
+>
+> A block owns the lines from itself to `@attests:end`, to the next block, or to the end of the file, whichever is first.
+>
+> ### Not a directive
+>
+> A token that contains `<`, `>`, or a backtick is not a directive.
+>
+> ### Ignored lines
+>
+> A line that contains `crux-ignore` has no directive. The match is case-sensitive.
+>
+> ### Claims only
+>
+> A witness attests claims. An `@attests` token has the form of a claim slug, `path#heading`, and never names a section heading.
 
 Thus the core ignores `*/`, `-->`, and `#`, and it does not know what they are. The rule about `<`, `>`, and the backtick protects prose that explains the format, for example the `AGENTS.md` of each repository that uses crux. `crux-ignore` is unusual on purpose, because it is the only permitted way to hide a real directive.
 
@@ -35,7 +51,7 @@ Thus the core ignores `*/`, `-->`, and `#`, and it does not know what they are. 
 - **A witness needs no stable identity.** A diff already records a moved file.
 - **A witness has two users.** An adapter changes it into a verdict. An auditor changes it into a standing.
 
-**A witness attests claims, not headings.** The long form let a witness attest a group of claims. Then a new claim in that group was attested on the day it was written, by a witness that nobody had read against it. That is under-attribution ([[readout#^over_attribution]]).
+**A witness attests claims, not section headings.** The long form let a witness attest a group of claims. Then a new claim in that group was attested on the day it was written, by a witness that nobody had read against it. That is under-attribution ([Over-attribution](readout.md#over-attribution)).
 
 **An extent that is too large is safe. An extent that is too small is not safe.** Too large causes more audits. Too small lets an unsound witness stay. Thus the large default is never wrong, only expensive, and a terminator is optional. Use `@attests:end` where one witness is among lines that no witness owns, for example one rule in a lint configuration.
 
@@ -43,11 +59,11 @@ Thus the core ignores `*/`, `-->`, and `#`, and it does not know what they are. 
 
 **A directive exists only for what the core must resolve without intelligence.** All other text is prose. There is no `@run`: the core runs nothing, and an agent reads a command as prose. The condition, the reason, and the rejected option are prose for the same reason.
 
-**The name stays `@attests`.** It is a verb, and it tells what the line means: this block attests that claim. A tool name in its place would put a migration into repositories that you do not control ([[glossary#tool-names]]).
+**The name stays `@attests`.** It is a verb, and it tells what the line means: this block attests that claim. A tool name in its place would put a migration into repositories that you do not control ([Tool names](glossary.md#tool-names)).
 
 ### Markdown and files with no comments
 
-A witness in Markdown uses the same rule. A prose witness file is ordinary Markdown with an `@attests` line. It is not a catalog file, so it needs no frontmatter. Do not put a directive in a code span: the closing backtick becomes part of the token. An example in a fence is a real directive, so add `crux-ignore` to it.
+A witness in Markdown uses the same rule. A prose witness file is ordinary Markdown with an `@attests` line. It holds no claims block, so it is not a catalog file. Do not put a directive in a code span: the closing backtick becomes part of the token. An example in a fence is a real directive, so add `crux-ignore` to it.
 
 For a file that takes no comments, such as JSON, write a witness file that names it. First, examine the parser: `tsconfig.json` is JSONC, and it takes comments.
 
@@ -64,13 +80,13 @@ Move each claim as high in this list as it can correctly go.
 
 Types, tests, and lint rules are **computational**: a tool answers them. Prose is **inferential**: a judge answers it.
 
-**A test is above a lint rule because of polarity.** A lint rule removes one way to fail. It cannot affirm the way to succeed ([[witnesses#polarity]]). A test can do both. But a lint rule examines each file, and this includes files that people add later. A test usually does not. Thus a claim that must hold for new code frequently needs a lint rule **and** a test.
+**A test is above a lint rule because of polarity.** A lint rule removes one way to fail. It cannot affirm the way to succeed ([Polarity](#polarity)). A test can do both. But a lint rule examines each file, and this includes files that people add later. A test usually does not. Thus a claim that must hold for new code frequently needs a lint rule **and** a test.
 
 **A type is at the top because it has both properties.** It reaches each use, as a lint rule does. It can require a shape, as a test does. If a type system can encode a behaviour, _it compiles_ becomes a verdict about that behaviour.
 
 > **A witness that no tool adapter reports on is inferential.**
 
-Crux cannot identify a test or a request handler, and it does not need to. The source that answers sets the rung. Nothing declares it ([[readout#adapters]]).
+Crux cannot identify a test or a request handler, and it does not need to. The source that answers sets the rung. Nothing declares it ([Adapters](readout.md#adapters)).
 
 **A type witness must bind its subject.** A `ReadOnlyDb` type proves nothing if the dashboard can still get `Db` directly. The project compiles, and the witness affirms, but it tells nothing. A type has no failing state before the build. Thus the builder breaks it: the builder adds the write that the type forbids, and makes sure that the build fails.
 
@@ -82,7 +98,7 @@ Crux cannot identify a test or a request handler, and it does not need to. The s
 An inferential witness names its target and tells when it is valid. It can be a witness file:
 
 ```md
-> @attests report#^reads_at_a_glance crux-ignore
+> @attests catalog/report.md#reads-at-a-glance crux-ignore
 
 Run `demo report --fixture test/fixtures/mixed-status`. The rendering code is in `src/report/`.
 
@@ -93,7 +109,7 @@ It can also be on the code that it examines. This is the correct first rung for 
 
 ```ts
 /**
- * @attests checkout#^never_charges_an_expired_cart    crux-ignore
+ * @attests catalog/checkout.md#never-charges-an-expired-cart    crux-ignore
  *
  * Valid when: the handler compares the expiry with the server-side timestamp
  * before it makes the payment client, and an expired cart returns 409 with
@@ -103,7 +119,7 @@ export async function checkout(req: Request) { … }
 // @attests:end    crux-ignore
 ```
 
-**Write the condition, not only the assertion.** _This endpoint satisfies the claim_ gives an auditor nothing to examine. The _Valid when_ line is the instrument. It also tells where to look, and the triage of the judge reads it ([[readout#verdict]]).
+**Write the condition, not only the assertion.** _This endpoint satisfies the claim_ gives an auditor nothing to examine. The _Valid when_ line is the instrument. It also tells where to look, and the triage of the judge reads it ([Verdict](readout.md#verdict)).
 
 **The upgrade is one merge.** When a test exists, add its `@attests` and delete the inline block. The claim does not change, and the readout shows the higher rung.
 
@@ -117,7 +133,7 @@ The block is on the rule, or on the configuration line that enables it. Delete t
 
 > **The subject is what a witness observes and must not consult.**
 
-Nothing declares a subject, but the subject is real. The rule for a sound witness defines it ([[witnesses#stated-contract]]). The witness uses the subject, and it takes none of its contract from the subject.
+Nothing declares a subject, but the subject is real. The rule for a sound witness defines it ([Stated contract](#stated-contract)). The witness uses the subject, and it takes none of its contract from the subject.
 
 > **The verdict is about the subject. The standing and the coverage are about the instrument. Only a change to an instrument or to the text of a claim opens a standing or a coverage again.**
 
@@ -145,7 +161,7 @@ interface ReadOnlyDb {
 
 Tests can fail in the same way. Examples are a snapshot that you record again after each output change, `expect(f(x)).toEqual(f(x))`, and a fixture that you make again from the current output. Each one takes its expected value from the thing that it examines.
 
-**What the instrument depends on is part of its meaning.** A shared test helper or a type utility is outside the extent. Name it when you set a standing, and decide if it is stable enough to trust. Crux does not track it ([[readout#reading]]).
+**What the instrument depends on is part of its meaning.** A shared test helper or a type utility is outside the extent. Name it when you set a standing, and decide if it is stable enough to trust. Crux does not track it ([Reading](readout.md#reading)).
 
 ## Several claims
 
@@ -157,4 +173,4 @@ Tests can fail in the same way. Examples are a snapshot that you record again af
 
 A lint rule that forbids `Math.random` is sound for _nobody can guess the token_. But a weak generator that somebody writes by hand passes it. Add a second witness with the opposite polarity: a test that observes the real path get its bytes from the approved source. Do this check first on a claim whose witnesses are all prohibitions.
 
-A witness that has never denied has not been tested. Before a handoff, the builder breaks each witness that can deny, and makes sure that it denies ([[readout#^handoff_when_green]]).
+A witness that has never denied has not been tested. Before a handoff, the builder breaks each witness that can deny, and makes sure that it denies ([Handoff when green](readout.md#handoff-when-green)).

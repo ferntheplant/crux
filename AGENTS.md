@@ -12,9 +12,9 @@ New writing goes to one of those homes from the start, and **nothing lives in tw
 
 **The reasoning stays beside the rule it justifies.** This repository has no separate rationale directory: a rejected alternative, a retracted rule, and a deleted design are written into the section that replaced them, because a rule split from its argument is an assertion nobody can weigh. The runbooks are the one exception — they are read per session and carry no history.
 
-**The specification is written in its own format.** Each file in `spec/` is a catalog file: claims sit in `> [!CLAIMS] Claims` blocks, and every other line is prose that never promises. Read [`spec/catalog.md`](./spec/catalog.md) before you add or change a claim.
+**The specification is written in its own format.** The files in `spec/` are catalog files: each claim is a heading inside a `> [!CLAIMS]` block, and everything outside those blocks is prose that never promises. Read [`spec/catalog.md`](./spec/catalog.md) before you add or change a claim.
 
-**Links are the citation form.** Cite a claim as `[[file#^id]]` — the same token an `@attests` line uses — and a heading as `[[file#heading]]`, in prose, in commits, and in trackers. Pin each claim you cite (` ^id` at the end of its last line) so the link resolves in markdown-oxide.
+**Links are the citation form.** In Markdown, cite a claim or a heading with an ordinary relative link, `[Rename](checks.md#rename)`, so it resolves on GitHub and in VS Code. In commits and trackers, write the claim's slug — its path from the repo root plus the heading slug, `spec/checks.md#rename` — which is the same token an `@attests` line uses.
 
 **Write the specification and the runbooks in ASD-STE100 Simplified Technical English.** Short sentences, active voice, and one meaning for each word. [`spec/glossary.md`](./spec/glossary.md) defines the technical words.
 

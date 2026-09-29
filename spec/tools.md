@@ -1,7 +1,3 @@
----
-catalog: 1
----
-
 # Tools
 
 The tools that read the format, the order in which they get built, and the rules that apply to all of them.
@@ -17,9 +13,11 @@ The format is the product. You can replace the tools.
 | 2    | **cairn**  | holds fog and amendments that are not enacted; gives amendments         |
 | 3    | **beacon** | moves the operator between fog work and rulings                         |
 
-> [!CLAIMS] Claims
+> [!CLAIMS]
 >
-> - **Crux stands alone.** The crux package depends on no package of belay, cairn, or beacon.
+> ### Crux stands alone
+>
+> The crux package depends on no package of belay, cairn, or beacon.
 
 **The format goes into repositories that you do not control.** Thus a change to the format is a migration that you cannot run, and a tool that the format depends on cannot change freely.
 
@@ -31,21 +29,29 @@ The format is the product. You can replace the tools.
 
 Cairn holds the work that is not yet a branch: fog, and amendments that nobody enacted.
 
-> [!CLAIMS] Claims
+> [!CLAIMS]
 >
-> - **State outside the repository.** Cairn keeps its records outside the repository, and it never writes into the repository.
-> - **Watcher.** When the main branch changes, the watcher of cairn reads the machine index of crux and warns about each slug in a cairn record that names no claim.
-> - **Witness supply.** When a change to the set of possible witnesses merges, cairn proposes a list of claims and fog to examine again. It never rewrites them.
+> ### State outside the repository
+>
+> Cairn keeps its records outside the repository, and it never writes into the repository.
+>
+> ### Watcher
+>
+> When the main branch changes, the watcher of cairn reads the machine index of crux and warns about each slug in a cairn record that names no claim.
+>
+> ### Witness supply
+>
+> When a change to the set of possible witnesses merges, cairn proposes a list of claims and fog to examine again. It never rewrites them.
 
 **Why outside.** An amendment exists before a branch exists. Fog in the repository adds noise to its history. The cost is that a rename does not change the tracker at the same time. The watcher repairs that cost, and it holds no facts of its own.
 
-**Why the witness supply matters.** When you adopt a type-aware linter or a declarative infrastructure framework, no claim changes. But the set of **possible** claims changes ([[witnesses#the-ladder]]). Cairn records the plan, and the merge is the signal to look again.
+**Why the witness supply matters.** When you adopt a type-aware linter or a declarative infrastructure framework, no claim changes. But the set of **possible** claims changes ([The ladder](witnesses.md#the-ladder)). Cairn records the plan, and the merge is the signal to look again.
 
 ## Build order
 
-**1. Crux.** It runs nothing and stores nothing. Its claims are in [[checks#form-errors]], [[checks#index]], and [[checks#scope]], and the format that it reads is in [[catalog#catalog-files]], [[catalog#claims]], [[catalog#links]], and [[witnesses#witness-blocks]].
+**1. Crux.** It runs nothing and stores nothing. Its claims are in [Form errors](checks.md#form-errors), [Index](checks.md#index), and [Scope](checks.md#scope), and the format that it reads is in [Catalog files](catalog.md#catalog-files), [Claims](catalog.md#claims), [Links](catalog.md#links), and [Witness blocks](witnesses.md#witness-blocks).
 
-**2. A belay MVP.** It runs the sources that `.belay/witnesses.toml` names. It joins their reports to the witness index, makes the readout, and posts it to the pull request. It runs the builder and a new reviewer in a loop, within a budget ([[readout#belay]]).
+**2. A belay MVP.** It runs the sources that `.belay/witnesses.toml` names. It joins their reports to the witness index, makes the readout, and posts it to the pull request. It runs the builder and a new reviewer in a loop, within a budget ([Belay](readout.md#belay)).
 
 **Cairn comes after belay.** Belay makes the catalog useful. Cairn makes it easy to use.
 
@@ -53,7 +59,7 @@ Cairn holds the work that is not yet a branch: fog, and amendments that nobody e
 
 ## Dogfooding
 
-While you build tools 1 and 2, record each problem when it occurs. A manual step that feels **clerical** is a missing feature. A manual step that feels like **thinking** must never be automated. Two items in this second group are settled: _is this worth a claim?_ ([[practice#writing-a-claim]]) and _is this claim covered?_ ([[readout#coverage]]). A complaint that a catalog is tiring to read is evidence about its altitude ([[practice#altitude]]).
+While you build tools 1 and 2, record each problem when it occurs. A manual step that feels **clerical** is a missing feature. A manual step that feels like **thinking** must never be automated. Two items in this second group are settled: _is this worth a claim?_ ([Writing a claim](practice.md#writing-a-claim)) and _is this claim covered?_ ([Coverage](readout.md#coverage)). A complaint that a catalog is tiring to read is evidence about its altitude ([Altitude](practice.md#altitude)).
 
 **An observation that occurred once is an anecdote.** One occurrence changes nothing, and a second occurrence is evidence. The specification keeps a single observation as an _Under watch_ note beside the rule that it questions, and it does not make it a rule. An entry leaves in one of three ways. It occurs again and becomes a rule. Somebody finds that it is wrong, and it is deleted with a line that tells why. Or it stays, because it occurred once and never again. A runbook step costs one question, so one observation is sufficient for a runbook step.
 

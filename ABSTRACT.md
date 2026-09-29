@@ -20,7 +20,7 @@ The catalog is ordinary Markdown. Claims sit in claims blocks, and the **prose**
 
 ## The mechanism, in one pass
 
-A **claim** is a short falsifiable statement: one item in a `[!CLAIMS]` block. Its slug is its file name and an id from its bold label, for example `sending#^retry`, and a wikilink `[[sending#^retry]]` cites it. A **witness** is a part of the repository that can show if the codebase satisfies a claim. An `@attests` block identifies a witness. There is no registry and no identity to migrate. Delete the test, and its block goes with it.
+A **claim** is a short falsifiable statement: one heading in a `[!CLAIMS]` block and the paragraphs under it. Its slug is the path of its file and the slug of its heading, for example `catalog/sending.md#retry`, and an ordinary Markdown link `[Retry](catalog/sending.md#retry)` cites it. A **witness** is a part of the repository that can show if the codebase satisfies a claim. An `@attests` block identifies a witness. There is no registry and no identity to migrate. Delete the test, and its block goes with it.
 
 Crux asks three questions about each claim. They are different questions on purpose.
 
@@ -41,13 +41,13 @@ Work that changes what the catalog promises is an **amendment**. Material that y
 The refusals are load-bearing. Each one keeps a cost out of the core.
 
 - **It never learns the comment syntax of a language.** A directive is a name, whitespace, and one token with no whitespace. The core is a line scanner.
-- **It never resolves a path.** Each check compares one thing that crux read with a different thing that it read. There are no projects: one repository, one catalog, and slugs made from a file name and a claim id.
+- **It never reads the file system.** Each check compares one thing that crux read with a different thing that it read. A path resolves against the list of files that git tracks. There are no projects: one repository, one catalog, and slugs made from a path and a heading.
 - **It has one directive.** Markdown structure declares a claim. `@attests` is the only directive, and it is a verb.
 - **It runs nothing and it stores nothing.** It calculates each index again on each run.
 - **It examines the repository only.** If a checkout cannot show a claim, it is not a claim.
 
 ## Status
 
-The vocabulary and the mechanism are stable. No code implements them. The specification is written in its own format, so each of its claims is unattested until crux exists. It tells what gets built first ([[tools#build-order]]). Open questions and single observations are notes beside the rules that they question.
+The vocabulary and the mechanism are stable. No code implements them. The specification is written in its own format, so each of its claims is unattested until crux exists. It tells what gets built first ([Build order](spec/tools.md#build-order)). Open questions and single observations are notes beside the rules that they question.
 
 This revision comes from a project outside crux, the first to use the vocabulary. Some parts of the model exist because somebody tried a different design and it failed. Other parts exist because that project **built** its design, and the build corrected the design.
