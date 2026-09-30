@@ -12,6 +12,14 @@ How to decide what becomes a claim, and how work moves from a wish to the catalo
 
 **A claim reads alone.** Read it with the glossary, but without its heading and the prose around it. If it is not true or false alone, it depends on context that no audit reads ([Prose](catalog.md#prose)).
 
+## Settling the words
+
+A claim is falsifiable only if its words are clear. Thus, settle the words before you write the claims that use them. Write the definitions. Select one word for each concept, and record the rejected synonyms. This is a convention, and crux does not check it.
+
+**The glossary directive was deleted.** The long form had `@glossary`, and a change to a glossary gave a readout row. The row was usually noise. Add one word to a glossary, and each claim that can use that word gets a yellow row, but no claim changed its meaning. An operator learns to ignore a row like this, and an ignored row is worse than no row.
+
+**The cost of the deletion.** A builder can make a definition narrower, and a claim becomes easier to satisfy. No claim and no witness changes, and nothing mechanical sees it. The reviewer reads the full diff, and the changed definition is in that diff. If a definition change alters what a claim promises, the claim text must also change, and changed claim text is already in the audit scope ([Claim change](checks.md#claim-change)).
+
 ## Rederivable
 
 > **Crux examines the repository. If a checkout cannot show that a claim is true, it is not a claim.**

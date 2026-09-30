@@ -4,15 +4,15 @@
 
 ## Where things live
 
-| If you need                 | Read                                     |
-| --------------------------- | ---------------------------------------- |
-| What this project is        | [`ABSTRACT.md`](./ABSTRACT.md)           |
-| What a word means           | [`spec/glossary.md`](./spec/glossary.md) |
-| How the framework works     | [`spec/`](./spec/)                       |
-| What to do in a session     | [`runbooks/`](./runbooks/)               |
-| Why a rule reads as it does | the prose beside its claims — see below  |
+| If you need                 | Read                                    |
+| --------------------------- | --------------------------------------- |
+| What this project is        | [`ABSTRACT.md`](./ABSTRACT.md)          |
+| What a word means           | [`CONTEXT.md`](./CONTEXT.md)            |
+| How the framework works     | [`spec/`](./spec/)                      |
+| What to do in a session     | [`runbooks/`](./runbooks/)              |
+| Why a rule reads as it does | the prose beside its claims — see below |
 
-New writing goes to one of those homes from the start, and **nothing lives in two of them**. The baseline template ships a `CONTEXT.md` for the project's vocabulary; this repo deletes it, because the glossary is already that home and the specification defines its words inside the catalog.
+New writing goes to one of those homes from the start, and **nothing lives in two of them**.
 
 **The reasoning stays beside the rule it justifies.** This repository has no separate rationale directory: a rejected alternative, a retracted rule, and a deleted design are written into the section that replaced them, because a rule split from its argument is an assertion nobody can weigh. The runbooks are the one exception — they are read per session and carry no history.
 
@@ -20,7 +20,7 @@ New writing goes to one of those homes from the start, and **nothing lives in tw
 
 **Links are the citation form.** In Markdown, cite a claim or a heading with an ordinary relative link, `[Rename](checks.md#rename)`, so it resolves on GitHub and in VS Code. In commits and trackers, write the claim's slug — its path from the repo root plus the heading slug, `spec/checks.md#rename` — which is the same token an `@attests` line uses.
 
-**Write the specification and the runbooks in ASD-STE100 Simplified Technical English.** Short sentences, active voice, and one meaning for each word. [`spec/glossary.md`](./spec/glossary.md) defines the technical words.
+**Write the specification and the runbooks in ASD-STE100 Simplified Technical English.** Short sentences, active voice, and one meaning for each word. [`CONTEXT.md`](./CONTEXT.md) defines the technical words.
 
 ## House rules
 
@@ -36,7 +36,7 @@ New writing goes to one of those homes from the start, and **nothing lives in tw
 
 ## Definition of done
 
-A change is done when its production path is reachable through a real entrypoint; success and expected failure are tested; `vp run ready:agent` passes from a clean checkout; and the documentation is updated where implementation invalidated an assumption — a new term means a [`spec/glossary.md`](./spec/glossary.md) entry, and a change in what the project is or is not means an `ABSTRACT.md` edit.
+A change is done when its production path is reachable through a real entrypoint; success and expected failure are tested; `vp run ready:agent` passes from a clean checkout; and the documentation is updated where implementation invalidated an assumption — a new term means a [`CONTEXT.md`](./CONTEXT.md) entry, and a change in what the project is or is not means an `ABSTRACT.md` edit.
 
 ## Skills
 
