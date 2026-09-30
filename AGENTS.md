@@ -6,7 +6,6 @@
 | How the framework works     | [`spec/`](./spec/)                      |
 | What to do in a session     | [`runbooks/`](./runbooks/)              |
 | Why a rule reads as it does | the prose beside its claims — see below |
-| The full history of a rule  | `git show 27db6c6:docs/README.md`       |
 
 New writing goes to one of those homes from the start, and **nothing lives in two of them**.
 
