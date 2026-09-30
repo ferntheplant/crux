@@ -25,6 +25,12 @@ The format is the product. You can replace the tools.
 
 > [!NOTE] **Open: beacon.** It has no owner, and it adds no data model.
 
+## Tool names
+
+The tools are **crux**, **belay**, **cairn**, and **beacon** ([Tool set](#tool-set)). A tool name has no meaning in the vocabulary. Thus you can rename a tool, and no migration is necessary.
+
+For the same reason, no part of the format uses a tool name. The directive is `@attests`, the frontmatter key is `catalog`, and the block marker is `[!CLAIMS]`. The format goes into repositories that you do not control, and a tool name in it would make a rename into a migration that you cannot run.
+
 ## Cairn
 
 Cairn holds the work that is not yet a branch: fog, and amendments that nobody enacted.

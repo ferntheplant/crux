@@ -67,7 +67,7 @@ A catalog file is an ordinary document. It has a title, then prose that tells wh
 >
 > The slug of each heading is unique in its file. This includes the headings of claims.
 
-**A claims block declares a catalog file.** The first version of this file declared a catalog file with the frontmatter key `catalog`. A file that held no claims needed the key too, only so that other files could link to its headings, and the glossary of this specification was such a file. A link target is now any Markdown file ([Links](#links)), so the key has only one job left: to name a version. A claims block is already the thing that crux reads, so it is sufficient to declare the file. The frontmatter key is a word of the format, not the name of a tool ([Tool names](glossary.md#tool-names)).
+**A claims block declares a catalog file.** The first version of this file declared a catalog file with the frontmatter key `catalog`. A file that held no claims needed the key too, only so that other files could link to its headings, and the glossary of this specification was such a file. A link target is now any Markdown file ([Links](#links)), so the key has only one job left: to name a version. A claims block is already the thing that crux reads, so it is sufficient to declare the file. The frontmatter key is a word of the format, not the name of a tool ([Tool names](tools.md#tool-names)).
 
 **The path, not the file name.** The first version of this file used the file name alone, so that a directory move renamed nothing. The cost was a collision rule: two catalog files with one name, in any directories, were an error, and an ordinary name such as `README` could hold claims only once in a repository. A path cannot collide. A directory move now renames each claim in the moved files, but it does not change their claim text, so rename detection finds it and it opens no audit ([Rename](checks.md#rename)).
 
@@ -83,7 +83,7 @@ The format goes into repositories that you do not control ([Tool set](tools.md#t
 
 **No key means version 1, for all time.** A later version does not change the default. Thus a file with no key never changes its meaning when a new version appears, and only a file that uses a later version must say so. The cost is one rule that a reader must know: an absent key is a version.
 
-**The version names the format, not a tool.** A crux release can read several versions. Its release number is not in the format, for the same reason as each tool name ([Tool names](glossary.md#tool-names)).
+**The version names the format, not a tool.** A crux release can read several versions. Its release number is not in the format, for the same reason as each tool name ([Tool names](tools.md#tool-names)).
 
 **Increase the version only for a change that alters how an existing file reads.** Examples are a change to the slug of a heading, to the form of a slug, or to what a claims block holds. Each is a change after which the same file gives a different slug, a different claim, or a different form error. A new rule that no existing file can break does not increase the version.
 

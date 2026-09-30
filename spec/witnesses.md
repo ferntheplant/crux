@@ -59,7 +59,7 @@ Thus the core ignores `*/`, `-->`, and `#`, and it does not know what they are. 
 
 **A directive exists only for what the core must resolve without intelligence.** All other text is prose. There is no `@run`: the core runs nothing, and an agent reads a command as prose. The condition, the reason, and the rejected option are prose for the same reason.
 
-**The name stays `@attests`.** It is a verb, and it tells what the line means: this block attests that claim. A tool name in its place would put a migration into repositories that you do not control ([Tool names](glossary.md#tool-names)).
+**The name stays `@attests`.** It is a verb, and it tells what the line means: this block attests that claim. A tool name in its place would put a migration into repositories that you do not control ([Tool names](tools.md#tool-names)).
 
 ### Markdown and files with no comments
 
