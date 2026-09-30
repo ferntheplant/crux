@@ -6,12 +6,12 @@ How belay measures a change against the catalog. Belay takes an amendment, asks 
 
 Crux asks four questions about each claim. They are different questions on purpose.
 
-| Question | Answered by | Cost | Made void by | Default |
-| --- | --- | --- | --- | --- |
-| **existence** | a form check | free | nothing — crux calculates it on each run | calculated each time |
-| **verdict** | an adapter or judge | free, or expensive | computational: each canvass. Inferential: a diff that the judge selects | **asked**; triaged if inferential |
-| **standing** | an auditor | always expensive | a change to the instrument or to the claim text | **kept**; audited after a change |
-| **coverage** | an auditor | always expensive | a change to one of the instruments of the claim, or to its claim text | **kept**; audited after a change |
+| Question      | Answered by         | Cost               | Made void by                                                            | Default                           |
+| ------------- | ------------------- | ------------------ | ----------------------------------------------------------------------- | --------------------------------- |
+| **existence** | a form check        | free               | nothing — crux calculates it on each run                                | calculated each time              |
+| **verdict**   | an adapter or judge | free, or expensive | computational: each canvass. Inferential: a diff that the judge selects | **asked**; triaged if inferential |
+| **standing**  | an auditor          | always expensive   | a change to the instrument or to the claim text                         | **kept**; audited after a change  |
+| **coverage**  | an auditor          | always expensive   | a change to one of the instruments of the claim, or to its claim text   | **kept**; audited after a change  |
 
 A computational verdict is cheap, so each canvass asks it. An inferential verdict is expensive, so a judge does a triage of the diff first. A standing and a coverage stay the same until a change, because only an intelligence can set them.
 
