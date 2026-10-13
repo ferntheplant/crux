@@ -24,30 +24,30 @@ A claim is falsifiable only if its words are clear. Thus, settle the words befor
 
 Crux uses its own convention ([Settling the words](#settling-the-words)). This table gives the rejected synonyms of the words of crux, and the reason for each.
 
-| Word                   | Rejected because                                                                                                                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **clause**             | It named a part of a claim. A claim is already the smallest promise, so one thing got two words.                                                                    |
-| **marker**             | It named the same thing as _witness_. One thing gets one word.                                                                                                      |
-| **project**            | It was tried in three forms, and all three failed. See [Groups](catalog.md#groups).                                                                                 |
-| **run**                | You cannot run a prose witness.                                                                                                                                     |
-| **poll**               | A poll samples. A canvass is complete. _Poll_ is the fallback if _canvass_ is too easy to misspell.                                                                 |
-| **passes** / **fails** | _The witness fails_ can mean that the code is bad or that the witness is bad.                                                                                       |
-| **ADR**                | An ADR holds the decision and the reasoning in one record. The catalog holds claims, with the reasoning as prose.                                                   |
-| **complete**           | This was a name for _covered_. No audit can prove that nothing is missing.                                                                                          |
-| **section number**     | `§8.2` was a second identity for a heading, and it did not move with the heading. A link cites the slug.                                                            |
-| **pin**                | A ` ^id` at the end of a claim fixed its id. The heading of a claim now gives its slug, and GitHub and VS Code do not go to a pin. See [Claims](catalog.md#claims). |
-| **id**                 | It named the part of a slug after `#^`. A claim now has a heading slug, which is a word that each viewer already uses.                                              |
-| **wikilink**           | `[[file#heading]]` named a file by a short name, which can match several files. See [Links](catalog.md#links).                                                      |
-| `@claim`               | Markdown structure declares a claim. The directive was a second name for a thing that the label already names.                                                      |
-| `@claims`              | A directive with no token breaks the directive form. The `[!CLAIMS]` line does its work. See [Claims](catalog.md#claims).                                           |
-| `@crux`                | A tool name in the format is a migration that you cannot run. See [Tool names](tools.md#tool-names).                                                                |
-| `@witness`             | `@attests` already opens a witness, so this directive added no information.                                                                                         |
-| `@kind`                | Nothing used its closed set. The readout is in the order of the claims.                                                                                             |
-| `@tag`                 | Free tags change without a signal. Declared tags need a registry. See [Groups](catalog.md#groups).                                                                  |
-| `@glossary`            | Its only function was a readout row, and the row was noise. See [Settling the words](#settling-the-words).                                                          |
-| `@grounds`             | It linked a rationale document to claims, and nothing mechanical read it. See [Prose](catalog.md#prose).                                                            |
-| `@scope`               | It was a manual list of the dependencies of a witness. A judgment replaces its one use. See [Scope](checks.md#scope).                                               |
-| a bare `@end`          | It is a keyword in Objective-C and Texinfo. A stray one cuts a witness short. Each terminator names its opener.                                                     |
+| Word | Rejected because |
+| --- | --- |
+| **clause** | It named a part of a claim. A claim is already the smallest promise, so one thing got two words. |
+| **marker** | It named the same thing as _witness_. One thing gets one word. |
+| **project** | It was tried in three forms, and all three failed. See [Groups](catalog.md#groups). |
+| **run** | You cannot run a prose witness. |
+| **poll** | A poll samples. A canvass is complete. _Poll_ is the fallback if _canvass_ is too easy to misspell. |
+| **passes** / **fails** | _The witness fails_ can mean that the code is bad or that the witness is bad. |
+| **ADR** | An ADR holds the decision and the reasoning in one record. The catalog holds claims, with the reasoning as prose. |
+| **complete** | This was a name for _covered_. No audit can prove that nothing is missing. |
+| **section number** | `§8.2` was a second identity for a heading, and it did not move with the heading. A link cites the slug. |
+| **pin** | A ` ^id` at the end of a claim fixed its id. The heading of a claim now gives its slug, and GitHub and VS Code do not go to a pin. See [Claims](catalog.md#claims). |
+| **id** | It named the part of a slug after `#^`. A claim now has a heading slug, which is a word that each viewer already uses. |
+| **wikilink** | `[[file#heading]]` named a file by a short name, which can match several files. See [Links](catalog.md#links). |
+| `@claim` | Markdown structure declares a claim. The directive was a second name for a thing that the label already names. |
+| `@claims` | A directive with no token breaks the directive form. The `[!CLAIMS]` line does its work. See [Claims](catalog.md#claims). |
+| `@crux` | A tool name in the format is a migration that you cannot run. See [Tool names](tools.md#tool-names). |
+| `@witness` | `@attests` already opens a witness, so this directive added no information. |
+| `@kind` | Nothing used its closed set. The readout is in the order of the claims. |
+| `@tag` | Free tags change without a signal. Declared tags need a registry. See [Groups](catalog.md#groups). |
+| `@glossary` | Its only function was a readout row, and the row was noise. See [Settling the words](#settling-the-words). |
+| `@grounds` | It linked a rationale document to claims, and nothing mechanical read it. See [Prose](catalog.md#prose). |
+| `@scope` | It was a manual list of the dependencies of a witness. A judgment replaces its one use. See [Scope](checks.md#scope). |
+| a bare `@end` | It is a keyword in Objective-C and Texinfo. A stray one cuts a witness short. Each terminator names its opener. |
 
 > [!NOTE]
 >
@@ -104,10 +104,10 @@ Fog is material that you want but cannot yet write as a claim. It is not a verdi
 
 > **Fog is clear when you can write the claim and select its witness.**
 
-| State                  | Can you write the claim? | Held by | Exit                                       |
-| ---------------------- | ------------------------ | ------- | ------------------------------------------ |
-| **fog**                | no                       | cairn   | examine the checkout, or examine the world |
-| **proposed amendment** | yes                      | branch  | the merge                                  |
+| State | Can you write the claim? | Held by | Exit |
+| --- | --- | --- | --- |
+| **fog** | no | cairn | examine the checkout, or examine the world |
+| **proposed amendment** | yes | branch | the merge |
 
 - **A fog item records what will clear it.** One search and a temporary deployment have very different costs. This field lets you sort the queue.
 - **Fog is inability, not unwillingness.** A claim that you can write is an amendment that you did not write yet. _Not now_ makes no artifact.

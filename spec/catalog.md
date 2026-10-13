@@ -89,9 +89,9 @@ The format goes into repositories that you do not control ([Tool set](tools.md#t
 
 **The witness side has no version.** An `@attests` token is a slug, and the catalog file that declares the slug sets the rules that make it. A version change that changes slugs is thus a rename, and rename detection applies to it ([Rename](checks.md#rename)).
 
-| Version | Change                                                                                  |
-| ------- | --------------------------------------------------------------------------------------- |
-| 1       | The first version: claims blocks of headings, `path#heading` slugs, and Markdown links. |
+| Version | Change |
+| --- | --- |
+| 1 | The first version: claims blocks of headings, `path#heading` slugs, and Markdown links. |
 
 ## Claims
 
