@@ -4,68 +4,50 @@ The tools that read the format, the order in which they get built, and the rules
 
 ## Tool set
 
-The format is the product. You can replace the tools.
+The format is the product. You can replace the tools. Each tool does one job in one layer, and it meets the other tools only through messages ([Interfaces](interfaces.md)).
 
-|  | Name | Does |
+| Layer | Name | Does |
 | --- | --- | --- |
-| core | **crux** | reads claims and witnesses; reports form errors ([checks](./checks.md)) |
-| 1 | **belay** | takes an amendment; makes a PR that is cheap to rule on |
-| 2 | **cairn** | holds fog and amendments that are not enacted; gives amendments |
-| 3 | **beacon** | moves the operator between fog work and rulings |
+| requirements | **crux** | reads claims and witnesses; reports form errors; gives the index and the scope ([checks](./checks.md)) |
+| requirements | **cairn** | holds fog and amendments that are not enacted; gives amendments ([cairn](cairn/README.md)) |
+| measurement | **carabiner** | joins tool reports and answers to witnesses; makes the readout ([carabiner](carabiner/README.md)) |
+| orchestration | **belay** | takes an amendment; makes a PR that is cheap to rule on ([belay](belay/README.md)) |
+| execution | **bedrock** | gives workspaces and agent runs ([bedrock](bedrock/README.md)) |
+| attention | **beacon** | moves the operator between fog work and rulings |
 
 > [!CLAIMS]
 >
-> ### Crux stands alone
+> ### Tools stand alone
 >
-> The crux package depends on no package of belay, cairn, or beacon.
+> The package of each tool depends on no package of a different tool.
 
 **The format goes into repositories that you do not control.** Thus a change to the format is a migration that you cannot run, and a tool that the format depends on cannot change freely.
 
-**A tracker stores slugs. It never stores claim text.** The person or tool with the checkout resolves the slug. The interface is one thing: a tracker gives an amendment.
+**Tools stand alone was _Crux stands alone_.** The first version kept only the crux package free of the others. Now each tool can change on its own, so each package is free of the others. A tool that needs a different tool calls it, or reads a file that it wrote, in the form that [Messages](interfaces.md#messages) tells.
 
 > [!NOTE] **Open: beacon.** It has no owner, and it adds no data model.
 
 ## Tool names
 
-The tools are **crux**, **belay**, **cairn**, and **beacon** ([Tool set](#tool-set)). A tool name has no meaning in the vocabulary. Thus you can rename a tool, and no migration is necessary.
+The tools are **crux**, **cairn**, **carabiner**, **belay**, **bedrock**, and **beacon** ([Tool set](#tool-set)). A tool name has no meaning in the vocabulary. Thus you can rename a tool, and no migration is necessary.
 
-For the same reason, no part of the format uses a tool name. The directive is `@attests`, the frontmatter key is `catalog`, and the block marker is `[!CLAIMS]`. The format goes into repositories that you do not control, and a tool name in it would make a rename into a migration that you cannot run.
-
-## Cairn
-
-Cairn holds the work that is not yet a branch: fog, and amendments that nobody enacted.
-
-> [!CLAIMS]
->
-> ### State outside the repository
->
-> Cairn keeps its records outside the repository, and it never writes into the repository.
->
-> ### Watcher
->
-> When the main branch changes, the watcher of cairn reads the machine index of crux and warns about each slug in a cairn record that names no claim.
->
-> ### Witness supply
->
-> When a change to the set of possible witnesses merges, cairn proposes a list of claims and fog to examine again. It never rewrites them.
-
-**Why outside.** An amendment exists before a branch exists. Fog in the repository adds noise to its history. The cost is that a rename does not change the tracker at the same time. The watcher repairs that cost, and it holds no facts of its own.
-
-**Why the witness supply matters.** When you adopt a type-aware linter or a declarative infrastructure framework, no claim changes. But the set of **possible** claims changes ([The ladder](witnesses.md#the-ladder)). Cairn records the plan, and the merge is the signal to look again.
+For the same reason, no part of the format uses a tool name. The directive is `@attests`, the frontmatter key is `catalog`, the block marker is `[!CLAIMS]`, and the file of sources is `canvass.jsonc`. The format goes into repositories that you do not control, and a tool name in it would make a rename into a migration that you cannot run.
 
 ## Build order
 
 **1. Crux.** It runs nothing and stores nothing. Its claims are in [Form errors](checks.md#form-errors), [Index](checks.md#index), and [Scope](checks.md#scope), and the format that it reads is in [Catalog files](catalog.md#catalog-files), [Claims](catalog.md#claims), [Links](catalog.md#links), and [Witness blocks](witnesses.md#witness-blocks).
 
-**2. A belay MVP.** It runs the sources that `.belay/witnesses.toml` names. It joins their reports to the witness index, makes the readout, and posts it to the pull request. It runs the builder and a new reviewer in a loop, within a budget ([Belay](readout.md#belay)).
+**2. Carabiner.** It reads the reports of the sources that `canvass.jsonc` names, joins them to the witness index, and makes the readout from them and from the answers ([Carabiner](carabiner/README.md)). With crux and carabiner, a person can make a readout by hand.
 
-**Cairn comes after belay.** Belay makes the catalog useful. Cairn makes it easy to use.
+**3. A belay MVP on a bedrock MVP.** Belay runs the builder and a new reviewer in a loop, within a budget, and posts the readout to the pull request ([Belay](belay/README.md)). Bedrock gives one kind of workspace and one harness ([Bedrock](bedrock/README.md)).
+
+**Cairn comes after belay.** Belay makes the catalog useful. Cairn makes it easy to use. Until cairn exists, the operator writes the amendment file ([Layers](interfaces.md#layers)).
 
 **This specification is its own first catalog.** No code implements crux yet, so each claim in it is unattested. The first build of crux can run on this repository, and its form errors are the work list.
 
 ## Dogfooding
 
-While you build tools 1 and 2, record each problem when it occurs. A manual step that feels **clerical** is a missing feature. A manual step that feels like **thinking** must never be automated. Two items in this second group are settled: _is this worth a claim?_ ([Writing a claim](practice.md#writing-a-claim)) and _is this claim covered?_ ([Coverage](readout.md#coverage)). A complaint that a catalog is tiring to read is evidence about its altitude ([Altitude](practice.md#altitude)).
+While you build the first tools, record each problem when it occurs. A manual step that feels **clerical** is a missing feature. A manual step that feels like **thinking** must never be automated. Two items in this second group are settled: _is this worth a claim?_ ([Writing a claim](practice.md#writing-a-claim)) and _is this claim covered?_ ([Coverage](readout.md#coverage)). A complaint that a catalog is tiring to read is evidence about its altitude ([Altitude](practice.md#altitude)).
 
 **An observation that occurred once is an anecdote.** One occurrence changes nothing, and a second occurrence is evidence. The specification keeps a single observation as an _Under watch_ note beside the rule that it questions, and it does not make it a rule. An entry leaves in one of three ways. It occurs again and becomes a rule. Somebody finds that it is wrong, and it is deleted with a line that tells why. Or it stays, because it occurred once and never again. A runbook step costs one question, so one observation is sufficient for a runbook step.
 

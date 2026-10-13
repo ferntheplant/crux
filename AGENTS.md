@@ -2,12 +2,12 @@
 
 ## Where things live
 
-| If you need                 | Read                                    |
-| --------------------------- | --------------------------------------- |
-| What this project is        | [`ABSTRACT.md`](./ABSTRACT.md)          |
-| What a word means           | [`CONTEXT.md`](./CONTEXT.md)            |
-| How the framework works     | [`spec/`](./spec/)                      |
-| What to do in a session     | [`runbooks/`](./runbooks/)              |
+| If you need | Read |
+| --- | --- |
+| What this project is | [`ABSTRACT.md`](./ABSTRACT.md) |
+| What a word means | [`CONTEXT.md`](./CONTEXT.md); a tool's own words in `spec/<tool>/CONTEXT.md` |
+| How the framework works | [`spec/`](./spec/) |
+| What to do in a session | [`runbooks/`](./runbooks/) |
 | Why a rule reads as it does | the prose beside its claims — see below |
 
 New writing goes to one of those homes from the start, and **nothing lives in two of them**.

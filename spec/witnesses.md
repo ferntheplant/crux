@@ -51,7 +51,7 @@ Thus the core ignores `*/`, `-->`, and `#`, and it does not know what they are. 
 - **A witness needs no stable identity.** A diff already records a moved file.
 - **A witness has two users.** An adapter changes it into a verdict. An auditor changes it into a standing.
 
-**A witness attests claims, not section headings.** The long form let a witness attest a group of claims. Then a new claim in that group was attested on the day it was written, by a witness that nobody had read against it. That is under-attribution ([Over-attribution](readout.md#over-attribution)).
+**A witness attests claims, not section headings.** The long form let a witness attest a group of claims. Then a new claim in that group was attested on the day it was written, by a witness that nobody had read against it. That is under-attribution ([Over-attribution](carabiner/README.md#over-attribution)).
 
 **An extent that is too large is safe. An extent that is too small is not safe.** Too large causes more audits. Too small lets an unsound witness stay. Thus the large default is never wrong, only expensive, and a terminator is optional. Use `@attests:end` where one witness is among lines that no witness owns, for example one rule in a lint configuration.
 
@@ -86,7 +86,7 @@ Types, tests, and lint rules are **computational**: a tool answers them. Prose i
 
 > **A witness that no tool adapter reports on is inferential.**
 
-Crux cannot identify a test or a request handler, and it does not need to. The source that answers sets the rung. Nothing declares it ([Adapters](readout.md#adapters)).
+Crux cannot identify a test or a request handler, and it does not need to. The source that answers sets the rung. Nothing declares it ([Adapters](carabiner/README.md#adapters)).
 
 **A type witness must bind its subject.** A `ReadOnlyDb` type proves nothing if the dashboard can still get `Db` directly. The project compiles, and the witness affirms, but it tells nothing. A type has no failing state before the build. Thus the builder breaks it: the builder adds the write that the type forbids, and makes sure that the build fails.
 
@@ -100,9 +100,13 @@ An inferential witness names its target and tells when it is valid. It can be a 
 ```md
 > @attests catalog/report.md#reads-at-a-glance crux-ignore
 
-Run `demo report --fixture test/fixtures/mixed-status`. The rendering code is in `src/report/`.
+The rendering code is in `src/report/`.
 
-Valid when: a reader can tell a failing row from a skipped row without the labels.
+Valid when:
+
+- Given the fixture `test/fixtures/mixed-status`
+- When a reader runs `demo report --fixture test/fixtures/mixed-status`
+- Then the reader can tell a failing row from a skipped row without the labels
 ```
 
 It can also be on the code that it examines. This is the correct first rung for a codebase that has no tests:
@@ -111,15 +115,17 @@ It can also be on the code that it examines. This is the correct first rung for 
 /**
  * @attests catalog/checkout.md#never-charges-an-expired-cart    crux-ignore
  *
- * Valid when: the handler compares the expiry with the server-side timestamp
- * before it makes the payment client, and an expired cart returns 409 with
- * no call to payments.
+ * Valid when:
+ * - Given a cart whose expiry is before the server-side timestamp
+ * - When the client posts the cart to checkout
+ * - Then the handler returns 409 before it makes the payment client,
+ *   and no call goes to payments
  */
 export async function checkout(req: Request) { … }
 // @attests:end    crux-ignore
 ```
 
-**Write the condition, not only the assertion.** _This endpoint satisfies the claim_ gives an auditor nothing to examine. The _Valid when_ line is the instrument. It also tells where to look, and the triage of the judge reads it ([Verdict](readout.md#verdict)).
+**Write the condition, not only the assertion.** _This endpoint satisfies the claim_ gives an auditor nothing to examine. The _Valid when_ condition is the instrument. It also tells where to look, and the triage of the judge reads it ([Verdict](readout.md#verdict)). Write it as one example: given a state, when an event occurs, then a reader observes a result at the subject ([The shape of an example](practice.md#the-shape-of-an-example)).
 
 **The upgrade is one merge.** When a test exists, add its `@attests` and delete the inline block. The claim does not change, and the readout shows the higher rung.
 
@@ -173,4 +179,4 @@ Tests can fail in the same way. Examples are a snapshot that you record again af
 
 A lint rule that forbids `Math.random` is sound for _nobody can guess the token_. But a weak generator that somebody writes by hand passes it. Add a second witness with the opposite polarity: a test that observes the real path get its bytes from the approved source. Do this check first on a claim whose witnesses are all prohibitions.
 
-A witness that has never denied has not been tested. Before a handoff, the builder breaks each witness that can deny, and makes sure that it denies ([Handoff when green](readout.md#handoff-when-green)).
+A witness that has never denied has not been tested. Before a handoff, the builder breaks each witness that can deny, and makes sure that it denies ([Handoff when green](belay/README.md#handoff-when-green)).

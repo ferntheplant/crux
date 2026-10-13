@@ -12,6 +12,8 @@ This runbook is procedure. It has no history and no rejected alternatives. Follo
 
 ## 1. Set the audit scope before you read
 
+Carabiner lists the questions of the readout: the triage, the standings in scope, and the coverage to set ([The questions for the reviewer](../spec/carabiner/README.md#the-questions-for-the-reviewer)). Start from that list. This step tells why the list is what it is.
+
 > **Audit scope** = witnesses whose instrument changed in this diff **∪** witnesses that attest a claim whose text changed in this diff.
 
 The first term is the most important. It finds a builder that added a witness to a claim that is **not** in the amendment. That is where a builder sets its own measure of success ([Scope](../spec/checks.md#scope)).
@@ -24,7 +26,7 @@ A change to the subject does **not** put a witness in the audit scope. It asks t
 
 ## 2. Do the triage of the inferential witnesses
 
-Do one pass. Read the diff and the _Valid when_ line of each inferential witness. Return the witnesses that the diff can affect, and answer them ([Verdict](../spec/readout.md#verdict)).
+Do one pass. Read the diff and the _Valid when_ condition of each inferential witness. Return the witnesses that the diff can affect, and answer them ([Verdict](../spec/readout.md#verdict)).
 
 - Ask if HEAD still satisfies the claim, because the base did. Do not ask if the diff is acceptable alone.
 - When you are not sure, ask the witness. A false red costs minutes. A false green is the failure.
@@ -44,7 +46,7 @@ Read the instrument and the code that it examines ([Standing](../spec/readout.md
 - **Sound does not mean sufficient.** A witness can support part of a claim and be sound. The full claim is the next question.
 - **Is its contract its own?** A type derived from the subject, a snapshot recorded again, or a fixture made from the current output takes its expected value from the subject. That witness is unsound.
 - **What does the instrument depend on?** Name each shared helper or type utility that gives the witness its meaning. Decide if it is stable enough to trust.
-- **Examine what it observes, not only what it asserts.** An invocation result, an HTTP status, or a job outcome can be a proxy that reports success when the subject failed ([Subject and instrument](../spec/witnesses.md#subject-and-instrument)). Ask where the observation occurs.
+- **Examine what it observes, not only what it asserts.** An invocation result, an HTTP status, or a job outcome can be a proxy that reports success when the subject failed ([Subject and instrument](../spec/witnesses.md#subject-and-instrument)). Ask where the observation occurs. The _Then_ of an example names it.
 - **A type witness must bind its subject.** Can the code go around the type? If yes, the witness tells nothing.
 - **A standing belongs to a witness and a claim together.** One witness that attests three claims has three standings, and they can be different. To repair one bad pair, remove that one `@attests`.
 
@@ -52,6 +54,7 @@ You can set **unsound** on your own authority. To find a bad witness needs no au
 
 ## 5. For each claim: do the witnesses reach it together?
 
+- **Walk the clauses of the claim.** For each _While_ state, each _When_ event, each _If_ event, and the response at the system that the claim names, find the witness that reaches it ([Coverage by clause](../spec/practice.md#coverage-by-clause)). An _under-covered_ answer names the clause that no witness reaches.
 - **Do this check first on a claim whose witnesses are all prohibitions.** A witness that removes one way to fail does not affirm the way to succeed ([Polarity](../spec/witnesses.md#polarity)).
 - **Ask: if somebody adds a new one, which witness sees it?** A new handler, route, or renderer in a new file is outside each existing witness. A lint rule, a type, or a test that examines all instances reaches it.
 - **Look for the opposite mismatch.** A witness that reaches **more** than its claim means that the claim is too small. Repair the claim, not the witness.
@@ -78,4 +81,4 @@ A repair changes the instrument, and a changed instrument is in scope again. A s
 
 Put it in the order of the claims: the claim text first, then the result. Do not sort by rung or by colour ([Readout](../spec/readout.md#readout)).
 
-A red item never goes to the operator. It is a stop, and the work goes back to the builder. The ruling gets only three types of open item: silent verdicts, standings that you proposed as sound, and coverage that you proposed as covered ([Belay](../spec/readout.md#belay)).
+A red item never goes to the operator. It is a stop, and the work goes back to the builder. The ruling gets only three types of open item: silent verdicts, standings that you proposed as sound, and coverage that you proposed as covered ([Making a readout](../spec/readout.md#making-a-readout)).

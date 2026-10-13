@@ -44,7 +44,7 @@ A machine finds each form error with no tool, no language, and no intelligence. 
 
 ## Index
 
-The index is what crux knows about one checkout. Crux calculates it again on each run.
+The index is what crux knows about one commit. Crux calculates it again on each run. Each other tool reads the catalog through the index ([Index only](interfaces.md#index-only)).
 
 > [!CLAIMS]
 >
@@ -58,7 +58,15 @@ The index is what crux knows about one checkout. Crux calculates it again on eac
 >
 > ### Machine form
 >
-> `crux index --json` writes the index to standard output. Each catalog file has its path and its version. Each claim has its slug, file path, line range, label, and a hash of its claim text. Each witness has its file, extent, and slugs.
+> `crux index --json` writes the index to standard output. Each catalog file has its path and its version. Each claim has its slug, file path, line range, label, claim text, and a hash of its claim text. Each witness has its file, extent, and slugs. Each heading has its file, line, level, text, and heading slug. Each link has its file, line, and destination, and the path and the fragment that it resolves to.
+>
+> ### Index version
+>
+> The machine form names the version of its schema. A change that removes a field or changes the meaning of a field increases the version. A new field does not.
+>
+> ### Index of a commit
+>
+> `crux index --ref <commit>` makes the index of that commit from the objects in git. The working tree does not change it.
 >
 > ### Summary
 >
@@ -66,17 +74,23 @@ The index is what crux knows about one checkout. Crux calculates it again on eac
 >
 > ### Deterministic
 >
-> One checkout gives the same output, byte for byte, on each run.
+> One commit gives the same output, byte for byte, on each run.
 >
 > ### Read-only
 >
 > Crux writes no file in the repository, and it keeps no cache that changes its output.
 
-The machine form is for adapters and for cairn ([Cairn](tools.md#cairn)). A readout is never committed ([Readout](readout.md#readout)), and neither is an index.
+The machine form is for each other tool ([Messages](interfaces.md#messages)). A readout is never committed ([Not committed](readout.md#not-committed)), and neither is an index.
+
+**The index has its own version.** The version of a catalog file tells how to read the Markdown ([Versions](catalog.md#versions)). The version of the index tells how to read the JSON. They change for different reasons. A new version of the format can give the same index, and a new field in the index changes no catalog file. Thus a tool that reads the index does not change when the format changes.
+
+**The index holds the claim text and the links.** The first machine form had only a hash of the claim text. Then each tool that needed the text had to parse the catalog file, and that breaks [Index only](interfaces.md#index-only). The headings and the links make the index a graph: each citation and each witness of a claim is in it. A documentation site or a search is then a view of the index, not a second parser.
+
+**Crux reads git objects, not the file system.** An index of a commit other than HEAD comes from the objects that git keeps. This is the same source as the list of tracked files ([Links](catalog.md#links)).
 
 ## Scope
 
-Given the machine index of the merge base and of HEAD, crux names the audit scope. It compares text by slug, never by position.
+`crux scope <base>` compares the index of the base commit with the index of HEAD, and names the audit scope and the catalog changes. It compares text by slug, never by position.
 
 > **Audit scope** = witnesses whose instrument changed **∪** witnesses that attest a claim whose text changed.
 
@@ -101,18 +115,28 @@ Given the machine index of the merge base and of HEAD, crux names the audit scop
 > ### Rename in a witness
 >
 > When the only change in the extent of a witness is an `@attests` slug, from an old slug to its new slug in a reported rename, that witness is not in scope.
+>
+> ### Base from the caller
+>
+> Crux uses the base commit that its caller names. It never selects a base.
+>
+> ### Catalog changes
+>
+> `crux scope` lists each claim that the diff adds, changes, deletes, or renames, with its slug and its claim text before and after.
 
 The first term of the scope is the most important. A builder that adds a test to a claim outside the amendment sets its own measure of success, and the instrument change puts that test in front of the auditor.
 
-**Crux detects a rename whether or not a crux command did it.** The detection needs identical claim text, after the whitespace is normalised. Thus it can miss a rename, and it cannot invent one. A missed rename is a deletion and an addition, and each witness of the claim is in scope. That is over-attribution, which is permitted ([Over-attribution](readout.md#over-attribution)). A witness that nobody updated after a rename is orphaned, and the form check finds it.
+**Crux detects a rename whether or not a crux command did it.** The detection needs identical claim text, after the whitespace is normalised. Thus it can miss a rename, and it cannot invent one. A missed rename is a deletion and an addition, and each witness of the claim is in scope. That is over-attribution, which is permitted ([Over-attribution](carabiner/README.md#over-attribution)). A witness that nobody updated after a rename is orphaned, and the form check finds it.
 
 **Three edits rename a claim, and none of them opens an audit.** A label edit renames it, because the label is a name and its slug is the slug of the heading ([Claim heading](catalog.md#claim-heading)). A move to a different file renames it. A move of its file to a different directory renames it, because the path is part of the slug ([File path](catalog.md#file-path)). The cost that stays is the edit to each `@attests` and each link that cites the old slug.
 
 **A section heading edit renames nothing.** No section heading is part of a slug. It only makes the heading links to it dangling, and the form check finds them.
 
-**A rename and a text change in one diff are a deletion and an addition.** The scope compares the merge base with HEAD, so it sees only the sum of a pull request. Put a large rename in its own pull request.
+**A rename and a text change in one diff are a deletion and an addition.** The scope compares the base with HEAD, so it sees only the sum of a pull request. Put a large rename in its own pull request.
 
-> [!NOTE] **Open: the diff base.** This blocks belay. The merge base is the clear answer, and it needs git.
+**The caller names the base.** The diff base was an open question, and it blocked belay. The merge base with the target branch is the usual answer, and belay gives it. But only the caller knows the target branch, and a person who makes a readout by hand can need a different base.
+
+**The catalog changes are what an amendment predicts.** Each entry of an amendment is one catalog change ([Entry](interfaces.md#entry)). Crux lists the changes, and the readout compares them with the entries ([Amendment match](readout.md#amendment-match)).
 
 ### Scope as a directive
 

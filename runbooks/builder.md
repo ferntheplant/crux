@@ -26,11 +26,17 @@ Move each claim as high on the ladder as it can correctly go ([The ladder](../sp
 - **Is the contract its own?** Do not take the expected value from the subject ([Stated contract](../spec/witnesses.md#stated-contract)). Write the allowed shape of a type. Do not derive it with `Omit` from the type that you examine. Do not record a snapshot again to make a test pass.
 - **Is the subject bound to the type?** A type witness proves nothing if the code can go around the type.
 
-For an inferential witness, write a _Valid when_ line. Tell what must be true and where to look. The judge reads this line for its triage ([Verdict](../spec/readout.md#verdict)).
+Read each claim by its clauses: _Where_, _While_, _When_ or _If_, the system, and the response ([The shape of a claim](../spec/practice.md#the-shape-of-a-claim)). Each clause needs a witness that reaches it.
+
+- **Write an example before each witness.** Given a state, when an event occurs, then a reader observes a result at the subject ([The shape of an example](../spec/practice.md#the-shape-of-an-example)). The witness makes the example true or false.
+- **Cause each _If_ event.** A claim with an _If … then_ clause, or with a response that says _no X occurs_, needs a witness that causes the unwanted event and observes that no harm occurs.
+- **Name the test by its example** when the test runner permits it.
+
+For an inferential witness, the example is its _Valid when_ condition. Tell what must be true and where to look. The judge reads this condition for its triage ([Verdict](../spec/readout.md#verdict)).
 
 ## 3. Escalate when the claim is wrong
 
-You cannot change the amendment on your own authority. The operator selects the claims ([Belay](../spec/readout.md#belay)). Tell the proposed change, and stop ([Escalation stops the build](../spec/readout.md#escalation-stops-the-build)).
+You cannot change the amendment on your own authority. The operator selects the claims ([Escalation](../spec/interfaces.md#escalation)). Tell the proposed change, and stop ([Escalation stops the build](../spec/belay/README.md#escalation-stops-the-build)).
 
 This is a normal step. If you escalate on **each** claim, you got fog, not an amendment ([Fog](../spec/practice.md#fog)).
 
@@ -50,7 +56,7 @@ In one unit of work, five structural witnesses were all green on the first run. 
 
 ## 5. Hand off when the canvass is green
 
-Green is a **handoff**. It does not mean that the work is done ([Handoff when green](../spec/readout.md#handoff-when-green)). It tells that the subject satisfies the witnesses. It tells nothing about whether the witnesses support the claims.
+Green is a **handoff**. It does not mean that the work is done ([Handoff when green](../spec/belay/README.md#handoff-when-green)). It tells that the subject satisfies the witnesses. It tells nothing about whether the witnesses support the claims.
 
 Before you hand off:
 
@@ -58,7 +64,8 @@ Before you hand off:
 - [ ] Each claim is true or false when you read it alone, without its heading ([Writing a claim](../spec/practice.md#writing-a-claim)).
 - [ ] Each claim in the amendment has a minimum of one witness that attests it alone ([Several claims](../spec/witnesses.md#several-claims)).
 - [ ] Each witness that **can** deny has denied once (step 4).
-- [ ] Each inferential witness has a _Valid when_ line.
+- [ ] Each inferential witness has a _Valid when_ condition with Given, When, and Then.
+- [ ] Each _If … then_ clause has a witness that causes the unwanted event.
 - [ ] The amendment names each witness that you wrote against an artifact that a later amendment will make ([Amendments](../spec/practice.md#amendments)).
 - [ ] The amendment names each seam that this build replaced ([Amendments](../spec/practice.md#amendments)).
 

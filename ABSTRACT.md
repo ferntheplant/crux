@@ -36,6 +36,12 @@ To **canvass** is to ask each witness for a verdict. To **audit** is to read the
 
 Work that changes what the catalog promises is an **amendment**. Material that you want but cannot yet write as a claim is **fog**. You clear fog. You do not collect it.
 
+## Around the format
+
+Crux is the backbone of a larger system, and each other tool does one job in one layer. **Cairn** holds the work that is not yet a branch. **Carabiner** makes the readout from tool reports and answers. **Belay** runs a builder and a reviewer until a pull request is ready for the ruling. **Bedrock** gives them workspaces and agent runs. **Beacon** moves the attention of the operator.
+
+The tools meet only through messages in the words of crux: the index, the amendment, the escalation, the answers, and the readout. Thus you can replace one tool, or do its work by hand, and change no other tool. The format itself is the part that is easy to change: the index stands between it and each tool ([Interfaces](spec/interfaces.md)).
+
 ## What crux refuses to do
 
 The refusals are load-bearing. Each one keeps a cost out of the core.

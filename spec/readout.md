@@ -1,6 +1,6 @@
 # The readout
 
-How belay measures a change against the catalog. Belay takes an amendment, asks each witness for a verdict, has an independent reviewer audit the instruments, and gives one page to a human for the ruling.
+How a change is measured against the catalog. A readout is the result: each witness gets a verdict, an independent reviewer audits the instruments, and a human gets one page for the ruling. Any process can make a readout. Belay makes one with agents ([Belay](belay/README.md)). A person makes one with carabiner and their own answers ([Carabiner](carabiner/README.md)). This file tells what a readout holds, and what each process must keep true when it makes one.
 
 ## Four questions
 
@@ -29,56 +29,7 @@ To canvass is to ask each witness for a verdict. The tool adapters answer the co
 >
 > A witness that nobody answered is silent. A canvass reports it and does not fail.
 
-A canvass asks, and it does not execute. Belay runs the sources that `.belay/witnesses.toml` names, and the adapters read their reports.
-
-### Adapters
-
-An adapter changes the report of one tool into verdicts for the witnesses that crux indexed. Adapters are in belay, never in the core. The join uses a handle that the tool reports and that the extent of the witness contains.
-
-| Rung      | Handle              | The extent of the witness contains     |
-| --------- | ------------------- | -------------------------------------- |
-| type      | the full project    | a type declaration                     |
-| test      | file and line range | the test that the runner ran           |
-| lint rule | the rule id         | the configuration line that enables it |
-| prose     | file and line range | nothing to join — the judge answers    |
-
-> [!CLAIMS]
->
-> #### Witnesses, not files
->
-> An adapter reports `(witness, verdict)` pairs. It never reports a verdict for a file.
->
-> #### The judge gets the rest
->
-> Each witness that no tool adapter reports on goes to the judge.
->
-> #### Type join
->
-> If the project compiles, each witness whose extent contains a type declaration affirms. If it does not compile, each of them denies.
->
-> #### Test join
->
-> A test result belongs to the witness whose extent contains its line. A failure denies. All passed affirms. A skip with no failure is silent.
->
-> #### Lint join
->
-> A lint rule that ran and reported nothing affirms. A report of the rule denies.
->
-> #### Ran, or silent
->
-> An adapter reports if the instrument ran, not only what it said. A rule id that the tool does not recognise is silent.
->
-> #### Over-attribution
->
-> When an adapter cannot tell which witness a result belongs to, it gives the result to each witness that can own it. It never gives a result to none.
-
-**A tool that runs on a file does not give a verdict for that file.** A linter and a type checker run on each file. If that were a verdict, they would report on each inline witness, and each witness would affirm when the project compiled. Thus a type adapter reports only on witnesses whose extent contains a type declaration. Adapters know the language, so they make this decision.
-
-**The type join over-attributes.** A type error occurs where the subject breaks the type, not in the extent of the type. Thus no error joins to one witness. A failed type check stops the work in any case.
-
-**A lint rule that reports nothing affirms, and a test that does not run is silent.** This is the only rule that is different for one rung, and it assumes that the linter ran the rule. That is why the adapter must report if the instrument ran.
-
-> **Over-attribution is permitted. Under-attribution is not.** A false red costs a builder some minutes. A false green is the failure that crux exists to prevent.
+A canvass asks, and it does not execute. Carabiner reads the reports of the sources that `canvass.jsonc` names. Its adapters join each report to the witnesses that crux indexed ([Adapters](carabiner/README.md#adapters)). The rung of a witness comes from the source that answers it ([The ladder](witnesses.md#the-ladder)).
 
 ## Verdict
 
@@ -93,7 +44,7 @@ An adapter changes the report of one tool into verdicts for the witnesses that c
 
 The condition of the catalog was true at the merge ([Condition](catalog.md#condition)). Thus the question for the judge is: can **this diff** change the verdict? For a small diff, this is cheap. A good code reviewer already works this way. Crux stores no verdicts.
 
-**Triage is one pass.** The judge gets the diff and the _Valid when_ line of each inferential witness. It returns the witnesses to ask again. The other witnesses affirm, unaffected. Then the judge answers the witnesses that it returned.
+**Triage is one pass.** The judge gets the diff and the _Valid when_ condition of each inferential witness. It returns the witnesses to ask again. The other witnesses affirm, unaffected. Then the judge answers the witnesses that it returned.
 
 > [!CLAIMS]
 >
@@ -103,7 +54,7 @@ The condition of the catalog was true at the merge ([Condition](catalog.md#condi
 >
 > ### Triage by the reviewer
 >
-> Belay gives the triage to the reviewer. The builder never does a triage.
+> The reviewer does the triage of the inferential witnesses. The builder never does a triage.
 >
 > ### Triage shown
 >
@@ -210,6 +161,12 @@ The first real build passed each test and the repository gate. Then an independe
 
 > **Somebody who did not build applies the gate.**
 
+> [!CLAIMS]
+>
+> ### Independent reviewer
+>
+> The reviewer that answers for a readout did not build the diff that the readout measures.
+
 ## Readout
 
 The readout has one block for each claim. The claim and its coverage are first. Then there is one line for each witness.
@@ -235,6 +192,7 @@ The third block is an inline witness. The diff changed the handler, so the judge
 | a witness is **unsound** | standing | the audit | red — stop |
 | the claim is **under-covered** | coverage | the audit | red — stop |
 | the prose triage finds a promise | verdict | the judge | red — stop |
+| an entry is not enacted, or a catalog change has no entry | amendment match | the comparison | red — stop |
 | each witness is **silent** | verdict | the canvass | yellow — the ruling |
 | a standing is unaudited, or proposed and not confirmed | standing | the audit | yellow — the ruling |
 | coverage is unaudited, or proposed and not confirmed | coverage | the audit | yellow — the ruling |
@@ -247,58 +205,94 @@ The third block is an inline witness. The diff changed the handler, so the judge
 >
 > ### Red stops
 >
-> Belay gives no readout that has a red item to the operator. The work goes back to the builder.
->
-> ### In the pull request
->
-> Belay posts each readout as a pull request comment that names its commit.
+> No process gives a readout that has a red item to the operator for a ruling. The work goes back to the builder.
 >
 > ### Void when stale
 >
-> A readout whose commit is not HEAD is void, and belay marks it so.
+> A readout names its commit. When its commit is not HEAD, the readout is void.
 >
 > ### Not committed
 >
-> The machine form of a readout is a build artifact. Belay never commits it.
+> The machine form of a readout is a build artifact. No tool commits it.
 
-The operator gets the amendment and the readout together. The amendment tells what somebody wanted. The readout tells what the witnesses say. The amendment goes in the pull request description.
+The operator gets the amendment and the readout together. The amendment tells what somebody wanted. The readout tells what the witnesses say.
 
-## Belay
+**Where the readout goes is a choice of the process.** The first version of this section had belay post each readout as a pull request comment. That is one rendering of the machine form, and belay still does it ([In the pull request](belay/README.md#in-the-pull-request)). A different process can show the same document in a different place.
 
-Belay takes an amendment and makes a pull request that is cheap to rule on.
-
-1. A human operator gives belay an amendment.
-2. Belay tells a **builder** to implement it.
-3. **At any time, the builder can escalate.** It tells the proposed change to the amendment, and it stops. The operator accepts or refuses the change, and the build continues.
-4. Belay tells a **reviewer** to canvass and to audit. The result is the readout.
-5. Belay gives the amendment and the readout to the operator for the ruling.
+### Machine form
 
 > [!CLAIMS]
 >
-> ### Escalation stops the build
+> #### Readout form
 >
-> When the builder escalates, belay stops the build until the operator accepts or refuses the proposed change.
+> The machine form of a readout is a JSON document. It names its commit, its base, and the version of its amendment when it has one.
 >
-> ### Handoff when green
+> #### Claim entries
 >
-> Belay starts the reviewer only when each computational witness in the canvass of the builder affirms.
+> The machine form has one item for each claim, in catalog order. Each item has the slug of the claim, its coverage, and one row for each witness of the claim.
 >
-> ### New reviewer each cycle
+> #### Witness rows
 >
-> Belay starts a new reviewer for each cycle, with no context from the last cycle.
+> Each witness row has the witness reference, the verdict, and the standing. A verdict of _affirms (unaffected)_ is a different value from _affirms_.
 >
-> ### Cycle budget
+> #### Proposed is marked
 >
-> Belay stops the loop when the cycle budget is spent, and gives the last readout to the operator.
+> Each _sound_ standing and each _covered_ coverage is marked as proposed or as confirmed.
 >
-> ### Restart loses nothing
+> #### Witness reference
 >
-> The supervisor calculates each fact again from the branch at HEAD. A restart loses no state.
+> A readout names a witness by its file and the line of its block, at the commit of the readout. The reference has no meaning at a different commit.
 
-**Green is a handoff. It does not mean that the work is done.** Before the handoff, the builder breaks each witness that can deny, and makes sure that it denies. A witness that has never denied has not been tested.
+**A witness reference is temporary on purpose.** A witness has no identity ([Witness blocks](witnesses.md#witness-blocks)). It is the extent that a block owns, and the slugs on the block tie it to its claims. A file and a line name it exactly at one commit, and a readout is valid at one commit only ([Void when stale](#void-when-stale)). Thus nothing needs a stable name for a witness.
 
-**The supervisor holds a loop and no facts.** A reviewer with context from the last cycle has already heard the arguments of the builder.
+### Against the amendment
 
-If a builder escalates on each claim, it got fog, not an amendment ([Fog](practice.md#fog)).
+> [!CLAIMS]
+>
+> #### Amendment match
+>
+> When a readout has an amendment, it compares the entries with the catalog changes from its base to its commit. Each entry that the diff does not make is red. Each catalog change that no entry names is red.
+>
+> #### Text match
+>
+> An `add` or a `change` entry is made when the claim text at the commit is the text of the entry, after the whitespace is normalised.
+>
+> #### No amendment
+>
+> A readout with no amendment lists the catalog changes from its base to its commit, and it compares nothing.
 
-**What the human decides.** The human makes a specification decision: **were these the correct claims?** The human closes the yellow items: silent verdicts, standings that nobody confirmed, and coverage that nobody confirmed. Only the operator can say that the witnesses reach a claim far enough.
+**Why a change with no entry is red.** A builder that changes a claim outside the amendment sets its own measure of success. The audit scope already finds the witness side of this ([Scope](checks.md#scope)). The comparison finds the claim side. The repair is an escalation, not a ruling ([Escalation](interfaces.md#escalation)).
+
+**Why exact text.** The operator approved the words of each entry. A builder that rewords a claim to make it easier to satisfy changes the promise. A rewording that keeps the promise costs one escalation. A comparison of meaning would need an intelligence, and this check is cheap because it needs none.
+
+## Answers
+
+Answers are what an intelligence gives to a readout: the verdicts of the inferential witnesses, the standings, and the coverage. A judge and an auditor give them. That can be an agent that belay starts, or a person.
+
+> [!CLAIMS]
+>
+> ### Answers form
+>
+> Answers are a JSON document that names its commit. Each verdict and each standing is keyed by a witness reference and a slug. Each coverage is keyed by a slug.
+>
+> ### Answers from any intelligence
+>
+> A readout takes answers from an agent or from a person, in the same form.
+>
+> ### Only a person confirms
+>
+> An answer from an agent can propose _sound_ or _covered_. Only an answer from a person can confirm them.
+>
+> ### Stale answers
+>
+> Answers whose commit is not the commit of the readout are not used.
+
+**The questions come from the readout.** Before the answers exist, carabiner lists the answers that the readout needs ([Questions](carabiner/README.md#questions)). An intelligence answers that list, and it does not need to find the scope itself.
+
+## Making a readout
+
+Each process that makes a readout for a ruling keeps these claims: [Independent reviewer](#independent-reviewer), [Triage by the reviewer](#triage-by-the-reviewer), [Red stops](#red-stops), and [Only a person confirms](#only-a-person-confirms). The rest of the process is its own. Belay keeps them with agents in a loop ([Belay](belay/README.md)). A person can keep them with carabiner and a colleague.
+
+**What the human decides.** The human makes a specification decision: **were these the correct claims?** The human closes the yellow items: silent verdicts, standings that nobody confirmed, and coverage that nobody confirmed. Only the operator can say that the witnesses reach a claim far enough. The merge confirms each proposed item that the ruling accepts, so no confirmation is kept anywhere else.
+
+**Belay was in this file.** The first version of this file told the loop of belay here, and the loop was a set of claims of the format. Then a change to belay was a change to crux. The loop moved to [Belay](belay/README.md). Only the claims that each process must keep stayed.
