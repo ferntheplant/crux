@@ -6,12 +6,12 @@ The tools that read the format, the order in which they get built, and the rules
 
 The format is the product. You can replace the tools.
 
-|      | Name       | Does                                                                    |
-| ---- | ---------- | ----------------------------------------------------------------------- |
-| core | **crux**   | reads claims and witnesses; reports form errors ([checks](./checks.md)) |
-| 1    | **belay**  | takes an amendment; makes a PR that is cheap to rule on                 |
-| 2    | **cairn**  | holds fog and amendments that are not enacted; gives amendments         |
-| 3    | **beacon** | moves the operator between fog work and rulings                         |
+|  | Name | Does |
+| --- | --- | --- |
+| core | **crux** | reads claims and witnesses; reports form errors ([checks](./checks.md)) |
+| 1 | **belay** | takes an amendment; makes a PR that is cheap to rule on |
+| 2 | **cairn** | holds fog and amendments that are not enacted; gives amendments |
+| 3 | **beacon** | moves the operator between fog work and rulings |
 
 > [!CLAIMS]
 >

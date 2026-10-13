@@ -11,9 +11,10 @@ Crux is a format that records what a codebase promises. A machine can find each 
 
 ## Setup
 
-The toolchain comes from the [baseline](https://github.com/ferntheplant/baseline) template: Vite+ for the JavaScript tooling, mise for gitleaks, typos, and Node. Its README covers the one-time machine setup and the GitHub repository settings.
+The toolchain comes from the [baseline](https://github.com/ferntheplant/baseline) template: Vite+ for Node, pnpm, and the JavaScript tooling, and mise for gitleaks, typos, and agent-browser. [`BASELINE.md`](./BASELINE.md) covers the one-time machine setup, the lint presets, dependency versions, and the GitHub repository settings. [`.baseline.jsonc`](./.baseline.jsonc) records the baseline commit this repo last took; `/rebaseline` takes baseline's later changes.
 
 ```bash
+vp env on          # once per machine, if you ever ran `vp env off`
 mise trust && mise install
 vp install
 ```

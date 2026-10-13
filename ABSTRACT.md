@@ -24,10 +24,10 @@ A **claim** is a short falsifiable statement: one heading in a `[!CLAIMS]` block
 
 Crux asks three questions about each claim. They are different questions on purpose.
 
-| Question     | Asks                                                  | Answered by            |
-| ------------ | ----------------------------------------------------- | ---------------------- |
-| **verdict**  | does the code satisfy the claim?                      | a tool, or a judge     |
-| **standing** | does this instrument support this claim?              | always an intelligence |
+| Question | Asks | Answered by |
+| --- | --- | --- |
+| **verdict** | does the code satisfy the claim? | a tool, or a judge |
+| **standing** | does this instrument support this claim? | always an intelligence |
 | **coverage** | do the witnesses of the claim **together** uphold it? | always an intelligence |
 
 A tool asks each computational witness again on each canvass. A judge reads the diff and asks again only the inferential witnesses that the diff can affect. A standing and a coverage change only when an instrument or a claim text changes. The subject never makes them void.

@@ -71,12 +71,12 @@ For a file that takes no comments, such as JSON, write a witness file that names
 
 Move each claim as high in this list as it can correctly go.
 
-|     | Rung      | Verdict from     | Reason for its position                                               |
-| --- | --------- | ---------------- | --------------------------------------------------------------------- |
-| 4   | type      | the type checker | It reaches each use, new uses also. It can require and it can forbid. |
-| 3   | test      | the runner       | It observes behaviour. It has a failing state before the build.       |
-| 2   | lint rule | the linter       | It reaches each file, new files also. It can only forbid.             |
-| 1   | prose     | a judge          | It is expensive to ask. It is only as good as the judge who reads it. |
+|  | Rung | Verdict from | Reason for its position |
+| --- | --- | --- | --- |
+| 4 | type | the type checker | It reaches each use, new uses also. It can require and it can forbid. |
+| 3 | test | the runner | It observes behaviour. It has a failing state before the build. |
+| 2 | lint rule | the linter | It reaches each file, new files also. It can only forbid. |
+| 1 | prose | a judge | It is expensive to ask. It is only as good as the judge who reads it. |
 
 Types, tests, and lint rules are **computational**: a tool answers them. Prose is **inferential**: a judge answers it.
 

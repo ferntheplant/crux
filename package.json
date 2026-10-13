@@ -5,22 +5,25 @@
   "type": "module",
   "scripts": {
     "ready": "sherif && typos && vp check && vp run -r test && vp run -r build && vp exec fallow",
-    "prepare": "node scripts/link-agents.mjs && vp config"
+    "prepare": "node scripts/link-agents.ts && effect-tsgo patch --no-typescript --oxlint && vp config"
   },
   "devDependencies": {
     "@commitlint/cli": "catalog:",
     "@commitlint/config-conventional": "catalog:",
+    "@effect/tsgo": "catalog:",
     "@types/node": "catalog:",
     "fallow": "catalog:",
     "sherif": "catalog:",
+    "taze": "catalog:",
     "typescript": "catalog:",
+    "ultracite": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^12.8.1",
+      "version": "12.9.1",
       "onFail": "download"
     }
   },

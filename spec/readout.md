@@ -6,12 +6,12 @@ How belay measures a change against the catalog. Belay takes an amendment, asks 
 
 Crux asks four questions about each claim. They are different questions on purpose.
 
-| Question      | Answered by         | Cost               | Made void by                                                            | Default                           |
-| ------------- | ------------------- | ------------------ | ----------------------------------------------------------------------- | --------------------------------- |
-| **existence** | a form check        | free               | nothing — crux calculates it on each run                                | calculated each time              |
-| **verdict**   | an adapter or judge | free, or expensive | computational: each canvass. Inferential: a diff that the judge selects | **asked**; triaged if inferential |
-| **standing**  | an auditor          | always expensive   | a change to the instrument or to the claim text                         | **kept**; audited after a change  |
-| **coverage**  | an auditor          | always expensive   | a change to one of the instruments of the claim, or to its claim text   | **kept**; audited after a change  |
+| Question | Answered by | Cost | Made void by | Default |
+| --- | --- | --- | --- | --- |
+| **existence** | a form check | free | nothing — crux calculates it on each run | calculated each time |
+| **verdict** | an adapter or judge | free, or expensive | computational: each canvass. Inferential: a diff that the judge selects | **asked**; triaged if inferential |
+| **standing** | an auditor | always expensive | a change to the instrument or to the claim text | **kept**; audited after a change |
+| **coverage** | an auditor | always expensive | a change to one of the instruments of the claim, or to its claim text | **kept**; audited after a change |
 
 A computational verdict is cheap, so each canvass asks it. An inferential verdict is expensive, so a judge does a triage of the diff first. A standing and a coverage stay the same until a change, because only an intelligence can set them.
 
@@ -82,12 +82,12 @@ An adapter changes the report of one tool into verdicts for the witnesses that c
 
 ## Verdict
 
-| Verdict                  | Colour | Meaning                                                             |
-| ------------------------ | ------ | ------------------------------------------------------------------- |
-| **affirms**              | green  | Somebody asked the witness, and the subject satisfies the claim.    |
-| **affirms (unaffected)** | green  | A judge read the diff and found that it cannot change this verdict. |
-| **silent**               | yellow | Nobody answered. No tool ran the witness, or no judge did a triage. |
-| **denies**               | red    | Somebody asked the witness, and the subject does not satisfy it.    |
+| Verdict | Colour | Meaning |
+| --- | --- | --- |
+| **affirms** | green | Somebody asked the witness, and the subject satisfies the claim. |
+| **affirms (unaffected)** | green | A judge read the diff and found that it cannot change this verdict. |
+| **silent** | yellow | Nobody answered. No tool ran the witness, or no judge did a triage. |
+| **denies** | red | Somebody asked the witness, and the subject does not satisfy it. |
 
 > **By induction, each verdict on the main branch is _affirms_. Thus a judge reads only the diff.**
 
@@ -141,11 +141,11 @@ To audit is to read the instruments and set their standings, and then set the co
 
 ### Standing
 
-| Standing      | Meaning                                                                                       |
-| ------------- | --------------------------------------------------------------------------------------------- |
-| **sound**     | An auditor read the instrument, and it supports this claim.                                   |
-| **unsound**   | It does not support this claim. Remove the slug from its `@attests`, repair it, or delete it. |
-| **unaudited** | Nobody has read it against this claim.                                                        |
+| Standing | Meaning |
+| --- | --- |
+| **sound** | An auditor read the instrument, and it supports this claim. |
+| **unsound** | It does not support this claim. Remove the slug from its `@attests`, repair it, or delete it. |
+| **unaudited** | Nobody has read it against this claim. |
 
 The auditor examines three things for each standing:
 
@@ -171,11 +171,11 @@ To find a bad witness needs no authority. To say that a witness is good enough n
 
 > **Coverage is if the witnesses of a claim uphold it together. If each witness is sound, the claim is not necessarily covered.**
 
-| Coverage          | Meaning                                                                         |
-| ----------------- | ------------------------------------------------------------------------------- |
-| **covered**       | An auditor read the witnesses together, and they reach the full claim.          |
+| Coverage | Meaning |
+| --- | --- |
+| **covered** | An auditor read the witnesses together, and they reach the full claim. |
 | **under-covered** | No witness reaches part of the claim. Add a witness, or make the claim smaller. |
-| **unaudited**     | Nobody has read the witnesses together.                                         |
+| **unaudited** | Nobody has read the witnesses together. |
 
 > [!CLAIMS]
 >
@@ -228,16 +228,16 @@ catalog/checkout.md#never-charges-an-expired-cart                               
 
 The third block is an inline witness. The diff changed the handler, so the judge asked the witness again. The edit also changed the instrument, so the standing waits for the audit.
 
-| Failure                                                | Question  | Found by    | Result              |
-| ------------------------------------------------------ | --------- | ----------- | ------------------- |
-| no witness attests the claim — **unattested**          | existence | form check  | red — stop          |
-| a witness **denies**                                   | verdict   | the canvass | red — stop          |
-| a witness is **unsound**                               | standing  | the audit   | red — stop          |
-| the claim is **under-covered**                         | coverage  | the audit   | red — stop          |
-| the prose triage finds a promise                       | verdict   | the judge   | red — stop          |
-| each witness is **silent**                             | verdict   | the canvass | yellow — the ruling |
-| a standing is unaudited, or proposed and not confirmed | standing  | the audit   | yellow — the ruling |
-| coverage is unaudited, or proposed and not confirmed   | coverage  | the audit   | yellow — the ruling |
+| Failure | Question | Found by | Result |
+| --- | --- | --- | --- |
+| no witness attests the claim — **unattested** | existence | form check | red — stop |
+| a witness **denies** | verdict | the canvass | red — stop |
+| a witness is **unsound** | standing | the audit | red — stop |
+| the claim is **under-covered** | coverage | the audit | red — stop |
+| the prose triage finds a promise | verdict | the judge | red — stop |
+| each witness is **silent** | verdict | the canvass | yellow — the ruling |
+| a standing is unaudited, or proposed and not confirmed | standing | the audit | yellow — the ruling |
+| coverage is unaudited, or proposed and not confirmed | coverage | the audit | yellow — the ruling |
 
 > [!CLAIMS]
 >

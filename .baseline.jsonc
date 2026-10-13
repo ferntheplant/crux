@@ -1,0 +1,20 @@
+// The baseline commit this repo last took, for `/rebaseline`. Each local edit to a file baseline
+// also owns gets a comment here saying what changed and why: the next rebaseline reads these to
+// decide which side of a conflict to keep.
+{
+  "repo": "https://github.com/ferntheplant/baseline",
+  "ref": "main",
+  "base": "a2e7ed101b37531ae57a1da47fca706e3166b008",
+  // Paths this repo owns outright, so baseline's changes to them are never taken. Add a path once
+  // the repo replaces or deletes it. pnpm-lock.yaml is regenerated after each merge instead.
+  // README.md is crux's own and points at BASELINE.md for setup; CONTEXT.md holds crux's
+  // vocabulary, not the template's tooling words. apps/example is still baseline's untouched
+  // example, so its changes are taken.
+  "exclude": ["README.md", "ABSTRACT.md", "CONTEXT.md", "pnpm-lock.yaml"],
+  // Local edits:
+  // - AGENTS.md: the heading is `# crux`; _Where things live_ adds rows for `spec/`, `runbooks/`,
+  //   and the reasoning-beside-the-rule prose, plus four crux paragraphs (reasoning stays beside
+  //   its rule, the catalog format, links as citations, ASD-STE100); _Definition of done_ links
+  //   `CONTEXT.md`. Keep all of these and take baseline's changes around them.
+  // - package.json: the root package is `@crux/root`, not `@baseline/root`.
+}
