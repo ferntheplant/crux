@@ -31,7 +31,7 @@ A claim can fail in three places. A witness can deny it. A witness can support n
 - **A claim enters the catalog in the merge that makes it true.** It never enters earlier. There is no `pending` status. Intent is an amendment ([Amendments](practice.md#amendments)) or fog ([Fog](practice.md#fog)).
 - **The condition holds by induction.** The claim satisfies it when it enters. Each merge keeps it, because each merge audits what it changed ([Scope](checks.md#scope)). Thus a reviewer reads only the diff.
 
-Belay enforces the condition. A red item stops the work before a human sees it ([Red stops](readout.md#red-stops)).
+Each process that makes a readout enforces the condition. A red item stops the work before a human sees it ([Red stops](readout.md#red-stops)).
 
 ## Catalog files
 

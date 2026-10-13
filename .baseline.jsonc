@@ -13,7 +13,7 @@
   "exclude": ["README.md", "ABSTRACT.md", "CONTEXT.md", "pnpm-lock.yaml"],
   // Local edits:
   // - AGENTS.md: the heading is `# crux`; _Where things live_ adds rows for `spec/`, `runbooks/`,
-  //   and the reasoning-beside-the-rule prose, plus four crux paragraphs (reasoning stays beside
+  //   and the reasoning-beside-the-rule prose, and a note on tool glossaries in the _What a word means_ row, plus four crux paragraphs (reasoning stays beside
   //   its rule, the catalog format, links as citations, ASD-STE100); _Definition of done_ links
   //   `CONTEXT.md`. Keep all of these and take baseline's changes around them.
   // - package.json: the root package is `@crux/root`, not `@baseline/root`.
